@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS CafeCoinDB;
-USE CafeCoinDB;
+CREATE DATABASE IF NOT EXISTS CafeCoin;
+USE CafeCoin;
 
 CREATE TABLE IF NOT EXISTS Customers
 (
@@ -67,7 +67,8 @@ CREATE TABLE IF NOT EXISTS Transactions
     CardUsed INT,
     Date            DATE NOT NULL,
     Time            TIME,
-    TransactionType VARCHAR(255),
+    TransactionType VARCHAR(255) NOT NULL,
+    AmountPaid DECIMAL (10, 2),
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE,
     FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE,
     FOREIGN KEY (CardUsed) REFERENCES DigitalPaymentMethods (MethodID) ON DELETE CASCADE
@@ -78,7 +79,7 @@ CREATE TABLE IF NOT EXISTS MenuItems
     ItemID      INT AUTO_INCREMENT PRIMARY KEY,
     MerchantID  INT          NOT NULL,
     ItemName    VARCHAR(255) NOT NULL,
-    Price       DECIMAL(10, 2),
+    CurrentPrice       DECIMAL(10, 2),
     Description VARCHAR(255),
     ItemType    VARCHAR(255),
     IsRewardItem  BOOLEAN,
@@ -86,16 +87,25 @@ CREATE TABLE IF NOT EXISTS MenuItems
     FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS RewardItems
+(
+    RewardID      INT AUTO_INCREMENT PRIMARY KEY,
+    MerchantID  INT          NOT NULL,
+    ItemID    INT NOT NULL,
+    StartDate      DATE,
+    EndDate DATE,
+    FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE,
+    FOREIGN KEY (ItemID) REFERENCES MenuItems (ItemID) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS OrderDetails
 (
     OrderItemNum INT,
     TransactionID INT,
-    ItemID        INT,
-    Quantity      INT,
+    ItemID        INT NOT NULL,
     Price         DECIMAL(10, 2),
-    CoinsUsed INT,
+    RewardRedeemed BOOLEAN NOT NULL,
     Discount DECIMAL (10, 2),
-    CoinsEarned INT,
     PRIMARY KEY (TransactionID, OrderItemNum),
     FOREIGN KEY (TransactionID) REFERENCES Transactions (TransactionID) ON DELETE CASCADE,
     FOREIGN KEY (ItemID) REFERENCES MenuItems (ItemID) ON DELETE CASCADE
@@ -246,19 +256,24 @@ VALUES (1, 'Credit', '4111111111111111', 'Alice A. Smith', '2026-01-01'),
        (1, 'Debit', '4222222222222222', 'Alice Smith', '2027-01-01');
 
 -- Transactions
-INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType)
-VALUES (1, 1, '2025-03-01', '08:30:00', 'card', 1, 'Product'),
-       (2, 2, '2025-03-02', '10:15:00', 'card', 1, 'Product');
+INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType, AmountPaid)
+VALUES (1, 1, '2025-03-01', '08:30:00', 'card', 1, 'Product', 0),
+       (2, 2, '2025-03-02', '10:15:00', 'card', 1, 'Product', 5.25);
 
 -- MenuItems
-INSERT INTO MenuItems (MerchantID, ItemName, Price, Description, ItemType, IsRewardItem, IsActive)
-VALUES (1, 'Latte', 4.50, 'Hot espresso with milk', 'Drink', TRUE, TRUE),
-       (2, 'Strawberry Smoothie', 5.25, 'Fresh strawberries and yogurt', 'Drink', FALSE, TRUE);
+INSERT INTO MenuItems (MerchantID, ItemName, CurrentPrice, Description, ItemType, IsActive)
+VALUES (1, 'Latte', 4.50, 'Hot espresso with milk', 'Drink', TRUE),
+       (2, 'Strawberry Smoothie', 5.25, 'Fresh strawberries and yogurt', 'Drink', TRUE);
+
+-- RewardItems
+INSERT INTO RewardItems (MerchantID, ItemID, StartDate, EndDate)
+VALUES (1, 1, '2025-03-01', '2025-03-31'),
+       (2, 2, '2025-03-01', '2025-03-31');
 
 -- OrderDetails
-INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Quantity, Price, CoinsUsed, Discount, CoinsEarned)
-VALUES (1, 1, 1, 2, 4.50, 1000, 4.50, 45),
-       (1, 2, 2, 1, 5.25, 0, 0, 53);
+INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount)
+VALUES (1, 1, 1, 4.50, TRUE, -4.50),
+       (1, 2, 2, 5.25, FALSE, 0);
 
 -- ComplaintTickets
 INSERT INTO ComplaintTickets (CustomerID, AssignedToEmployeeID, CreatedAt, Category, Description, Status, Priority)
