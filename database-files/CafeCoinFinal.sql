@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS OrderDetails
 (
     OrderItemNum INT,
     TransactionID INT,
-    ItemID        INT NOT NULL,
+    ItemID        INT,
     Price         DECIMAL(10, 2),
     RewardRedeemed BOOLEAN NOT NULL,
     Discount DECIMAL (10, 2),

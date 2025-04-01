@@ -1,8 +1,8 @@
-USE CafeCoinDB;
+USE CafeCoin;
 
 -- As a Collective customer, I want to have the option to load my CafeCoin profile with a cash balance in-app or in-store so that my coﬀee transactions are more seamless.
-INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType)
-VALUES (1, 1, '2025-03-31', '10:30:00', 'Card', 1, 'Balance Reload');
+INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType, AmountPaid)
+VALUES (1, 1, '2025-03-31', '10:30:00', 'Card', 1, 'Balance Reload', 10);
 
 UPDATE Customers
 SET AccountBalance = AccountBalance + 10
@@ -14,15 +14,19 @@ FROM Customers
 WHERE CustomerID = 1;
 
 -- As a Collective customer, I want to access an interactive map featuring Collective members so that I can quickly view the shops near me where I can receive Coins.
-SELECT *
+SELECT m.MerchantID, m.MerchantName, m.StreetAddress, m.Suite, m.City, m.State, m.ZipCode
 FROM Merchants m
-WHERE m.City = 'Boston'
+WHERE m.City = 'Boston';
 
 -- As a Collective customer, I want to be able to see robust summary statistics of my cafe spending so that I can more eﬀectively manage my coﬀee habit and better understand how much I am contributing to my local coﬀee economy.
+SELECT c.CustomerID, c.FirstName, c.LastName, sum(t.AmountPaid) as TotalSpent, avg(t.AmountPaid) as AvgSpend, max(AmountPaid) as LargestOrder, count(t.TransactionID) as NumOrders, count(DISTINCT od.ItemID) AS UniqueItemsPurchased, sum(od.Discount) AS TotalSavings
+FROM Customers c JOIN Transactions t on c.CustomerID = t.CustomerID LEFT JOIN OrderDetails od ON t.TransactionID = od.TransactionID
+WHERE t.TransactionType != 'Balance Reload' AND t.Date >= DATE_ADD(NOW(), INTERVAL -2 MONTH)
+GROUP BY c.CustomerID, c.FirstName, c.LastName;
 
 -- As a Collective customer, I want to be alerted to upcoming promotions, new menu items, and other news from Collective members I visit frequently so that I can take advantage of oﬀers at my favorite cafes.
 INSERT INTO CommsSubscribers (CustomerID, MerchantID, DateSubscribed)
-VALUES (1, 2, '2025-03-31')
+VALUES (1, 2, '2025-03-31');
 
 -- As a Collective customer, I want to review tailored item and shop recommendations based on my preferences so that I can easily locate new cafes to try that I am confident I will enjoy.
 SELECT sa.MerchantID
