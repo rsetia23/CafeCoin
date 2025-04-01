@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS Customers
     CoinBalance INT     DEFAULT 0,
     AccountBalance INT DEFAULT 0,
     DateJoined  DATE         NOT NULL,
-    IsActive      BOOLEAN DEFAULT TRUE
+    IsActive      BOOLEAN DEFAULT TRUE,
+    AutoReloadAmt INT DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS Merchants
@@ -32,7 +33,10 @@ CREATE TABLE IF NOT EXISTS Merchants
     City VARCHAR(255),
     State VARCHAR(255),
     ZipCode VARCHAR(9),
-    Website       VARCHAR(255)
+    Website       VARCHAR(255),
+    OwnerFirst VARCHAR(255),
+    OwnerLast VARCHAR(255),
+    OwnerComment VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS CafeCoinEmployees
@@ -236,14 +240,14 @@ CREATE TABLE IF NOT EXISTS CustAmenityPrefs
 );
 
 -- Customers
-INSERT INTO Customers (FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance, AccountBalance, DateJoined, IsActive)
-VALUES ('Alice', 'Smith', 'alice@example.com', '555-1234', '123 Main St', 'Unit 3', 'Boston', 'MA', '02120', 200, 50, '2024-01-01', TRUE),
-       ('Bob', 'Jones', 'bob@example.com', '555-5678', '456 Elm St', 'Apartment #4', 'Boston', 'MA', '02120', 150, 10, '2024-02-15', TRUE);
+INSERT INTO Customers (FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance, AccountBalance, DateJoined, IsActive, AutoReloadAmt)
+VALUES ('Alice', 'Smith', 'alice@example.com', '555-1234', '123 Main St', 'Unit 3', 'Boston', 'MA', '02120', 200, 50, '2024-01-01', TRUE, 0),
+       ('Bob', 'Jones', 'bob@example.com', '555-5678', '456 Elm St', 'Apartment #4', 'Boston', 'MA', '02120', 150, 10, '2024-02-15', TRUE, 5);
 
 -- Merchants
-INSERT INTO Merchants (MerchantName, MerchantType, MembershipLvl, Email, Phone, StreetAddress, Suite, City, State, ZipCode, Website)
-VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 Bean Blvd', NULL, 'Boston', 'MA', '02120', 'www.cafecoin.com'),
-       ('The Juice Bar', 'Collective Member', 'Silver', 'info@juicebar.com', '555-2222', '321 Berry Ln', 'Suite 1', 'Boston', 'MA', '02120','www.juicebar.com');
+INSERT INTO Merchants (MerchantName, MerchantType, MembershipLvl, Email, Phone, StreetAddress, Suite, City, State, ZipCode, Website, OwnerFirst, OwnerLast, OwnerComment)
+VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 Bean Blvd', NULL, 'Boston', 'MA', '02120', 'www.cafecoin.com', 'John', 'Smith', 'Great Coffee, Better People!'),
+       ('The Juice Bar', 'Collective Member', 'Silver', 'info@juicebar.com', '555-2222', '321 Berry Ln', 'Suite 1', 'Boston', 'MA', '02120','www.juicebar.com', 'Jane', 'Doe', 'Only the Juiciest!');
 
 -- CafeCoinEmployees
 INSERT INTO CafeCoinEmployees (FirstName, LastName, Email, Phone, EmployeeType, StartDate, IsActive)
