@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS Merchants
     Website       VARCHAR(255),
     OwnerFirst VARCHAR(255),
     OwnerLast VARCHAR(255),
-    OwnerComment VARCHAR(255)
+    OwnerComment VARCHAR(255),
+    IsActive BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE IF NOT EXISTS CafeCoinEmployees
@@ -242,12 +243,21 @@ CREATE TABLE IF NOT EXISTS CustAmenityPrefs
 -- Customers
 INSERT INTO Customers (FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance, AccountBalance, DateJoined, IsActive, AutoReloadAmt)
 VALUES ('Alice', 'Smith', 'alice@example.com', '555-1234', '123 Main St', 'Unit 3', 'Boston', 'MA', '02120', 200, 50, '2024-01-01', TRUE, 0),
-       ('Bob', 'Jones', 'bob@example.com', '555-5678', '456 Elm St', 'Apartment #4', 'Boston', 'MA', '02120', 150, 10, '2024-02-15', TRUE, 5);
+       ('Bob', 'Jones', 'bob@example.com', '555-5678', '456 Elm St', 'Apartment #4', 'Boston', 'MA', '02120', 150, 10, '2024-02-15', TRUE, 5),
+       ('Charlie', 'Brown', 'cb@example.com', '111-2222', '1 Main St', '#5', 'New York', 'NY', '00000', 10, 6, CURRENT_DATE, TRUE, 6),
+       ('Dana', 'White', 'd.white@example.com', '222-3333', '2 Main St', NULL, 'Clinton', 'NJ', '08827', 56, 2,CURRENT_DATE, TRUE, 0),
+       ('Eve', 'Black', 'eve.black@example.com', '333-4444', '3 Main St', 'Unit 6', 'Malden', 'MA', '02222', 43, 1, CURRENT_DATE, TRUE, 2),
+       ('Frank', 'Green', 'f.green@example.com', '444-5555', '4 Main St', '#2', 'Philadelphia', 'PA', '09999', 126, 86, CURRENT_DATE, TRUE, 0);
 
 -- Merchants
 INSERT INTO Merchants (MerchantName, MerchantType, MembershipLvl, Email, Phone, StreetAddress, Suite, City, State, ZipCode, Website, OwnerFirst, OwnerLast, OwnerComment)
 VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 Bean Blvd', NULL, 'Boston', 'MA', '02120', 'www.cafecoin.com', 'John', 'Smith', 'Great Coffee, Better People!'),
-       ('The Juice Bar', 'Collective Member', 'Silver', 'info@juicebar.com', '555-2222', '321 Berry Ln', 'Suite 1', 'Boston', 'MA', '02120','www.juicebar.com', 'Jane', 'Doe', 'Only the Juiciest!');
+       ('The Juice Bar', 'Collective Member', 'Silver', 'info@juicebar.com', '555-2222', '321 Berry Ln', 'Suite 1', 'Boston', 'MA', '02120','www.juicebar.com', 'Jane', 'Doe', 'Only the Juiciest!'),
+       ('Cafe John', 'Collective Member', 'Gold', 'info@cafejohn.com', '665-7777', '6 Main St', NULL, 'Boston', 'MA', '02120', 'cafejohn.com', 'John', 'Walsh', 'Good coffee!'),
+       ('Lovely Cafe', 'Collective Member', 'Bronze', 'info@lovelycafe.com', '777-8888', '7 Main St', NULL, 'Boston', 'MA', '02120', 'lovelycafe.com', 'Sam', 'Sosa', 'Great stuff!'),
+       ('NYC Coffee', 'Collective Member', 'Silver', 'info@nyccoffee.com', '888-9999', '8 Main St', NULL, 'New York','NY', '00000', 'nyccoffee.com', 'Steve','Samuels', 'We are pretty good'),
+       ('Java Joy', 'Collective Member', 'Bronze', 'info@javajoy.com', '999-1000', '9 Main St', NULL, 'Clinton', 'NJ', '08827', 'javajoy.com', 'Andrew', 'Fielding', 'Only the best!'),
+       ('Riverside Cafe', 'Collective Member', 'Gold', 'info@riversidecafe.com', '100-1111', '10 Main St', NULL, 'Malden', 'MA', '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');;
 
 -- CafeCoinEmployees
 INSERT INTO CafeCoinEmployees (FirstName, LastName, Email, Phone, EmployeeType, StartDate, IsActive)
@@ -324,18 +334,40 @@ VALUES (1, 'System Maintenance', 'Scheduled downtime tonight.', '2025-03-03 18:0
 
 -- Features
 INSERT INTO Amenities (Name, Description)
-VALUES ('Free Wi-Fi', 'High-speed wireless internet'),
-       ('Outdoor Seating', 'Tables available outside');
+VALUES ('Wi-Fi', 'High-speed wireless internet'),
+       ('Outdoor Seating', 'Tables available outside'),
+       ('Vegan', 'Vegan options are available'),
+       ('GF', 'Gluten-free options are available'),
+       ('Dog-friendly', 'Dogs are allowed on the property'),
+       ('Open late', 'Opening hours extend past 4pm');
 
 -- StoreFeatures
 INSERT INTO StoreAmenities (MerchantID, AmenityID)
-VALUES (1, 1),
-       (2, 2);
+VALUES (2, 1),
+       (2, 2),
+       (2, 3),
+       (3, 2),
+       (3, 4),
+       (4, 5),
+       (4, 6),
+       (4, 1),
+       (5, 2),
+       (6, 1),
+       (6, 3),
+       (6, 5);
 
--- MerchantTransaction
+-- CustAmenityPreferences
 INSERT INTO CustAmenityPrefs (CustomerID, AmenityID)
 VALUES (1, 1),
-       (2, 1);
+       (2, 1),
+       (2, 2),
+       (3, 2),
+       (3, 3),
+       (4, 1),
+       (4, 3),
+       (4, 5),
+       (5, 1),
+       (6, 2);
 
 -- User Story: As a shop owner, I want to be able to add new items to and remove old items from my menu...
 INSERT INTO MenuItems (ItemId, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive)
