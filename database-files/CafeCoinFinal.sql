@@ -400,8 +400,18 @@ JOIN Merchants m ON cc.MerchantID = m.MerchantID
 WHERE m.MerchantID = 123 AND c.IsActive = TRUE;
 
 
--- User Story: As a shop owner, I want to make a payment for my membership plan...
--- Creating a dummy customer
-INSERT INTO Transactions (CustomerID, MerchantID, PaymentMethod, CardUsed, Date, Time, TransactionType, AmountPaid)
-VALUES (3, 1, 'Card', 1, CURRENT_DATE, CURRENT_TIME, 'Membership Fee', 49.99);
+-- As a shop owner, I want to view a history of my past reward items so I can avoid repeating them too often.
+SELECT ri.RewardID, mi.ItemName, ri.StartDate, ri.EndDate
+FROM RewardItems ri
+JOIN MenuItems mi ON ri.ItemID = mi.ItemID
+WHERE ri.MerchantID = 1
+ORDER BY ri.StartDate DESC;
+
+
+-- As a shop owner, I want to choose or update my membership level so that I can access the features that best fit my business needs.
+UPDATE Merchants
+SET MembershipLvl = 'Gold'
+WHERE MerchantID = 1;
+
+
 
