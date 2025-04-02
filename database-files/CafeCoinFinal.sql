@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS Merchants
 (
     MerchantID    INT AUTO_INCREMENT PRIMARY KEY,
     MerchantName  VARCHAR(255) NOT NULL,
-    MerchantType  VARCHAR(255),
+    MerchantType  VARCHAR(255) NOT NULL,
     MembershipLvl VARCHAR(255),
     Email         VARCHAR(255) NOT NULL UNIQUE,
     Phone         VARCHAR(255),
@@ -40,16 +40,18 @@ CREATE TABLE IF NOT EXISTS Merchants
     IsActive BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE IF NOT EXISTS CafeCoinEmployees
+CREATE TABLE IF NOT EXISTS Employees
 (
     EmployeeID   INT AUTO_INCREMENT PRIMARY KEY,
+    MerchantID INT NOT NULL,
     FirstName    VARCHAR(255) NOT NULL,
     LastName     VARCHAR(255) NOT NULL,
     Email        VARCHAR(255) NOT NULL UNIQUE,
     Phone        VARCHAR(255),
     EmployeeType VARCHAR(255),
     StartDate    DATE         NOT NULL,
-    IsActive       BOOLEAN DEFAULT TRUE
+    IsActive       BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS DigitalPaymentMethods
@@ -127,7 +129,7 @@ CREATE TABLE IF NOT EXISTS ComplaintTickets
     Status               VARCHAR(255),
     Priority             VARCHAR(255),
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE,
-    FOREIGN KEY (AssignedToEmployeeID) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE SET NULL
+    FOREIGN KEY (AssignedToEmployeeID) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS Surveys
@@ -136,7 +138,7 @@ CREATE TABLE IF NOT EXISTS Surveys
     CreatedByEmp INT  NOT NULL,
     Question   TEXT NOT NULL,
     DateSent   DATE,
-    FOREIGN KEY (CreatedByEmp) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE CASCADE
+    FOREIGN KEY (CreatedByEmp) REFERENCES Employees (EmployeeID) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS SurveyResponses
@@ -189,7 +191,7 @@ CREATE TABLE IF NOT EXISTS Leads
     Status          VARCHAR(255),
     Notes           TEXT,
     LastContactedAt DATETIME,
-    FOREIGN KEY (AssignedToEmp) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE SET NULL
+    FOREIGN KEY (AssignedToEmp) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS FraudTickets
@@ -199,7 +201,7 @@ CREATE TABLE IF NOT EXISTS FraudTickets
     CreatedAt   DATETIME NOT NULL,
     Description TEXT,
     Status      VARCHAR(255),
-    FOREIGN KEY (AssignedToEmp) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE SET NULL
+    FOREIGN KEY (AssignedToEmp) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS Alerts
@@ -212,7 +214,7 @@ CREATE TABLE IF NOT EXISTS Alerts
     Audience   VARCHAR(255),
     Status     VARCHAR(255),
     Priority   VARCHAR(255),
-    FOREIGN KEY (CreatedByEmp) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE SET NULL
+    FOREIGN KEY (CreatedByEmp) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS Amenities
@@ -259,10 +261,10 @@ VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 B
        ('Java Joy', 'Collective Member', 'Bronze', 'info@javajoy.com', '999-1000', '9 Main St', NULL, 'Clinton', 'NJ', '08827', 'javajoy.com', 'Andrew', 'Fielding', 'Only the best!'),
        ('Riverside Cafe', 'Collective Member', 'Gold', 'info@riversidecafe.com', '100-1111', '10 Main St', NULL, 'Malden', 'MA', '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');;
 
--- CafeCoinEmployees
-INSERT INTO CafeCoinEmployees (FirstName, LastName, Email, Phone, EmployeeType, StartDate, IsActive)
-VALUES ('Jane', 'Doe', 'jane.doe@cafecoin.com', '555-9999', 'Support', '2023-08-01', TRUE),
-       ('Mark', 'Lee', 'mark.lee@cafecoin.com', '555-8888', 'Fraud Analyst', '2023-06-15', TRUE);
+-- Employees
+INSERT INTO Employees (FirstName, LastName, MerchantID, Email, Phone, EmployeeType, StartDate, IsActive)
+VALUES ('Jane', 'Doe', 1, 'jane.doe@cafecoin.com', '555-9999', 'Support', '2023-08-01', TRUE),
+       ('Mark', 'Lee', 1, 'mark.lee@cafecoin.com', '555-8888', 'Fraud Analyst', '2023-06-15', TRUE);
 
 -- DigitalPaymentMethods
 INSERT INTO DigitalPaymentMethods (CustomerID, CardType, CardNumber, NameOnCard, Expiration)
