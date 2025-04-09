@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS CafeCoin;
-USE CafeCoin;
+CREATE DATABASE IF NOT EXISTS `CafeCoin`;
+USE `CafeCoin`;
 
 DROP TABLE IF EXISTS ComplaintTickets;
 DROP TABLE IF EXISTS Leads;
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS ComplaintTickets
 (
     TicketID             INT AUTO_INCREMENT PRIMARY KEY,
     CustomerID           INT      NOT NULL,
-    AssignedToEmployeeID INT NOT NULL,
+    AssignedToEmployeeID INT,
     CreatedAt            DATETIME NOT NULL,
     Category             VARCHAR(255),
     Description          TEXT,
@@ -297,7 +297,7 @@ VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 B
        ('Java Joy', 'Collective Member', 'Bronze', 'info@javajoy.com', '999-1000', '9 Main St', NULL, 'Clinton', 'NJ',
         '08827', 'javajoy.com', 'Andrew', 'Fielding', 'Only the best!'),
        ('Riverside Cafe', 'Collective Member', 'Gold', 'info@riversidecafe.com', '100-1111', '10 Main St', NULL,
-        'Malden', 'MA', '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');;
+        'Malden', 'MA', '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');
 
 -- Employees
 INSERT INTO Employees (FirstName, LastName, MerchantID, Email, Phone, EmployeeType, StartDate, IsActive)
