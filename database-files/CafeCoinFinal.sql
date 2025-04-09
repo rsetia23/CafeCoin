@@ -54,6 +54,8 @@ CREATE TABLE IF NOT EXISTS Merchants
     City          VARCHAR(255),
     State         VARCHAR(255),
     ZipCode       VARCHAR(9),
+    Lat DECIMAL(9, 6),
+    Lon DECIMAL(9, 6),
     Website       VARCHAR(255),
     OwnerFirst    VARCHAR(255),
     OwnerLast     VARCHAR(255),
@@ -129,8 +131,8 @@ CREATE TABLE IF NOT EXISTS RewardItems
 CREATE TABLE IF NOT EXISTS OrderDetails
 (
     OrderItemNum   INT,
-    TransactionID  INT,
-    ItemID         INT,
+    TransactionID  INT NOT NULL,
+    ItemID         INT NOT NULL,
     Price          DECIMAL(10, 2),
     RewardRedeemed BOOLEAN NOT NULL,
     Discount       DECIMAL(10, 2),
@@ -143,7 +145,7 @@ CREATE TABLE IF NOT EXISTS ComplaintTickets
 (
     TicketID             INT AUTO_INCREMENT PRIMARY KEY,
     CustomerID           INT      NOT NULL,
-    AssignedToEmployeeID INT,
+    AssignedToEmployeeID INT NOT NULL,
     CreatedAt            DATETIME NOT NULL,
     Category             VARCHAR(255),
     Description          TEXT,
