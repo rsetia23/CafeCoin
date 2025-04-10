@@ -7,24 +7,6 @@ from backend.db_connection import db
 
 users_bp = Blueprint('customers', __name__)
 
-@users_bp.route('/customers', methods=['PUT'])
-def update_customer():
-    current_app.logger.info('PUT /customers/balance')
-    cust_info = request.json
-    cust_id = cust_info['CustomerID']
-    custom_amt = cust_info['AmountToAdd']
-    
-    query = f'''
-        UPDATE Customers
-        SET AccountBalance = AccountBalance + {custom_amt}
-        WHERE CustomerID = {cust_id}
-    '''
-
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    db.get_db().commit()
-    return 'customer balance updated!'
-
 @users_bp.route('/transactions', methods=['POST'])
 def add_transaction():
     
@@ -72,3 +54,22 @@ def add_transaction():
     response = make_response("Successfully added transaction")
     response.status_code = 200
     return response
+
+@users_bp.route('/customers', methods=['PUT'])
+def update_customer():
+    current_app.logger.info('PUT /customers')
+    cust_info = request.json
+    cust_id = cust_info['CustomerID']
+    custom_amt = cust_info['AmountToAdd']
+    
+    query = f'''
+        UPDATE Customers
+        SET AccountBalance = AccountBalance + {custom_amt}
+        WHERE CustomerID = {cust_id}
+    '''
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    return 'customer balance updated!'
+
