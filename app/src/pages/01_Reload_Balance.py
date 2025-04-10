@@ -19,20 +19,44 @@ st.header('Reload CafeCoin Account Balance')
 # Access the session state to greet the customer
 st.write(f"### Hi, {st.session_state['first_name']}.")
 
-with st.echo(code_location='above'):
-    try:
-       card_data = requests.get(f"http://api:4000/c/balanceupdate/{st.session_state['userID']}").json()
-    except:
-       st.write('Could not load cards.')
-    
-    if card_data:
-        card_options = {card['CardNumber'] : card['MethodID'] for card in card_data}
+st.write('How much money would you like to load into your CafeCoin account? Remember, in-store purchases made with account balances earn double Coins!')
 
-        selected_card = st.selectbox('Choose one of your cards on file:', options = list(card_options.keys()))
-        st.write('Thank you for your selection!')
-    else:
-        st.write('No cards on file')
+standard_denoms = [1, 5, 10, 20]
 
+selected_denom = 0
+
+for denom in standard_denoms:
+    if st.checkbox(f'${denom}'):
+        selected_denom+=denom
+
+entered_amount = st.number_input('Or, enter a custom amount:', step = 0.01)
+
+if selected_denom > 0:
+    total = selected_denom
+elif entered_amount:
+    total = entered_amount
+else:
+    total = 0
+
+st.write('Please select which of your cards on file to use for this transaction from the dropdown below.')
+try:
+    card_data = requests.get(f"http://api:4000/c/balanceupdate/{st.session_state['userID']}").json()
+except:
+    st.write('Could not load cards.')
+
+if card_data:
+    card_options = {card['CardNumber'] : card['MethodID'] for card in card_data}
+
+    selected_card = st.selectbox('Choose one of your cards on file:', options = list(card_options.keys()))
+else:
+    st.write('No cards on file')
+
+st.write(f'You are adding ${total} to your CafeCoin account balance using your card with the number {selected_card}.')
+
+if st.button('Confirm purchase'):
+    st.write(f'Thank you for your order! ${total} added to account.')
+elif st.button('Cancel purchase'):
+    st.write('Transaction canceled.')
     
   #  if card_data:
    #    card_options = {}
