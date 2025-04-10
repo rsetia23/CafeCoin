@@ -1,8 +1,9 @@
 USE CafeCoin;
 
 --  As a Regional System Administrator, I want to deprecate a business that is no longer participating in the program so that I can remove their data and keep the system clean.
-DELETE FROM Merchants
-WHERE MerchantID = 2;
+UPDATE Merchants
+SET IsActive = FALSE
+WHERE MerchantId = 1;
 
 -- As a Regional System Administrator, I want to automate user deprecation after confirmation so that the offboarding process is streamlined and our systems do not store duplicate or inactive accounts.
 UPDATE Customers
