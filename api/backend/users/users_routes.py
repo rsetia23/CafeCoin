@@ -7,7 +7,7 @@ from backend.db_connection import db
 
 users_bp = Blueprint('customers', __name__)
 
-@users_bp.route('/transactions', methods=['POST'])
+@users_bp.route('/balanceupdate', methods=['POST'])
 def add_transaction():
     
     # In a POST request, there is a 
@@ -55,7 +55,7 @@ def add_transaction():
     response.status_code = 200
     return response
 
-@users_bp.route('/customers', methods=['PUT'])
+@users_bp.route('/balanceupdate', methods=['PUT'])
 def update_customer():
     current_app.logger.info('PUT /customers')
     cust_info = request.json
@@ -73,3 +73,13 @@ def update_customer():
     db.get_db().commit()
     return 'customer balance updated!'
 
+@users_bp.route('/balanceupdate/<userID>', methods=['GET'])
+def get_user_pay_methods(userID):
+    current_app.logger.info('GET /balanceupdate/<userID> route')
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT MethodID, CardNumber FROM DigitalPaymentMethods WHERE CustomerID = {0}'.format(userID))
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
