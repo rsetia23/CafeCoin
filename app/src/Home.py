@@ -81,4 +81,4 @@ if st.button('Act as Alex Morgan, CafeCoin Regional System Administrator',
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'data_analyst'
     st.session_state['first_name'] = 'Alex'
-    st.switch_page('pages/30_Data_Analyst_Home.py')
+    st.switch_page('pages/20_Admin_Home.py')

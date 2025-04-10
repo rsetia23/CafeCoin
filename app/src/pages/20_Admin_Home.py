@@ -9,9 +9,19 @@ st.set_page_config(layout = 'wide')
 
 SideBarLinks()
 
-st.title('System Admin Home Page')
+st.title('Admin Home')
 
-if st.button('Update ML Models', 
+if st.button('Delete a Merchant/Customer', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/21_Delete_Merchant_Or_Customer.py')
+
+if st.button('Alerts Dashboard',
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/22_Alerts_Dashboard.py')
+
+if st.button('Complaints Dashboard',
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/23_Complaints_Dashboard.py')

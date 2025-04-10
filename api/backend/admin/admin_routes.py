@@ -7,8 +7,6 @@ from backend.db_connection import db
 
 admin_bp = Blueprint('admin', __name__)
 
-# This route is used to deprecate a resource (customer or merchant)
-# by setting its IsActive field to FALSE
 @admin_bp.route('/admin/deprecate/<resource>/<int:item_id>', methods=['PUT'])
 def deprecate_resource(resource, item_id):
     current_app.logger.info(f'PUT /admin/deprecate/{resource}/{item_id}')
@@ -36,9 +34,43 @@ def deprecate_resource(resource, item_id):
     db.get_db().commit()
     
     if result == 0:
-        return make_response(jsonify({'message': f'{resource.capitalize()} not found'}), 404)
+        return make_response(jsonify({'message': f'{resource.capitalize()} already inactive'}), 404)
 
     return make_response(jsonify({'message': f'{resource.capitalize()} {item_id} marked as inactive'}), 200)
+
+@admin_bp.route('/admin/customers', methods=['GET'])
+def get_active_customers():
+    current_app.logger.info("GET /admin/customers")
+
+    query = '''
+        SELECT CustomerID, CONCAT(FirstName, ' ', LastName) AS Name
+        FROM Customers
+        WHERE IsActive = TRUE
+        ORDER BY FirstName, LastName
+    '''
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    results = cursor.fetchall()
+
+    return jsonify(results), 200
+
+@admin_bp.route('/admin/merchants', methods=['GET'])
+def get_active_merchants():
+    current_app.logger.info("GET /admin/merchants")
+
+    query = '''
+        SELECT MerchantID, MerchantName AS Name
+        FROM Merchants
+        WHERE IsActive = TRUE
+        ORDER BY MerchantName
+    '''
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    results = cursor.fetchall()
+
+    return jsonify(results), 200
 
 # Manage Alerts
 @admin_bp.route('/admin/alerts/<audience>', methods=['GET'])
@@ -85,3 +117,31 @@ def create_alert():
         current_app.logger.error(f"Error inserting alert: {e}")
         return make_response(jsonify({'error': str(e)}), 500)
 
+
+@admin_bp.route('/admin/complaints', methods=['GET'])
+def get_complaints():
+    query = '''
+        SELECT TicketID, CustomerID, AssignedToEmployeeID, CreatedAt, Category, Description, Status, Priority
+        FROM ComplaintTickets
+        ORDER BY CreatedAt DESC
+    '''
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    data = cursor.fetchall()
+    return jsonify(data), 200
+
+@admin_bp.route('/admin/complaints/<int:ticket_id>/resolve', methods=['PUT'])
+def resolve_complaint(ticket_id):
+    query = '''
+        UPDATE ComplaintTickets
+        SET Status = 'Resolved'
+        WHERE TicketID = %s
+    '''
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (ticket_id,))
+    db.get_db().commit()
+
+    if cursor.rowcount == 0:
+        return jsonify({'message': 'Ticket not found'}), 404
+
+    return jsonify({'message': f'Ticket {ticket_id} marked as resolved'}), 200
