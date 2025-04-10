@@ -7,46 +7,50 @@ from backend.db_connection import db
 
 users_bp = Blueprint('customers', __name__)
 
+@users_bp.route('/balanceupdate/<userID>', methods=['GET'])
+def get_user_pay_methods(userID):
+    current_app.logger.info('GET /balanceupdate/<userID> route')
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT MethodID, CardNumber FROM DigitalPaymentMethods WHERE CustomerID = {0}'.format(userID))
+    theData = cursor.fetchall()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
 @users_bp.route('/balanceupdate', methods=['POST'])
-def add_transaction():
+def record_transaction():
     
     # In a POST request, there is a 
     # collecting data from the request object 
-    the_data = request.json
+    the_data = request.json 
     current_app.logger.info(the_data)
 
     #extracting the variable
     customerID = the_data['CustomerID']
     merchantID = the_data['MerchantID']
     date = the_data['Date']
-    time = the_data['Time']
     paymentMethod = the_data['PaymentMethod']
     cardUsed = the_data['CardUsed']
     transactionType = the_data['TransactionType']
     amountPaid = the_data['AmountPaid']
+
+    queryDate = "DEFAULT" if date is None else date
     
     query = f'''
         INSERT INTO Transactions (CustomerID,
                               MerchantID,
-                              Date, 
-                              Time, 
+                              TransactionDate, 
                               PaymentMethod,
                               CardUsed,
                               TransactionType,
                               AmountPaid)
-        VALUES ({customerID}, {merchantID}, '{date}', '{time}', '{paymentMethod}',
+        VALUES ({customerID}, {merchantID}, '{queryDate}', '{paymentMethod}',
         {cardUsed if cardUsed is not None else 'NULL'}, '{transactionType}', {amountPaid})
     '''
-    # TODO: Make sure the version of the query above works properly
-    # Constructing the query
-    # query = 'insert into products (product_name, description, category, list_price) values ("'
-    # query += name + '", "'
-    # query += description + '", "'
-    # query += category + '", '
-    # query += str(price) + ')'
+
     current_app.logger.info(query)
 
-    # executing and committing the insert statement 
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
@@ -55,17 +59,14 @@ def add_transaction():
     response.status_code = 200
     return response
 
-@users_bp.route('/balanceupdate', methods=['PUT'])
-def update_customer():
-    current_app.logger.info('PUT /customers')
-    cust_info = request.json
-    cust_id = cust_info['CustomerID']
-    custom_amt = cust_info['AmountToAdd']
-    
+@users_bp.route('/balanceupdate/<userID>/<amt>', methods=['PUT'])
+def update_customer(userID, amt):
+    current_app.logger.info('PUT /balanceupdate/<userID>/<amt>')
+
     query = f'''
         UPDATE Customers
-        SET AccountBalance = AccountBalance + {custom_amt}
-        WHERE CustomerID = {cust_id}
+        SET AccountBalance = AccountBalance + {amt}
+        WHERE CustomerID = {userID}
     '''
 
     cursor = db.get_db().cursor()
@@ -73,13 +74,29 @@ def update_customer():
     db.get_db().commit()
     return 'customer balance updated!'
 
-@users_bp.route('/balanceupdate/<userID>', methods=['GET'])
-def get_user_pay_methods(userID):
+@users_bp.route('/summary/<userID>', methods = ['GET'])
+def customer_summary(userID):
     current_app.logger.info('GET /balanceupdate/<userID> route')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT MethodID, CardNumber FROM DigitalPaymentMethods WHERE CustomerID = {0}'.format(userID))
-    theData = cursor.fetchall()
-    the_response = make_response(jsonify(theData))
+
+    coin_query = 'SELECT CoinBalance FROM Customers WHERE CustomerID = {0}'.format(userID)
+    cursor.execute(coin_query)
+    coin_data = cursor.fetchall()
+    
+    cursor = db.get_db().cursor()
+    stats_query = '''
+    SELECT c.CustomerID, c.FirstName, c.LastName, sum(t.AmountPaid) as TotalSpent, avg(t.AmountPaid) as AvgSpend, max(AmountPaid) as LargestOrder, 
+    count(t.TransactionID) as NumOrders, count(DISTINCT od.ItemID) AS UniqueItemsPurchased, sum(od.Discount) AS TotalSavings
+    FROM Customers c JOIN Transactions t on c.CustomerID = t.CustomerID LEFT JOIN OrderDetails od ON t.TransactionID = od.TransactionID
+    WHERE t.TransactionType != 'Balance Reload' AND t.TransactionDate >= DATE_ADD(NOW(), INTERVAL -1 MONTH)
+    GROUP BY c.CustomerID, c.FirstName, c.LastName
+    HAVING c.CustomerID = {0}
+    '''.format(userID)
+
+    cursor.execute(stats_query)
+    stats_data = cursor.fetchall()
+
+    the_response = make_response(jsonify(coin_data, stats_data))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response

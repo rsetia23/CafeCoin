@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `CafeCoin`;
-USE `CafeCoin`;
+CREATE DATABASE IF NOT EXISTS CafeCoin;
+USE CafeCoin;
 
 DROP TABLE IF EXISTS ComplaintTickets;
 DROP TABLE IF EXISTS Leads;
@@ -54,8 +54,6 @@ CREATE TABLE IF NOT EXISTS Merchants
     City          VARCHAR(255),
     State         VARCHAR(255),
     ZipCode       VARCHAR(9),
-    Lat DECIMAL(9, 6),
-    Lon DECIMAL(9, 6),
     Website       VARCHAR(255),
     OwnerFirst    VARCHAR(255),
     OwnerLast     VARCHAR(255),
@@ -95,8 +93,7 @@ CREATE TABLE IF NOT EXISTS Transactions
     MerchantID      INT          NOT NULL,
     PaymentMethod   VARCHAR(255),
     CardUsed        INT,
-    Date            DATE         NOT NULL,
-    Time            TIME,
+    TransactionDate            DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
     TransactionType VARCHAR(255) NOT NULL,
     AmountPaid      DECIMAL(10, 2),
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE,
@@ -131,8 +128,8 @@ CREATE TABLE IF NOT EXISTS RewardItems
 CREATE TABLE IF NOT EXISTS OrderDetails
 (
     OrderItemNum   INT,
-    TransactionID  INT NOT NULL,
-    ItemID         INT NOT NULL,
+    TransactionID  INT,
+    ItemID         INT,
     Price          DECIMAL(10, 2),
     RewardRedeemed BOOLEAN NOT NULL,
     Discount       DECIMAL(10, 2),
@@ -297,7 +294,7 @@ VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 B
        ('Java Joy', 'Collective Member', 'Bronze', 'info@javajoy.com', '999-1000', '9 Main St', NULL, 'Clinton', 'NJ',
         '08827', 'javajoy.com', 'Andrew', 'Fielding', 'Only the best!'),
        ('Riverside Cafe', 'Collective Member', 'Gold', 'info@riversidecafe.com', '100-1111', '10 Main St', NULL,
-        'Malden', 'MA', '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');
+        'Malden', 'MA', '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');;
 
 -- Employees
 INSERT INTO Employees (FirstName, LastName, MerchantID, Email, Phone, EmployeeType, StartDate, IsActive)
@@ -310,9 +307,12 @@ VALUES (1, 'Credit', '4111111111111111', 'Alice A. Smith', '2026-01-01'),
        (1, 'Debit', '4222222222222222', 'Alice Smith', '2027-01-01');
 
 -- Transactions
-INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType, AmountPaid)
-VALUES (1, 1, '2025-03-01', '08:30:00', 'card', 1, 'Product', 0),
-       (2, 2, '2025-03-02', '10:15:00', 'card', 1, 'Product', 5.25);
+INSERT INTO Transactions (CustomerID, MerchantID, TransactionDate, PaymentMethod, CardUsed, TransactionType, AmountPaid)
+VALUES (1, 1, '2025-03-16 08:30:00', 'card', 1, 'Product', 0),
+       (2, 2, '2025-03-02 10:15:00', 'card', 1, 'Product', 5.25),
+       (1, 2, '2025-03-28 08:30:00', 'card', 1, 'Product', 3),
+       (1, 2, '2025-03-28 08:30:00', 'card', 1, 'Product', 15),
+       (1, 2, '2025-03-28 08:30:00', 'account balance', 1, 'Product', 8);
 
 -- MenuItems
 INSERT INTO MenuItems (MerchantID, ItemName, CurrentPrice, Description, ItemType, IsActive)
