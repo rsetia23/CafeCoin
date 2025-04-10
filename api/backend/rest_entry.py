@@ -2,6 +2,7 @@ from flask import Flask
 
 from backend.db_connection import db
 from backend.users.users_routes import users_bp
+from backend.admin.admin_routes import admin_bp
 from backend.products.products_routes import products
 from backend.simple.simple_routes import simple_routes
 import os
@@ -41,6 +42,7 @@ def create_app():
     app.logger.info('current_app(): registering blueprints with Flask app object.')   
     app.register_blueprint(simple_routes, url_prefix='/s')
     app.register_blueprint(users_bp, url_prefix='/c')
+    app.register_blueprint(admin_bp)
    # app.register_blueprint(products,    url_prefix='/p')
 
 
