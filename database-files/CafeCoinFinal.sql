@@ -312,7 +312,14 @@ VALUES (1, 1, '2025-03-16 08:30:00', 'card', 1, 'Product', 0),
        (2, 2, '2025-03-02 10:15:00', 'card', 1, 'Product', 5.25),
        (1, 2, '2025-03-28 08:30:00', 'card', 1, 'Product', 3),
        (1, 2, '2025-03-28 08:30:00', 'card', 1, 'Product', 15),
-       (1, 2, '2025-03-28 08:30:00', 'account balance', 1, 'Product', 8);
+       (1, 2, '2025-03-28 08:30:00', 'account balance', 1, 'Product', 8),
+       (1, 2, '2025-03-02 10:15:00', 'card', 1, 'Product', 5.25),
+       (1, 2, '2025-02-02 10:15:00', 'card', 1, 'Product', 6),
+       (1, 2, '2025-02-04 10:15:00', 'card', 1, 'Product', 8),
+       (1, 2, '2025-02-05 10:15:00', 'card', 1, 'Product', 4),
+       (1, 2, '2025-01-02 10:15:00', 'card', 1, 'Product', 5),
+       (1, 2, '2025-01-03 10:15:00', 'card', 1, 'Product', 10);
+
 
 -- MenuItems
 INSERT INTO MenuItems (MerchantID, ItemName, CurrentPrice, Description, ItemType, IsActive)
@@ -327,7 +334,18 @@ VALUES (1, 1, '2025-03-01', '2025-03-31'),
 -- OrderDetails
 INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount)
 VALUES (1, 1, 1, 4.50, TRUE, -4.50),
-       (1, 2, 2, 5.25, FALSE, 0);
+       (1, 2, 2, 5.25, FALSE, 0),
+       (1, 3, 1, 3, FALSE, 0),
+       (1, 4, 2, 10, FALSE, 0),
+       (2, 4, 1, 5, FALSE, 0),
+       (1, 5, 1, 8, FALSE, 0),
+       (1, 6, 1, 5.25, FALSE, 0),
+       (1, 7, 1, 6, FALSE, 0),
+       (1, 8, 1, 8, FALSE, 0),
+       (1, 9, 1, 4, FALSE, 0),
+       (1, 10, 1, 5, FALSE, 0),
+       (1, 11, 2, 5, FALSE, 0),
+       (2, 11, 1, 5, FALSE, 0);
 
 -- ComplaintTickets
 INSERT INTO ComplaintTickets (CustomerID, AssignedToEmployeeID, CreatedAt, Category, Description, Status, Priority)
