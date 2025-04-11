@@ -27,6 +27,7 @@ standard_denoms = [1, 5, 10, 20]
 
 selected_denom = 0
 
+# change this to radio button
 for denom in standard_denoms:
     if st.checkbox(f'${denom}'):
         selected_denom+=denom
@@ -44,7 +45,7 @@ st.text("")
 
 st.write('Please select which of your cards on file to use for this transaction from the dropdown below.')
 try:
-    card_data = requests.get(f"http://api:4000/c/balanceupdate/{st.session_state['userID']}").json()
+    card_data = requests.get(f"http://api:4000/c/paymethods/{st.session_state['userID']}").json()
 except:
     st.write('Could not load cards.')
 
@@ -84,7 +85,7 @@ if confirm:
     body = {
         'CustomerID': st.session_state['userID'],
         'MerchantID': 1,
-        'Date': '2025-03-01 08:30:00',
+        'Date': None,
         'PaymentMethod': 'card',
         'CardUsed': selected_card_id,
         'TransactionType': 'online',
@@ -99,33 +100,3 @@ if confirm:
 
 elif cancel:
     st.write('Transaction canceled.')
-    
-  #  if card_data:
-   #    card_options = {}
-    #   for card in card_data:
-     #      card_options[card['CardNumber'] : card['MethodID']]
-        
-      #  selected_card = st.selectbox("Choose one of your cards on file:", options=list(card_options.keys()))
-       
-
-   
-   
-   #countries:pd.DataFrame = wb.get_countries()
-   
-    #st.dataframe(countries)
-
-# the with statment shows the code for this block above it 
-# with st.echo(code_location='above'):
-#     arr = np.random.normal(1, 1, size=100)
-#     test_plot, ax = plt.subplots()
-#     ax.hist(arr, bins=20)
-
-#     st.pyplot(test_plot)
-
-
-# with st.echo(code_location='above'):
-#     slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-#     data_crosstab = pd.crosstab(slim_countries['region'], 
-#                                 slim_countries['incomeLevel'],  
-#                                 margins = False) 
-#     st.table(data_crosstab)

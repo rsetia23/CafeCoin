@@ -14,6 +14,11 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
+if st.button('View Account Details and Order Data', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/02_cust_data_dashboard.py')
+
 if st.button('Reload CafeCoin Account Balance', 
              type='primary',
              use_container_width=True):

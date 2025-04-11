@@ -7,7 +7,7 @@ from backend.db_connection import db
 
 users_bp = Blueprint('customers', __name__)
 
-@users_bp.route('/balanceupdate/<userID>', methods=['GET'])
+@users_bp.route('/paymethods/<userID>', methods=['GET'])
 def get_user_pay_methods(userID):
     current_app.logger.info('GET /balanceupdate/<userID> route')
     cursor = db.get_db().cursor()
@@ -37,15 +37,26 @@ def record_transaction():
 
     queryDate = "DEFAULT" if date is None else date
     
+    # query = f'''
+    #     INSERT INTO Transactions (CustomerID,
+    #                           MerchantID,
+    #                           TransactionDate, 
+    #                           PaymentMethod,
+    #                           CardUsed,
+    #                           TransactionType,
+    #                           AmountPaid)
+    #     VALUES ({customerID}, {merchantID}, '{queryDate}', '{paymentMethod}',
+    #     {cardUsed if cardUsed is not None else 'NULL'}, '{transactionType}', {amountPaid})
+    # '''
+
     query = f'''
         INSERT INTO Transactions (CustomerID,
-                              MerchantID,
-                              TransactionDate, 
+                             MerchantID, 
                               PaymentMethod,
                               CardUsed,
                               TransactionType,
                               AmountPaid)
-        VALUES ({customerID}, {merchantID}, '{queryDate}', '{paymentMethod}',
+        VALUES ({customerID}, {merchantID}, '{paymentMethod}',
         {cardUsed if cardUsed is not None else 'NULL'}, '{transactionType}', {amountPaid})
     '''
 
@@ -79,18 +90,24 @@ def customer_summary(userID):
     current_app.logger.info('GET /balanceupdate/<userID> route')
     cursor = db.get_db().cursor()
 
-    coin_query = 'SELECT CoinBalance FROM Customers WHERE CustomerID = {0}'.format(userID)
+    coin_query = 'SELECT CoinBalance, AccountBalance FROM Customers WHERE CustomerID = {0}'.format(userID)
     cursor.execute(coin_query)
     coin_data = cursor.fetchall()
     
     cursor = db.get_db().cursor()
+    # stats_query = '''
+    # SELECT c.CustomerID, c.FirstName, c.LastName, sum(t.AmountPaid) as TotalSpent, avg(t.AmountPaid) as AvgSpend, max(AmountPaid) as LargestOrder, 
+    # count(t.TransactionID) as NumOrders, count(DISTINCT od.ItemID) AS UniqueItemsPurchased, sum(od.Discount) AS TotalSavings
+    # FROM Customers c JOIN Transactions t on c.CustomerID = t.CustomerID LEFT JOIN OrderDetails od ON t.TransactionID = od.TransactionID
+    # WHERE t.TransactionType != 'Balance Reload' AND t.TransactionDate >= DATE_ADD(NOW(), INTERVAL -1 MONTH)
+    # GROUP BY c.CustomerID, c.FirstName, c.LastName
+    # HAVING c.CustomerID = {0}
+    # '''.format(userID)
+
     stats_query = '''
-    SELECT c.CustomerID, c.FirstName, c.LastName, sum(t.AmountPaid) as TotalSpent, avg(t.AmountPaid) as AvgSpend, max(AmountPaid) as LargestOrder, 
-    count(t.TransactionID) as NumOrders, count(DISTINCT od.ItemID) AS UniqueItemsPurchased, sum(od.Discount) AS TotalSavings
-    FROM Customers c JOIN Transactions t on c.CustomerID = t.CustomerID LEFT JOIN OrderDetails od ON t.TransactionID = od.TransactionID
-    WHERE t.TransactionType != 'Balance Reload' AND t.TransactionDate >= DATE_ADD(NOW(), INTERVAL -1 MONTH)
-    GROUP BY c.CustomerID, c.FirstName, c.LastName
-    HAVING c.CustomerID = {0}
+    SELECT t.TransactionDate, t.PaymentMethod, t.AmountPaid as OrderTotal, t.TransactionID as OrderNum, od.ItemID AS ItemNum, m.ItemName, od.Price AS ItemPrice, od.Discount
+    FROM Customers c JOIN Transactions t on c.CustomerID = t.CustomerID LEFT JOIN OrderDetails od ON t.TransactionID = od.TransactionID JOIN MenuItems m ON od.ItemID = m.ItemID
+    WHERE t.TransactionType != 'Balance Reload' AND c.CustomerID = {0}
     '''.format(userID)
 
     cursor.execute(stats_query)
@@ -100,3 +117,4 @@ def customer_summary(userID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
