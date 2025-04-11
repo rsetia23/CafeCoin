@@ -14,10 +14,10 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
-if st.button('View CafeCoin Balance Dashboard', 
+if st.button('Reload CafeCoin Account Balance', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/01_World_Bank_Viz.py')
+  st.switch_page('pages/01_Reload_Balance.py')
 
 if st.button('Find a CafeCoin Shop Near Me', 
              type='primary',

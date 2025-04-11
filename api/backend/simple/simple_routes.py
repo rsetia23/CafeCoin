@@ -46,3 +46,22 @@ def affirmation():
 @simple_routes.route('/message')
 def mesage():
     return redirect(url_for(affirmation))
+    
+@simple_routes.route("/data")
+def getData():
+    data = {
+            "staff": [
+  { "id": 1, "name": "Ava Thompson", "role": "student" },
+  { "id": 2, "name": "Liam Rodriguez", "role": "teacher" },
+  { "id": 3, "name": "Noah Kim", "role": "ta" },
+  { "id": 4, "name": "Emma Garcia", "role": "student" },
+  { "id": 5, "name": "Oliver Patel", "role": "student" },
+  { "id": 6, "name": "Sophia Nguyen", "role": "teacher" },
+  { "id": 7, "name": "James Anderson", "role": "ta" },
+  { "id": 8, "name": "Isabella Brown", "role": "student" },
+  { "id": 9, "name": "Lucas Martinez", "role": "teacher" },
+  { "id": 10, "name": "Mia Johnson", "role": "student" }
+]}
+    response = make_response(jsonify(data))
+    response.status_code = 200
+    return data
