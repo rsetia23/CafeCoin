@@ -369,6 +369,49 @@ VALUES (1, 1),
        (5, 1),
        (6, 2);
 
+
+-- New Menu Items
+INSERT INTO MenuItems (MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive)
+VALUES 
+(1, 'Vanilla Latte', 4.25, 'Espresso with vanilla syrup and milk', 'Beverage', TRUE, TRUE),
+(1, 'Matcha Latte', 4.50, 'Green tea with steamed milk', 'Beverage', TRUE, TRUE),
+(1, 'Mocha', 4.75, 'Espresso with chocolate and steamed milk', 'Beverage', TRUE, TRUE);
+
+-- New Reward Items
+INSERT INTO RewardItems (MerchantID, ItemID, StartDate, EndDate)
+VALUES 
+(1, 3, '2025-02-01', '2025-02-28'),
+(1, 4, '2025-03-01', '2025-03-31'),
+(1, 5, '2025-04-01', '2025-04-30');
+
+-- New Transactions
+INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType, AmountPaid)
+VALUES 
+(1, 1, '2025-03-05', '08:00:00', 'card', 1, 'Product', 4.75),
+(2, 1, '2025-03-06', '09:30:00', 'card', 1, 'Product', 4.50),
+(3, 1, '2025-03-07', '10:15:00', 'card', 1, 'Product', 4.25);
+
+-- New OrderDetails
+INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount)
+VALUES 
+(1, 3, 3, 4.75, TRUE, -4.75),
+(1, 4, 4, 4.50, TRUE, -4.50),
+(1, 5, 5, 4.25, TRUE, -4.25);
+
+-- Additional transactions for testing multiple orders of the same item
+INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType, AmountPaid)
+VALUES 
+(2, 1, '2025-03-10', '11:00:00', 'card', 1, 'Product', 4.50),
+(3, 1, '2025-03-11', '12:00:00', 'card', 1, 'Product', 4.50),
+(4, 1, '2025-03-12', '13:00:00', 'card', 1, 'Product', 4.50);
+
+INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount)
+VALUES 
+(1, 6, 1, 4.50, TRUE, -4.50),
+(1, 7, 1, 4.50, TRUE, -4.50),
+(1, 8, 1, 4.50, TRUE, -4.50);
+
+
 -- User Story: As a shop owner, I want to be able to add new items to and remove old items from my menu...
 INSERT INTO MenuItems (ItemId, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive)
 VALUES (1001, 1, 'Honey Lavender Latte', 4.75, 'Espresso with steamed milk, honey, and lavender syrup', 'Beverage', TRUE, TRUE);

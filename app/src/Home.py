@@ -62,9 +62,9 @@ if st.button('Act as Andrew Patten, a CafeCoin Shop Owner',
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'usaid_worker'
-    st.session_state['first_name'] = 'Mohammad'
-    st.switch_page('pages/10_USAID_Worker_Home.py')
+    st.session_state['role'] = 'shop_owner'
+    st.session_state['first_name'] = 'Andrew'
+    st.switch_page('pages/04_Shop_Owner_Home.py')
 
 if st.button('Act as Jordan Kim, a CafeCoin Data Analyst', 
             type = 'primary', 
