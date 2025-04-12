@@ -16,10 +16,10 @@ url = "http://web-api:4000/a/leadsinfo"
 try:
     response = requests.get(url)
     if response.status_code == 200:
-        transactions = response.json()
-        if transactions:
-            st.dataframe(transactions)
-            df_leads = pd.DataFrame(transactions)
+        leads = response.json()
+        if leads:
+            st.dataframe(leads)
+            df_leads = pd.DataFrame(leads)
         else:
             st.info("No leads found.")
     else:
