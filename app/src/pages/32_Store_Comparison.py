@@ -10,7 +10,6 @@ st.title("Store Comparison Selector")
 
 API_HISTORY = "http://web-api:4000/a/transactions"
 
-#Get reward history
 try:
     response = requests.get(f"{API_HISTORY}")
     if response.status_code == 200:
@@ -19,7 +18,6 @@ try:
         if not transaction_history:
             st.warning("No transaction history found.")
         else:
-            #item dropdown
             store_map = {
                 f"{merchant['MerchantName']} (Merchant #{merchant['MerchantID']})": merchant["MerchantID"]
                 for merchant in transaction_history
