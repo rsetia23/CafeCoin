@@ -9,6 +9,8 @@ SideBarLinks()
 
 store1_id = st.session_state.get("store1_id")
 store2_id = st.session_state.get("store2_id")
+store1_name = st.session_state.get("store1_name")
+store2_name = st.session_state.get("store2_name")
 
 st.write("# Viewing All Transaction and Order Details")
 
@@ -16,7 +18,7 @@ st.write("# Viewing All Transaction and Order Details")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown(f"## Merchant #{store1_id} Transaction Data")
+    st.markdown(f"## {store1_name} Transaction Data")
     # API endpoint for Store 1 Transactions
     url = f"http://web-api:4000/a/transactions/{store1_id}"
     try:
@@ -49,7 +51,7 @@ with col1:
         st.error(f"Request failed: {e}")
 
 with col2:
-    st.markdown(f"## Merchant #{store2_id} Transaction Data")
+    st.markdown(f"## {store2_name} Transaction Data")
     # API endpoint for Store 2 Transactions
     url = f"http://web-api:4000/a/transactions/{store2_id}"
     try:

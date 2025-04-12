@@ -11,7 +11,9 @@ analyst_bp = Blueprint('analyst', __name__)
 def get_analyst_transactions():
     current_app.logger.info('GET /transactions route')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionType, AmountPaid FROM Transactions')
+    cursor.execute(
+    'SELECT M.MerchantName, TransactionID, CustomerID, T.MerchantID, PaymentMethod, CardUsed, TransactionType, AmountPaid '
+    'FROM Transactions T JOIN CafeCoin.Merchants M on M.MerchantID = T.MerchantID')
     theData = cursor.fetchall()
     the_response = make_response(theData)
     the_response.status_code = 200
@@ -36,15 +38,8 @@ def get_transactions_for_merchants(merchant1):
 
     # Query using equality check for a single MerchantID
     query = '''
-        SELECT
-            TransactionID,
-            CustomerID,
-            MerchantID,
-            PaymentMethod,
-            CardUsed,
-            TransactionType,
-            AmountPaid
-        FROM Transactions
+        SELECT TransactionID, CustomerID, MerchantID, PaymentMethod,  CardUsed, TransactionType, AmountPaid
+        FROM Transactions T
         WHERE MerchantID = %s
     '''
 

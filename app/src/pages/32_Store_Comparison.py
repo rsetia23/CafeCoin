@@ -21,15 +21,16 @@ try:
         else:
             #item dropdown
             store_map = {
-                f" (Merchant #{merchant['MerchantID']})": merchant["MerchantID"]
+                f"{merchant['MerchantName']} (Merchant #{merchant['MerchantID']})": merchant["MerchantID"]
                 for merchant in transaction_history
-            }
+}
             merchant1_choice = st.selectbox(
                 "Select the first merchant to view performance:",
                 list(store_map.keys()),
                 key="merchant1_select"
             )
             store1_id = store_map[merchant1_choice]
+            store1_name = merchant1_choice.split(" (")[0]
 
             merchant2_choice = st.selectbox(
                 "Select the second merchant to view performance:",
@@ -37,12 +38,15 @@ try:
                 key="merchant2_select"
             )
             store2_id = store_map[merchant2_choice]
+            store2_name = merchant2_choice.split(" (")[0]
 
             if st.button('Compare Stores', 
              type='primary',
              use_container_width=True):
                 st.session_state["store1_id"] = store1_id
                 st.session_state["store2_id"] = store2_id
+                st.session_state["store1_name"] = store1_name
+                st.session_state["store2_name"] = store2_name
                 st.switch_page('pages/33_Store_Comparison_Data.py')
             
     else:
