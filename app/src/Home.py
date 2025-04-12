@@ -52,6 +52,7 @@ if st.button("Act as Jasper Finch, CafeCoin Customer",
     # we add the first name of the user (so it can be displayed on 
     # subsequent pages). 
     st.session_state['first_name'] = 'Jasper'
+    st.session_state['last_name'] = 'Finch'
     # finally, we ask streamlit to switch to another page, in this case, the 
     # landing page for this particular user type
     st.session_state['userID'] = 1
