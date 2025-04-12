@@ -38,7 +38,7 @@ def get_transactions_for_merchants(merchant1):
 
     # Query using equality check for a single MerchantID
     query = '''
-        SELECT TransactionID, CustomerID, MerchantID, PaymentMethod,  CardUsed, TransactionDate TransactionType, AmountPaid
+        SELECT TransactionID, CustomerID, MerchantID, PaymentMethod,  CardUsed, TransactionDate, TransactionType, AmountPaid
         FROM Transactions T
         WHERE MerchantID = %s
     '''
