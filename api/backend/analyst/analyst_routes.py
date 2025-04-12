@@ -11,7 +11,9 @@ analyst_bp = Blueprint('analyst', __name__)
 def get_analyst_transactions():
     current_app.logger.info('GET /transactions route')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionType, AmountPaid FROM Transactions')
+    cursor.execute(
+    'SELECT M.MerchantName, TransactionID, CustomerID, T.MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid '
+    'FROM Transactions T JOIN CafeCoin.Merchants M on M.MerchantID = T.MerchantID')
     theData = cursor.fetchall()
     the_response = make_response(theData)
     the_response.status_code = 200
@@ -29,33 +31,30 @@ def get_analyst_orderdetails():
     the_response.mimetype = 'application/json'
     return the_response
 
-@analyst_bp.route('/transactions/<int:merchant1>/<int:merchant2>', methods=['GET'])
-def get_transactions_for_merchants(merchant1, merchant2):
-    current_app.logger.info(f'GET /transactions/{merchant1}/{merchant2}')
+@analyst_bp.route('/transactions/<int:merchant1>', methods=['GET'])
+def get_transactions_for_merchants(merchant1):
+    current_app.logger.info(f'GET /transactions/{merchant1}')
     cursor = db.get_db().cursor()
+
+    # Query using equality check for a single MerchantID
     query = '''
-        SELECT
-            TransactionID,
-            CustomerID,
-            MerchantID,
-            PaymentMethod,
-            CardUsed,
-            TransactionType,
-            AmountPaid
-        FROM Transactions
-        WHERE MerchantID IN (%s, %s)
+        SELECT TransactionID, CustomerID, MerchantID, PaymentMethod,  CardUsed, TransactionDate TransactionType, AmountPaid
+        FROM Transactions T
+        WHERE MerchantID = %s
     '''
-    cursor.execute(query, (merchant1, merchant2))
-    theData = cursor.fetchall()
-    the_response = make_response(theData)
-    the_response.status_code = 200
+
+    # Execute the query for merchant1 (note the trailing comma for a one-element tuple)
+    cursor.execute(query, (merchant1,))
+    the_data = cursor.fetchall()
+
+    # Create the response with correct variable and status code
+    the_response = make_response(jsonify(the_data), 200)
     the_response.mimetype = 'application/json'
     return the_response
 
-@analyst_bp.route('/orderdetails/<int:merchant1>/<int:merchant2>', methods=['GET'])
-def get_orderdetails_for_merchants(merchant1, merchant2):
-    current_app.logger.info(f'GET /orderdetails/{merchant1}/{merchant2}')
-
+@analyst_bp.route('/orderdetails/<int:merchant1>', methods=['GET'])
+def get_orderdetails_for_merchant(merchant1):
+    current_app.logger.info(f'GET /orderdetails/{merchant1}')
     cursor = db.get_db().cursor()
 
     query = '''
@@ -70,12 +69,12 @@ def get_orderdetails_for_merchants(merchant1, merchant2):
         FROM OrderDetails od
         JOIN Transactions t
           ON od.TransactionID = t.TransactionID
-        WHERE t.MerchantID IN (%s, %s)
+        WHERE t.MerchantID = %s
     '''
-    cursor.execute(query, (merchant1, merchant2))
-    theData = cursor.fetchall()
-    the_response = make_response(theData)
-    the_response.status_code = 200
+    cursor.execute(query, (merchant1,))
+    the_data = cursor.fetchall()
+
+    the_response = make_response(jsonify(the_data), 200)
     the_response.mimetype = 'application/json'
     return the_response
 

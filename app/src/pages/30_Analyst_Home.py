@@ -28,4 +28,4 @@ if st.button('Compare 2 Stores',
 if st.button('Show Store Leads', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/34_Leads_Info.py')

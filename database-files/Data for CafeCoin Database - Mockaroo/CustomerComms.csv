@@ -1,0 +1,41 @@
+PromoId,MerchantId,Type,Content,DateSent
+1,1,Promo,Limited-time offer or sale,1/30/2024
+2,2,Update,Business or app changes,9/14/2023
+3,3,Event,Upcoming in-store or virtual event,3/26/2024
+4,4,Reminder,Friendly nudge for action,11/8/2024
+5,5,Survey,Request for customer feedback,6/18/2024
+6,6,Alert,Important or urgent notice,1/10/2023
+7,7,Newsletter,Regular info and tips,7/17/2024
+8,8,Discount,Price cut or special deal,4/29/2024
+9,9,Thank You,Appreciation message,2/11/2025
+10,10,Feature Launch,New feature or product release,5/25/2023
+11,11,Promo,Limited-time offer or sale,5/19/2023
+12,12,Update,Business or app changes,10/14/2023
+13,13,Event,Upcoming in-store or virtual event,1/19/2024
+14,14,Reminder,Friendly nudge for action,12/8/2023
+15,15,Survey,Request for customer feedback,11/5/2023
+16,16,Alert,Important or urgent notice,8/23/2023
+17,17,Newsletter,Regular info and tips,3/8/2023
+18,18,Discount,Price cut or special deal,2/9/2025
+19,19,Thank You,Appreciation message,11/27/2023
+20,20,Feature Launch,New feature or product release,11/21/2024
+21,21,Promo,Limited-time offer or sale,3/6/2024
+22,22,Update,Business or app changes,9/6/2024
+23,23,Event,Upcoming in-store or virtual event,9/9/2023
+24,24,Reminder,Friendly nudge for action,10/22/2023
+25,25,Survey,Request for customer feedback,11/18/2024
+26,26,Alert,Important or urgent notice,3/18/2024
+27,27,Newsletter,Regular info and tips,12/12/2024
+28,28,Discount,Price cut or special deal,8/15/2024
+29,29,Thank You,Appreciation message,5/25/2024
+30,30,Feature Launch,New feature or product release,9/7/2024
+31,31,Promo,Limited-time offer or sale,1/6/2024
+32,32,Update,Business or app changes,3/26/2024
+33,33,Event,Upcoming in-store or virtual event,4/3/2023
+34,34,Reminder,Friendly nudge for action,10/18/2023
+35,35,Survey,Request for customer feedback,11/2/2024
+36,36,Alert,Important or urgent notice,4/3/2024
+37,37,Newsletter,Regular info and tips,11/16/2023
+38,38,Discount,Price cut or special deal,12/4/2024
+39,39,Thank You,Appreciation message,12/4/2023
+40,40,Feature Launch,New feature or product release,8/4/2024
