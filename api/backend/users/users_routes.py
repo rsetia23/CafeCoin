@@ -105,8 +105,8 @@ def customer_summary(userID):
     # '''.format(userID)
 
     stats_query = '''
-    SELECT t.TransactionDate, t.PaymentMethod, t.AmountPaid as OrderTotal, t.TransactionID as OrderNum, od.ItemID AS ItemNum, m.ItemName, od.Price AS ItemPrice, od.Discount
-    FROM Customers c JOIN Transactions t on c.CustomerID = t.CustomerID LEFT JOIN OrderDetails od ON t.TransactionID = od.TransactionID JOIN MenuItems m ON od.ItemID = m.ItemID
+    SELECT t.TransactionDate, t.MerchantID, m.MerchantName, t.PaymentMethod, t.AmountPaid as OrderTotal, t.TransactionID as OrderNum, od.ItemID AS ItemNum, mi.ItemName, od.Price AS ItemPrice, od.RewardRedeemed, od.Discount
+    FROM Customers c JOIN Transactions t on c.CustomerID = t.CustomerID JOIN Merchants m on t.MerchantID = m.MerchantID LEFT JOIN OrderDetails od ON t.TransactionID = od.TransactionID JOIN MenuItems mi ON od.ItemID = mi.ItemID
     WHERE t.TransactionType != 'Balance Reload' AND c.CustomerID = {0}
     '''.format(userID)
 

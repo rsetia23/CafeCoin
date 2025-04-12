@@ -23,18 +23,24 @@ st.write(f"### Hi, {st.session_state['first_name']}.")
 st.write('How much money would you like to load into your CafeCoin account? Remember, in-store purchases made with account balances earn double Coins!')
 st.text("")
 
-standard_denoms = [1, 5, 10, 20]
+# standard_denoms = [1, 5, 10, 20]
 
-selected_denom = 0
+# selected_denom = 0
 
-# change this to radio button
-for denom in standard_denoms:
-    if st.checkbox(f'${denom}'):
-        selected_denom+=denom
+# # change this to radio button
+# for denom in standard_denoms:
+#     if st.checkbox(f'${denom}'):
+#         selected_denom+=denom
+
+selected_denom = st.radio(
+    "Choose a preset amount (USD)",
+    [1, 5, 10, 20],
+    index=None,
+)
 
 entered_amount = st.number_input('Or, enter a custom amount:', step = 0.01)
 
-if selected_denom > 0:
+if selected_denom:
     total = selected_denom
 elif entered_amount:
     total = entered_amount
@@ -54,6 +60,9 @@ if card_data:
 
     selected_card_number = st.selectbox('Choose one of your cards on file:', options = list(card_options.keys()))
     selected_card_id = card_options[selected_card_number]
+
+    st.text_input(label = 'Input CVV/security code', value = None)
+
 else:
     st.write('No cards on file')
 
@@ -71,16 +80,6 @@ with stylable_container(
 ):
     confirm = st.button("Confirm purchase")
 
-with stylable_container(
-    "red",
-    css_styles="""
-    button {
-        background-color: #FF0000;
-
-    }""",
-):
-    cancel = st.button("Cancel Transaction")
-
 if confirm:
     body = {
         'CustomerID': st.session_state['userID'],
@@ -96,7 +95,4 @@ if confirm:
     if transaction.status_code == 200:
         acct_balance = requests.put(f"http://api:4000/c/balanceupdate/{st.session_state['userID']}/{total}")
 
-        st.write(f'Your next cup of java awaits! ${total} added to account.')
-
-elif cancel:
-    st.write('Transaction canceled.')
+        st.success(f'Your next cup of java awaits! ${total} added to account.')
