@@ -11,9 +11,9 @@ analyst_bp = Blueprint('analyst', __name__)
 def get_analyst_transactions():
     current_app.logger.info('GET /transactions route')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, Date, Time, TransactionType, AmountPaid FROM Transactions)
+    cursor.execute('SELECT TransactionID FROM Transactions')
     theData = cursor.fetchall()
-    the_response = make_response(jsonify(theData))
+    the_response = make_response(theData)
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
