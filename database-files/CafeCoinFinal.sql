@@ -54,6 +54,8 @@ CREATE TABLE IF NOT EXISTS Merchants
     City          VARCHAR(255),
     State         VARCHAR(255),
     ZipCode       VARCHAR(9),
+    Lat DECIMAL(9, 6),
+    Lon DECIMAL(9,6),
     Website       VARCHAR(255),
     OwnerFirst    VARCHAR(255),
     OwnerLast     VARCHAR(255),
@@ -280,21 +282,21 @@ VALUES ('Alice', 'Smith', 'alice@example.com', '555-1234', '123 Main St', 'Unit 
 
 -- Merchants
 INSERT INTO Merchants (MerchantName, MerchantType, MembershipLvl, Email, Phone, StreetAddress, Suite, City, State,
-                       ZipCode, Website, OwnerFirst, OwnerLast, OwnerComment)
+                       ZipCode, Lat, Lon, Website, OwnerFirst, OwnerLast, OwnerComment)
 VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 Bean Blvd', NULL, 'Boston', 'MA',
-        '02120', 'www.cafecoin.com', 'John', 'Smith', 'Great Coffee, Better People!'),
+        '02120', 42.3503, -71.0810, 'www.cafecoin.com', 'John', 'Smith', 'Great Coffee, Better People!'),
        ('The Juice Bar', 'Collective Member', 'Silver', 'info@juicebar.com', '555-2222', '321 Berry Ln', 'Suite 1',
-        'Boston', 'MA', '02120', 'www.juicebar.com', 'Jane', 'Doe', 'Only the Juiciest!'),
+        'Boston', 'MA', '02120', 42.3736, -71.1097, 'www.juicebar.com', 'Jane', 'Doe', 'Only the Juiciest!'),
        ('Cafe John', 'Collective Member', 'Gold', 'info@cafejohn.com', '665-7777', '6 Main St', NULL, 'Boston', 'MA',
-        '02120', 'cafejohn.com', 'John', 'Walsh', 'Good coffee!'),
+        '02120', 42.3389, -71.0476, 'cafejohn.com', 'John', 'Walsh', 'Good coffee!'),
        ('Lovely Cafe', 'Collective Member', 'Bronze', 'info@lovelycafe.com', '777-8888', '7 Main St', NULL, 'Boston',
-        'MA', '02120', 'lovelycafe.com', 'Sam', 'Sosa', 'Great stuff!'),
+        'MA', '02120', 42.3097, -71.1151, 'lovelycafe.com', 'Sam', 'Sosa', 'Great stuff!'),
        ('NYC Coffee', 'Collective Member', 'Silver', 'info@nyccoffee.com', '888-9999', '8 Main St', NULL, 'New York',
-        'NY', '00000', 'nyccoffee.com', 'Steve', 'Samuels', 'We are pretty good'),
+        'NY', '00000', 40.7128, -74.0060, 'nyccoffee.com', 'Steve', 'Samuels', 'We are pretty good'),
        ('Java Joy', 'Collective Member', 'Bronze', 'info@javajoy.com', '999-1000', '9 Main St', NULL, 'Clinton', 'NJ',
-        '08827', 'javajoy.com', 'Andrew', 'Fielding', 'Only the best!'),
+        '08827', 40.6365, -74.9091, 'javajoy.com', 'Andrew', 'Fielding', 'Only the best!'),
        ('Riverside Cafe', 'Collective Member', 'Gold', 'info@riversidecafe.com', '100-1111', '10 Main St', NULL,
-        'Malden', 'MA', '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');;
+        'Malden', 'MA', 42.4251, -71.0662, '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');;
 
 -- Employees
 INSERT INTO Employees (FirstName, LastName, MerchantID, Email, Phone, EmployeeType, StartDate, IsActive)
