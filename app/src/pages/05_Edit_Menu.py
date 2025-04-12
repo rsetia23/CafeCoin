@@ -12,7 +12,7 @@ st.title("Edit Menu")
 
 API_BASE = "http://web-api:4000/shop_owner/menu"
 
-# --- DISPLAY CURRENT MENU ITEMS ---
+#SHowing the menu items
 st.subheader("Current Menu Items")
 
 try:
@@ -28,7 +28,7 @@ try:
 except requests.exceptions.RequestException as e:
     st.error(f"Failed to fetch menu items: {e}")
 
-# --- ADD ITEM ---
+#Add a new item
 st.subheader("Add a New Menu Item")
 with st.form("add_form"):
     add_name = st.text_input("Item Name")
@@ -58,7 +58,7 @@ with st.form("add_form"):
         except requests.exceptions.RequestException as e:
             st.error(f"Request failed: {e}")
 
-# --- UPDATE ITEM ---
+#Update menu item
 st.subheader("Update an Existing Item")
 with st.form("update_form"):
     update_id = st.number_input("Item ID to Update", min_value=1, step=1)
@@ -89,7 +89,7 @@ with st.form("update_form"):
         except requests.exceptions.RequestException as e:
             st.error(f"Request failed: {e}")
 
-# --- DELETE ITEM ---
+#Delete menu item
 st.subheader("Delete an Item")
 with st.form("delete_form"):
     delete_id = st.number_input("Item ID to Delete", min_value=1, step=1)

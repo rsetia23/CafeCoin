@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 from modules.nav import SideBarLinks
+import pandas as pd
 
 st.set_page_config(layout='wide')
 SideBarLinks()
@@ -8,15 +9,22 @@ SideBarLinks()
 st.title("View Subscribers")
 merchant_id = 1
 
-# API endpoint
 url = f"http://web-api:4000/shop_owner/subscribers/{merchant_id}"
+
+query = st.text_input("Filter by name, email, etc.")
 
 try:
     response = requests.get(url)
     if response.status_code == 200:
         subscribers = response.json()
         if subscribers:
-            st.dataframe(subscribers)
+            df = pd.DataFrame(subscribers)
+
+            if query:
+                query = query.lower()
+                df = df[df.apply(lambda row: row.astype(str).str.lower().str.contains(query).any(), axis=1)]
+
+            st.dataframe(df)
         else:
             st.info("No subscribers found.")
     else:
