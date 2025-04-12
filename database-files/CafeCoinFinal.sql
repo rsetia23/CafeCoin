@@ -1,79 +1,101 @@
 CREATE DATABASE IF NOT EXISTS CafeCoin;
 USE CafeCoin;
 
+DROP TABLE IF EXISTS ComplaintTickets;
+DROP TABLE IF EXISTS Leads;
+DROP TABLE IF EXISTS FraudTickets;
+DROP TABLE IF EXISTS Alerts;
+DROP TABLE IF EXISTS SurveyResponses;
+DROP TABLE IF EXISTS CommsSubscribers;
+DROP TABLE IF EXISTS Surveys;
+DROP TABLE IF EXISTS CustomerComms;
+DROP TABLE IF EXISTS Employees;
+DROP TABLE IF EXISTS OrderDetails;
+DROP TABLE IF EXISTS Transactions;
+DROP TABLE IF EXISTS RewardItems;
+DROP TABLE IF EXISTS MenuItems;
+DROP TABLE IF EXISTS StoreAmenities;
+DROP TABLE IF EXISTS CustAmenityPrefs;
+DROP TABLE IF EXISTS DigitalPaymentMethods;
+DROP TABLE IF EXISTS Amenities;
+DROP TABLE IF EXISTS Customers;
+DROP TABLE IF EXISTS Merchants;
+
+
 CREATE TABLE IF NOT EXISTS Customers
 (
-    CustomerID  INT AUTO_INCREMENT PRIMARY KEY,
-    FirstName   VARCHAR(255) NOT NULL,
-    LastName    VARCHAR(255) NOT NULL,
-    Email       VARCHAR(255) NOT NULL UNIQUE,
-    Phone       VARCHAR(255),
-    StreetAddress     VARCHAR(255),
-    Apartment VARCHAR(255),
-    City VARCHAR(255),
-    State VARCHAR(255),
-    ZipCode VARCHAR(9),
-    CoinBalance INT     DEFAULT 0,
-    AccountBalance INT DEFAULT 0,
-    DateJoined  DATE         NOT NULL,
-    IsActive      BOOLEAN DEFAULT TRUE,
-    AutoReloadAmt INT DEFAULT 0
+    CustomerID     INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName      VARCHAR(255) NOT NULL,
+    LastName       VARCHAR(255) NOT NULL,
+    Email          VARCHAR(255) NOT NULL UNIQUE,
+    Phone          VARCHAR(255),
+    StreetAddress  VARCHAR(255),
+    Apartment      VARCHAR(255),
+    City           VARCHAR(255),
+    State          VARCHAR(255),
+    ZipCode        VARCHAR(9),
+    CoinBalance    INT     DEFAULT 0,
+    AccountBalance INT     DEFAULT 0,
+    DateJoined     DATE         NOT NULL,
+    IsActive       BOOLEAN DEFAULT TRUE,
+    AutoReloadAmt  INT     DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS Merchants
 (
     MerchantID    INT AUTO_INCREMENT PRIMARY KEY,
     MerchantName  VARCHAR(255) NOT NULL,
-    MerchantType  VARCHAR(255),
+    MerchantType  VARCHAR(255) NOT NULL,
     MembershipLvl VARCHAR(255),
     Email         VARCHAR(255) NOT NULL UNIQUE,
     Phone         VARCHAR(255),
-    StreetAddress     VARCHAR(255),
-    Suite VARCHAR(255),
-    City VARCHAR(255),
-    State VARCHAR(255),
-    ZipCode VARCHAR(9),
+    StreetAddress VARCHAR(255),
+    Suite         VARCHAR(255),
+    City          VARCHAR(255),
+    State         VARCHAR(255),
+    ZipCode       VARCHAR(9),
     Website       VARCHAR(255),
-    OwnerFirst VARCHAR(255),
-    OwnerLast VARCHAR(255),
-    OwnerComment VARCHAR(255),
-    IsActive BOOLEAN DEFAULT TRUE
+    OwnerFirst    VARCHAR(255),
+    OwnerLast     VARCHAR(255),
+    OwnerComment  VARCHAR(255),
+    IsActive      BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE IF NOT EXISTS CafeCoinEmployees
+CREATE TABLE IF NOT EXISTS Employees
 (
     EmployeeID   INT AUTO_INCREMENT PRIMARY KEY,
+    MerchantID   INT          NOT NULL,
     FirstName    VARCHAR(255) NOT NULL,
     LastName     VARCHAR(255) NOT NULL,
     Email        VARCHAR(255) NOT NULL UNIQUE,
     Phone        VARCHAR(255),
     EmployeeType VARCHAR(255),
     StartDate    DATE         NOT NULL,
-    IsActive       BOOLEAN DEFAULT TRUE
+    IsActive     BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS DigitalPaymentMethods
 (
-    MethodID         INT AUTO_INCREMENT PRIMARY KEY,
-    CustomerID       INT NOT NULL,
-    CardType         VARCHAR(255),
+    MethodID   INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT NOT NULL,
+    CardType   VARCHAR(255),
     NameOnCard VARCHAR(255),
-    CardNumber       VARCHAR(16) UNIQUE,
-    Expiration       DATE,
+    CardNumber VARCHAR(16) UNIQUE,
+    Expiration DATE,
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Transactions
 (
     TransactionID   INT AUTO_INCREMENT PRIMARY KEY,
-    CustomerID      INT  NOT NULL,
-    MerchantID      INT  NOT NULL,
-    PaymentMethod VARCHAR(255),
-    CardUsed INT,
-    Date            DATE NOT NULL,
-    Time            TIME,
+    CustomerID      INT          NOT NULL,
+    MerchantID      INT          NOT NULL,
+    PaymentMethod   VARCHAR(255),
+    CardUsed        INT,
+    TransactionDate            DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
     TransactionType VARCHAR(255) NOT NULL,
-    AmountPaid DECIMAL (10, 2),
+    AmountPaid      DECIMAL(10, 2),
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE,
     FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE,
     FOREIGN KEY (CardUsed) REFERENCES DigitalPaymentMethods (MethodID) ON DELETE CASCADE
@@ -81,36 +103,36 @@ CREATE TABLE IF NOT EXISTS Transactions
 
 CREATE TABLE IF NOT EXISTS MenuItems
 (
-    ItemID      INT AUTO_INCREMENT PRIMARY KEY,
-    MerchantID  INT          NOT NULL,
-    ItemName    VARCHAR(255) NOT NULL,
-    CurrentPrice       DECIMAL(10, 2),
-    Description VARCHAR(255),
-    ItemType    VARCHAR(255),
-    IsRewardItem  BOOLEAN,
-    IsActive      BOOLEAN,
+    ItemID       INT AUTO_INCREMENT PRIMARY KEY,
+    MerchantID   INT          NOT NULL,
+    ItemName     VARCHAR(255) NOT NULL,
+    CurrentPrice DECIMAL(10, 2),
+    Description  VARCHAR(255),
+    ItemType     VARCHAR(255),
+    IsRewardItem BOOLEAN,
+    IsActive     BOOLEAN,
     FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS RewardItems
 (
-    RewardID      INT AUTO_INCREMENT PRIMARY KEY,
-    MerchantID  INT          NOT NULL,
-    ItemID    INT NOT NULL,
-    StartDate      DATE,
-    EndDate DATE,
+    RewardID   INT AUTO_INCREMENT PRIMARY KEY,
+    MerchantID INT NOT NULL,
+    ItemID     INT NOT NULL,
+    StartDate  DATE,
+    EndDate    DATE,
     FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE,
     FOREIGN KEY (ItemID) REFERENCES MenuItems (ItemID) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS OrderDetails
 (
-    OrderItemNum INT,
-    TransactionID INT,
-    ItemID        INT,
-    Price         DECIMAL(10, 2),
+    OrderItemNum   INT,
+    TransactionID  INT,
+    ItemID         INT,
+    Price          DECIMAL(10, 2),
     RewardRedeemed BOOLEAN NOT NULL,
-    Discount DECIMAL (10, 2),
+    Discount       DECIMAL(10, 2),
     PRIMARY KEY (TransactionID, OrderItemNum),
     FOREIGN KEY (TransactionID) REFERENCES Transactions (TransactionID) ON DELETE CASCADE,
     FOREIGN KEY (ItemID) REFERENCES MenuItems (ItemID) ON DELETE CASCADE
@@ -127,16 +149,16 @@ CREATE TABLE IF NOT EXISTS ComplaintTickets
     Status               VARCHAR(255),
     Priority             VARCHAR(255),
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE,
-    FOREIGN KEY (AssignedToEmployeeID) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE SET NULL
+    FOREIGN KEY (AssignedToEmployeeID) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS Surveys
 (
-    SurveyID   INT AUTO_INCREMENT PRIMARY KEY,
+    SurveyID     INT AUTO_INCREMENT PRIMARY KEY,
     CreatedByEmp INT  NOT NULL,
-    Question   TEXT NOT NULL,
-    DateSent   DATE,
-    FOREIGN KEY (CreatedByEmp) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE CASCADE
+    Question     TEXT NOT NULL,
+    DateSent     DATE,
+    FOREIGN KEY (CreatedByEmp) REFERENCES Employees (EmployeeID) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS SurveyResponses
@@ -164,7 +186,7 @@ CREATE TABLE IF NOT EXISTS CustomerComms
 CREATE TABLE IF NOT EXISTS CommsSubscribers
 (
     CustomerID     INT,
-    MerchantID        INT,
+    MerchantID     INT,
     DateSubscribed DATE,
     PRIMARY KEY (CustomerID, MerchantID),
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE,
@@ -174,45 +196,45 @@ CREATE TABLE IF NOT EXISTS CommsSubscribers
 CREATE TABLE IF NOT EXISTS Leads
 (
     LeadID          INT AUTO_INCREMENT PRIMARY KEY,
-    AssignedToEmp      INT,
+    AssignedToEmp   INT,
     BusinessName    VARCHAR(255),
     OwnerFirst      VARCHAR(255),
     OwnerLast       VARCHAR(255),
     Email           VARCHAR(255),
     PhoneNumber     VARCHAR(255),
-    StreetAddress     VARCHAR(255),
-    Suite VARCHAR(255),
-    City VARCHAR(255),
-    State VARCHAR(255),
-    ZipCode VARCHAR(9),
+    StreetAddress   VARCHAR(255),
+    Suite           VARCHAR(255),
+    City            VARCHAR(255),
+    State           VARCHAR(255),
+    ZipCode         VARCHAR(9),
     Website         VARCHAR(255),
     Status          VARCHAR(255),
     Notes           TEXT,
     LastContactedAt DATETIME,
-    FOREIGN KEY (AssignedToEmp) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE SET NULL
+    FOREIGN KEY (AssignedToEmp) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS FraudTickets
 (
-    TicketID    INT AUTO_INCREMENT PRIMARY KEY,
-    AssignedToEmp  INT,
-    CreatedAt   DATETIME NOT NULL,
-    Description TEXT,
-    Status      VARCHAR(255),
-    FOREIGN KEY (AssignedToEmp) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE SET NULL
+    TicketID      INT AUTO_INCREMENT PRIMARY KEY,
+    AssignedToEmp INT,
+    CreatedAt     DATETIME NOT NULL,
+    Description   TEXT,
+    Status        VARCHAR(255),
+    FOREIGN KEY (AssignedToEmp) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS Alerts
 (
-    AlertID    INT AUTO_INCREMENT PRIMARY KEY,
+    AlertID      INT AUTO_INCREMENT PRIMARY KEY,
     CreatedByEmp INT,
-    Title VARCHAR(255),
-    Message    TEXT,
-    SentAt     DATETIME,
-    Audience   VARCHAR(255),
-    Status     VARCHAR(255),
-    Priority   VARCHAR(255),
-    FOREIGN KEY (CreatedByEmp) REFERENCES CafeCoinEmployees (EmployeeID) ON DELETE SET NULL
+    Title        VARCHAR(255),
+    Message      TEXT,
+    SentAt       DATETIME,
+    Audience     VARCHAR(255),
+    Status       VARCHAR(255),
+    Priority     VARCHAR(255),
+    FOREIGN KEY (CreatedByEmp) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS Amenities
@@ -241,28 +263,43 @@ CREATE TABLE IF NOT EXISTS CustAmenityPrefs
 );
 
 -- Customers
-INSERT INTO Customers (FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance, AccountBalance, DateJoined, IsActive, AutoReloadAmt)
-VALUES ('Alice', 'Smith', 'alice@example.com', '555-1234', '123 Main St', 'Unit 3', 'Boston', 'MA', '02120', 200, 50, '2024-01-01', TRUE, 0),
-       ('Bob', 'Jones', 'bob@example.com', '555-5678', '456 Elm St', 'Apartment #4', 'Boston', 'MA', '02120', 150, 10, '2024-02-15', TRUE, 5),
-       ('Charlie', 'Brown', 'cb@example.com', '111-2222', '1 Main St', '#5', 'New York', 'NY', '00000', 10, 6, CURRENT_DATE, TRUE, 6),
-       ('Dana', 'White', 'd.white@example.com', '222-3333', '2 Main St', NULL, 'Clinton', 'NJ', '08827', 56, 2,CURRENT_DATE, TRUE, 0),
-       ('Eve', 'Black', 'eve.black@example.com', '333-4444', '3 Main St', 'Unit 6', 'Malden', 'MA', '02222', 43, 1, CURRENT_DATE, TRUE, 2),
-       ('Frank', 'Green', 'f.green@example.com', '444-5555', '4 Main St', '#2', 'Philadelphia', 'PA', '09999', 126, 86, CURRENT_DATE, TRUE, 0);
+INSERT INTO Customers (FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance,
+                       AccountBalance, DateJoined, IsActive, AutoReloadAmt)
+VALUES ('Alice', 'Smith', 'alice@example.com', '555-1234', '123 Main St', 'Unit 3', 'Boston', 'MA', '02120', 200, 50,
+        '2024-01-01', TRUE, 0),
+       ('Bob', 'Jones', 'bob@example.com', '555-5678', '456 Elm St', 'Apartment #4', 'Boston', 'MA', '02120', 150, 10,
+        '2024-02-15', TRUE, 5),
+       ('Charlie', 'Brown', 'cb@example.com', '111-2222', '1 Main St', '#5', 'New York', 'NY', '00000', 10, 6,
+        CURRENT_DATE, TRUE, 6),
+       ('Dana', 'White', 'd.white@example.com', '222-3333', '2 Main St', NULL, 'Clinton', 'NJ', '08827', 56, 2,
+        CURRENT_DATE, TRUE, 0),
+       ('Eve', 'Black', 'eve.black@example.com', '333-4444', '3 Main St', 'Unit 6', 'Malden', 'MA', '02222', 43, 1,
+        CURRENT_DATE, TRUE, 2),
+       ('Frank', 'Green', 'f.green@example.com', '444-5555', '4 Main St', '#2', 'Philadelphia', 'PA', '09999', 126, 86,
+        CURRENT_DATE, TRUE, 0);
 
 -- Merchants
-INSERT INTO Merchants (MerchantName, MerchantType, MembershipLvl, Email, Phone, StreetAddress, Suite, City, State, ZipCode, Website, OwnerFirst, OwnerLast, OwnerComment)
-VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 Bean Blvd', NULL, 'Boston', 'MA', '02120', 'www.cafecoin.com', 'John', 'Smith', 'Great Coffee, Better People!'),
-       ('The Juice Bar', 'Collective Member', 'Silver', 'info@juicebar.com', '555-2222', '321 Berry Ln', 'Suite 1', 'Boston', 'MA', '02120','www.juicebar.com', 'Jane', 'Doe', 'Only the Juiciest!'),
-       ('Cafe John', 'Collective Member', 'Gold', 'info@cafejohn.com', '665-7777', '6 Main St', NULL, 'Boston', 'MA', '02120', 'cafejohn.com', 'John', 'Walsh', 'Good coffee!'),
-       ('Lovely Cafe', 'Collective Member', 'Bronze', 'info@lovelycafe.com', '777-8888', '7 Main St', NULL, 'Boston', 'MA', '02120', 'lovelycafe.com', 'Sam', 'Sosa', 'Great stuff!'),
-       ('NYC Coffee', 'Collective Member', 'Silver', 'info@nyccoffee.com', '888-9999', '8 Main St', NULL, 'New York','NY', '00000', 'nyccoffee.com', 'Steve','Samuels', 'We are pretty good'),
-       ('Java Joy', 'Collective Member', 'Bronze', 'info@javajoy.com', '999-1000', '9 Main St', NULL, 'Clinton', 'NJ', '08827', 'javajoy.com', 'Andrew', 'Fielding', 'Only the best!'),
-       ('Riverside Cafe', 'Collective Member', 'Gold', 'info@riversidecafe.com', '100-1111', '10 Main St', NULL, 'Malden', 'MA', '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');;
+INSERT INTO Merchants (MerchantName, MerchantType, MembershipLvl, Email, Phone, StreetAddress, Suite, City, State,
+                       ZipCode, Website, OwnerFirst, OwnerLast, OwnerComment)
+VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 Bean Blvd', NULL, 'Boston', 'MA',
+        '02120', 'www.cafecoin.com', 'John', 'Smith', 'Great Coffee, Better People!'),
+       ('The Juice Bar', 'Collective Member', 'Silver', 'info@juicebar.com', '555-2222', '321 Berry Ln', 'Suite 1',
+        'Boston', 'MA', '02120', 'www.juicebar.com', 'Jane', 'Doe', 'Only the Juiciest!'),
+       ('Cafe John', 'Collective Member', 'Gold', 'info@cafejohn.com', '665-7777', '6 Main St', NULL, 'Boston', 'MA',
+        '02120', 'cafejohn.com', 'John', 'Walsh', 'Good coffee!'),
+       ('Lovely Cafe', 'Collective Member', 'Bronze', 'info@lovelycafe.com', '777-8888', '7 Main St', NULL, 'Boston',
+        'MA', '02120', 'lovelycafe.com', 'Sam', 'Sosa', 'Great stuff!'),
+       ('NYC Coffee', 'Collective Member', 'Silver', 'info@nyccoffee.com', '888-9999', '8 Main St', NULL, 'New York',
+        'NY', '00000', 'nyccoffee.com', 'Steve', 'Samuels', 'We are pretty good'),
+       ('Java Joy', 'Collective Member', 'Bronze', 'info@javajoy.com', '999-1000', '9 Main St', NULL, 'Clinton', 'NJ',
+        '08827', 'javajoy.com', 'Andrew', 'Fielding', 'Only the best!'),
+       ('Riverside Cafe', 'Collective Member', 'Gold', 'info@riversidecafe.com', '100-1111', '10 Main St', NULL,
+        'Malden', 'MA', '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');;
 
--- CafeCoinEmployees
-INSERT INTO CafeCoinEmployees (FirstName, LastName, Email, Phone, EmployeeType, StartDate, IsActive)
-VALUES ('Jane', 'Doe', 'jane.doe@cafecoin.com', '555-9999', 'Support', '2023-08-01', TRUE),
-       ('Mark', 'Lee', 'mark.lee@cafecoin.com', '555-8888', 'Fraud Analyst', '2023-06-15', TRUE);
+-- Employees
+INSERT INTO Employees (FirstName, LastName, MerchantID, Email, Phone, EmployeeType, StartDate, IsActive)
+VALUES ('Jane', 'Doe', 1, 'jane.doe@cafecoin.com', '555-9999', 'Support', '2023-08-01', TRUE),
+       ('Mark', 'Lee', 1, 'mark.lee@cafecoin.com', '555-8888', 'Fraud Analyst', '2023-06-15', TRUE);
 
 -- DigitalPaymentMethods
 INSERT INTO DigitalPaymentMethods (CustomerID, CardType, CardNumber, NameOnCard, Expiration)
@@ -270,9 +307,19 @@ VALUES (1, 'Credit', '4111111111111111', 'Alice A. Smith', '2026-01-01'),
        (1, 'Debit', '4222222222222222', 'Alice Smith', '2027-01-01');
 
 -- Transactions
-INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType, AmountPaid)
-VALUES (1, 1, '2025-03-01', '08:30:00', 'card', 1, 'Product', 0),
-       (2, 2, '2025-03-02', '10:15:00', 'card', 1, 'Product', 5.25);
+INSERT INTO Transactions (CustomerID, MerchantID, TransactionDate, PaymentMethod, CardUsed, TransactionType, AmountPaid)
+VALUES (1, 1, '2025-03-16 08:30:00', 'card', 1, 'Product', 0),
+       (2, 2, '2025-03-02 10:15:00', 'card', 1, 'Product', 5.25),
+       (1, 2, '2025-03-28 08:30:00', 'card', 1, 'Product', 3),
+       (1, 2, '2025-03-28 08:30:00', 'card', 1, 'Product', 15),
+       (1, 2, '2025-03-28 08:30:00', 'account balance', 1, 'Product', 8),
+       (1, 2, '2025-03-02 10:15:00', 'card', 1, 'Product', 5.25),
+       (1, 2, '2025-02-02 10:15:00', 'card', 1, 'Product', 6),
+       (1, 2, '2025-02-04 10:15:00', 'card', 1, 'Product', 8),
+       (1, 2, '2025-02-05 10:15:00', 'card', 1, 'Product', 4),
+       (1, 2, '2025-01-02 10:15:00', 'card', 1, 'Product', 5),
+       (1, 2, '2025-01-03 10:15:00', 'card', 1, 'Product', 10);
+
 
 -- MenuItems
 INSERT INTO MenuItems (MerchantID, ItemName, CurrentPrice, Description, ItemType, IsActive)
@@ -287,7 +334,18 @@ VALUES (1, 1, '2025-03-01', '2025-03-31'),
 -- OrderDetails
 INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount)
 VALUES (1, 1, 1, 4.50, TRUE, -4.50),
-       (1, 2, 2, 5.25, FALSE, 0);
+       (1, 2, 2, 5.25, FALSE, 0),
+       (1, 3, 1, 3, FALSE, 0),
+       (1, 4, 2, 10, FALSE, 0),
+       (2, 4, 1, 5, FALSE, 0),
+       (1, 5, 1, 8, FALSE, 0),
+       (1, 6, 1, 5.25, FALSE, 0),
+       (1, 7, 1, 6, FALSE, 0),
+       (1, 8, 1, 8, FALSE, 0),
+       (1, 9, 1, 4, FALSE, 0),
+       (1, 10, 1, 5, FALSE, 0),
+       (1, 11, 2, 5, FALSE, 0),
+       (2, 11, 1, 5, FALSE, 0);
 
 -- ComplaintTickets
 INSERT INTO ComplaintTickets (CustomerID, AssignedToEmployeeID, CreatedAt, Category, Description, Status, Priority)
@@ -315,11 +373,14 @@ VALUES (1, 1, '2025-01-01'),
        (2, 1, '2025-02-01');
 
 -- Leads
-INSERT INTO Leads (AssignedToEmp, BusinessName, OwnerFirst, OwnerLast, Email, PhoneNumber, StreetAddress, Suite, City, State, ZipCode, Website, Status, Notes,
+INSERT INTO Leads (AssignedToEmp, BusinessName, OwnerFirst, OwnerLast, Email, PhoneNumber, StreetAddress, Suite, City,
+                   State, ZipCode, Website, Status, Notes,
                    LastContactedAt)
-VALUES (1, 'Sunny Cafe', 'Taylor', 'Green', 'sunny@example.com', '555-3333', '789 Brew St', NULL, 'Boston', 'MA', '02120','www.sunnycafe.com', 'New',
+VALUES (1, 'Sunny Cafe', 'Taylor', 'Green', 'sunny@example.com', '555-3333', '789 Brew St', NULL, 'Boston', 'MA',
+        '02120', 'www.sunnycafe.com', 'New',
         'Called once', '2025-03-01'),
-       (2, 'Urban Bean', 'Alex', 'Lopez', 'urban@example.com', '555-4444', '654 Java Ave', NULL, 'Boston', 'MA', '02120', 'www.urbanbean.com',
+       (2, 'Urban Bean', 'Alex', 'Lopez', 'urban@example.com', '555-4444', '654 Java Ave', NULL, 'Boston', 'MA',
+        '02120', 'www.urbanbean.com',
         'In Review', 'Requested follow-up', '2025-03-02');
 
 -- FraudTickets
@@ -368,93 +429,3 @@ VALUES (1, 1),
        (4, 5),
        (5, 1),
        (6, 2);
-
-
--- New Menu Items
-INSERT INTO MenuItems (MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive)
-VALUES 
-(1, 'Vanilla Latte', 4.25, 'Espresso with vanilla syrup and milk', 'Beverage', TRUE, TRUE),
-(1, 'Matcha Latte', 4.50, 'Green tea with steamed milk', 'Beverage', TRUE, TRUE),
-(1, 'Mocha', 4.75, 'Espresso with chocolate and steamed milk', 'Beverage', TRUE, TRUE);
-
--- New Reward Items
-INSERT INTO RewardItems (MerchantID, ItemID, StartDate, EndDate)
-VALUES 
-(1, 3, '2025-02-01', '2025-02-28'),
-(1, 4, '2025-03-01', '2025-03-31'),
-(1, 5, '2025-04-01', '2025-04-30');
-
--- New Transactions
-INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType, AmountPaid)
-VALUES 
-(1, 1, '2025-03-05', '08:00:00', 'card', 1, 'Product', 4.75),
-(2, 1, '2025-03-06', '09:30:00', 'card', 1, 'Product', 4.50),
-(3, 1, '2025-03-07', '10:15:00', 'card', 1, 'Product', 4.25);
-
--- New OrderDetails
-INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount)
-VALUES 
-(1, 3, 3, 4.75, TRUE, -4.75),
-(1, 4, 4, 4.50, TRUE, -4.50),
-(1, 5, 5, 4.25, TRUE, -4.25);
-
--- Additional transactions for testing multiple orders of the same item
-INSERT INTO Transactions (CustomerID, MerchantID, Date, Time, PaymentMethod, CardUsed, TransactionType, AmountPaid)
-VALUES 
-(2, 1, '2025-03-10', '11:00:00', 'card', 1, 'Product', 4.50),
-(3, 1, '2025-03-11', '12:00:00', 'card', 1, 'Product', 4.50),
-(4, 1, '2025-03-12', '13:00:00', 'card', 1, 'Product', 4.50);
-
-INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount)
-VALUES 
-(1, 6, 1, 4.50, TRUE, -4.50),
-(1, 7, 1, 4.50, TRUE, -4.50),
-(1, 8, 1, 4.50, TRUE, -4.50);
-
-
--- User Story: As a shop owner, I want to be able to add new items to and remove old items from my menu...
-INSERT INTO MenuItems (ItemId, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive)
-VALUES (1001, 1, 'Honey Lavender Latte', 4.75, 'Espresso with steamed milk, honey, and lavender syrup', 'Beverage', TRUE, TRUE);
-
--- User Story: As a shop owner, I want access to a dashboard that displays transaction data like the number of purchases...
-SELECT COUNT(DISTINCT t.TransactionId) AS RewardItemTransactionCount
-FROM Transactions t
-JOIN OrderDetails od ON t.TransactionId = od.TransactionId
-JOIN MenuItems mi ON od.ItemId = mi.ItemId
-WHERE t.MerchantId = 123 AND mi.IsRewardItem = TRUE AND t.Date >= '2024-01-01';
-
--- User Story: As a shop owner, I want to be able to edit the featured “reward item” I offer each month...
--- Deactivate the current reward item
-UPDATE MenuItems
-SET IsRewardItem = FALSE
-WHERE MerchantID = 123 AND IsRewardItem = TRUE;
-
--- Activate the new reward item
-UPDATE MenuItems
-SET IsRewardItem = TRUE
-WHERE ItemID = 1005 AND MerchantID = 123;
-
-
--- User Story: As a shop owner, I want to access customer contact info...
-SELECT c.FirstName, c.LastName, c.Email, c.Phone
-FROM Customers c
-JOIN CommsSubscribers cc ON c.CustomerID = cc.CustomerID
-JOIN Merchants m ON cc.MerchantID = m.MerchantID
-WHERE m.MerchantID = 123 AND c.IsActive = TRUE;
-
-
--- As a shop owner, I want to view a history of my past reward items so I can avoid repeating them too often.
-SELECT ri.RewardID, mi.ItemName, ri.StartDate, ri.EndDate
-FROM RewardItems ri
-JOIN MenuItems mi ON ri.ItemID = mi.ItemID
-WHERE ri.MerchantID = 1
-ORDER BY ri.StartDate DESC;
-
-
--- As a shop owner, I want to choose or update my membership level so that I can access the features that best fit my business needs.
-UPDATE Merchants
-SET MembershipLvl = 'Gold'
-WHERE MerchantID = 1;
-
-
-
