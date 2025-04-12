@@ -296,7 +296,7 @@ VALUES ('CafeCoin', 'CafeCoin', NULL, 'contact@cafecoin.com', '555-1111', '789 B
        ('Java Joy', 'Collective Member', 'Bronze', 'info@javajoy.com', '999-1000', '9 Main St', NULL, 'Clinton', 'NJ',
         '08827', 40.6365, -74.9091, 'javajoy.com', 'Andrew', 'Fielding', 'Only the best!'),
        ('Riverside Cafe', 'Collective Member', 'Gold', 'info@riversidecafe.com', '100-1111', '10 Main St', NULL,
-        'Malden', 'MA', 42.4251, -71.0662, '02222', 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');;
+        'Malden', 'MA', '02222', 42.4251, -71.0662, 'riversidecafe.com', 'Brian', 'Pedretti', 'Electrolytes please!');
 
 -- Employees
 INSERT INTO Employees (FirstName, LastName, MerchantID, Email, Phone, EmployeeType, StartDate, IsActive)

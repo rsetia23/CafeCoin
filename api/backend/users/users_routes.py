@@ -118,3 +118,31 @@ def customer_summary(userID):
     the_response.mimetype = 'application/json'
     return the_response
 
+@users_bp.route('/stores', methods = ['GET'])
+def store_locations():
+    current_app.logger.info('GET /stores route')
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT m.MerchantID, m.MerchantName, m.StreetAddress, m.Suite, m.City, m.State, m.ZipCode, m.Lat, m.Lon, m.Website, m.OwnerComment FROM Merchants m')
+    merchant_data = cursor.fetchall()
+    merchant_response = make_response(jsonify(merchant_data))
+    merchant_response.status_code = 200
+    merchant_response.mimetype = 'application/json'
+    return merchant_response
+
+@users_bp.route('/storerecs/<userID>', methods = ['GET'])
+def store_recommendations(userID):
+    current_app.logger.info('GET /storerecs/<userID> route')
+    cursor = db.get_db().cursor()
+    cursor.execute('''SELECT c.CustomerID, c.FirstName, c.LastName, m.MerchantName, m.Lat, m.Lon, m.StreetAddress, m.Suite, m.City, m.State, m.ZipCode, m.Website, m.OwnerComment
+                   FROM StoreAmenities sa JOIN CustAmenityPrefs cap on sa.AmenityID = cap.AmenityID JOIN Customers c on cap.CustomerID = c.CustomerID JOIN Merchants m ON sa.MerchantID = m.MerchantID JOIN Amenities a ON cap.AmenityID = a.AmenityID
+                   WHERE c.CustomerID = {0}
+                   GROUP BY m.MerchantName, c.CustomerID, c.FirstName, c.LastName, m.Lat, m.Lon, m.StreetAddress, m.Suite, m.City, m.State, m.ZipCode, m.Website, m.OwnerComment
+                   HAVING count(distinct cap.AmenityID) = (SELECT COUNT(DISTINCT cap2.AmenityID)
+                                        FROM CustAmenityPrefs cap2 JOIN Customers c2 ON cap2.CustomerID = c2.CustomerID
+                                        WHERE c2.CustomerID = {0} AND c2.CustomerID = {0});
+                   '''.format(userID))
+    rec_data = cursor.fetchall()
+    rec_response = make_response(jsonify(rec_data))
+    rec_response.status_code = 200
+    rec_response.mimetype = 'application/json'
+    return rec_response
