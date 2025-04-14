@@ -130,9 +130,14 @@ def load_csv_to_table(file_path, table_name):
 
 # Run cleaning and loading
 for file_name, table_name in file_table_map.items():
-    cleaned_path = clean_and_save_csv(file_name)
+  #  cleaned_path = clean_and_save_csv(file_name)
+    cleaned_path = os.path.join(cleaned_csv_folder, file_name)
     load_csv_to_table(cleaned_path, table_name)
 
+# file_name = 'Customers.csv'
+# table_name = 'Customers'
+# cleaned_path = os.path.join(cleaned_csv_folder, file_name)
+# load_csv_to_table(cleaned_path, table_name)
 
 cursor.close()
 connection.close()

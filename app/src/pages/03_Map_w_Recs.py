@@ -44,7 +44,9 @@ def clean_lat_lon(json_data):
 
 # generate cleaned dataframes from response
 all_stores = clean_lat_lon(all_stores_data)
-rec_stores = clean_lat_lon(customer_recs_data)
+
+if not customer_recs_data.empty:
+    rec_stores = clean_lat_lon(customer_recs_data)
 
 # build webpage
 # construct pydeck layers
@@ -55,7 +57,7 @@ all_layers = {
                 data = all_stores,
                 get_position = ["lon", "lat"],
                 get_color = [200, 30, 0, 160],
-                get_radius = 200,
+                get_radius = 5000,
                 pickable = True), 
                 
                 # layer that only includes dots for stores matching all customer amenity preferences
@@ -65,7 +67,8 @@ all_layers = {
                 get_position = ["lon", "lat"],
                 get_color = [0, 0, 255, 160],
                 get_radius = 200,
-                pickable = True)}
+                pickable = True)
+                }
 
 # construct check boxes in sidebar so user can decide what to see
 st.sidebar.markdown("### Map Layers")

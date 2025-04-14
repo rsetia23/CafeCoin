@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS Customers
     ZipCode        VARCHAR(9),
     CoinBalance    INT     DEFAULT 0,
     AccountBalance INT     DEFAULT 0,
-    DateJoined     DATE         NOT NULL,
+    DateJoined     DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     IsActive       BOOLEAN DEFAULT TRUE,
     AutoReloadAmt  INT     DEFAULT 0
 );
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS Employees
     Email        VARCHAR(255) NOT NULL UNIQUE,
     Phone        VARCHAR(255),
     EmployeeType VARCHAR(255),
-    StartDate    DATE         NOT NULL,
+    StartDate    DATETIME DEFAULT CURRENT_TIMESTAMP         NOT NULL,
     IsActive     BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE
 );
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS ComplaintTickets
     TicketID             INT AUTO_INCREMENT PRIMARY KEY,
     CustomerID           INT      NOT NULL,
     AssignedToEmployeeID INT,
-    CreatedAt            DATETIME NOT NULL,
+    CreatedAt            DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Category             VARCHAR(255),
     Description          TEXT,
     Status               VARCHAR(255),
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS Surveys
     SurveyID     INT AUTO_INCREMENT PRIMARY KEY,
     CreatedByEmp INT  NOT NULL,
     Question     TEXT NOT NULL,
-    DateSent     DATE,
+    DateSent     DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (CreatedByEmp) REFERENCES Employees (EmployeeID) ON DELETE CASCADE
 );
 
@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS SurveyResponses
     SurveyID   INT NOT NULL,
     CustomerID INT NOT NULL,
     Response   TEXT,
-    SubmitDate DATE,
+    SubmitDate DATETIME DEFAULT CURRENT TIMESTAMP,
     PRIMARY KEY (ResponseID, SurveyID),
     FOREIGN KEY (SurveyID) REFERENCES Surveys (SurveyID) ON DELETE CASCADE,
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS CustomerComms
     MerchantID INT NOT NULL,
     Type       VARCHAR(255),
     Content    TEXT,
-    DateSent   DATE,
+    DateSent   DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE
 );
 
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS CommsSubscribers
 (
     CustomerID     INT,
     MerchantID     INT,
-    DateSubscribed DATE,
+    DateSubscribed DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (CustomerID, MerchantID),
     FOREIGN KEY (CustomerID) REFERENCES Customers (CustomerID) ON DELETE CASCADE,
     FOREIGN KEY (MerchantID) REFERENCES Merchants (MerchantID) ON DELETE CASCADE
@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS Leads
     Website         VARCHAR(255),
     Status          VARCHAR(255),
     Notes           TEXT,
-    LastContactedAt DATETIME,
+    LastContactedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (AssignedToEmp) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
 );
 
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS FraudTickets
 (
     TicketID      INT AUTO_INCREMENT PRIMARY KEY,
     AssignedToEmp INT,
-    CreatedAt     DATETIME NOT NULL,
+    CreatedAt     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Description   TEXT,
     Status        VARCHAR(255),
     FOREIGN KEY (AssignedToEmp) REFERENCES Employees (EmployeeID) ON DELETE SET NULL
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS Alerts
     CreatedByEmp INT,
     Title        VARCHAR(255),
     Message      TEXT,
-    SentAt       DATETIME,
+    SentAt       DATETIME DEFAULT CURRENT_TIMESTAMP,
     Audience     VARCHAR(255),
     Status       VARCHAR(255),
     Priority     VARCHAR(255),
