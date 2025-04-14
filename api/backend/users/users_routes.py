@@ -122,7 +122,11 @@ def customer_summary(userID):
 def store_locations():
     current_app.logger.info('GET /stores route')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT m.MerchantID, m.MerchantName, m.StreetAddress, m.Suite, m.City, m.State, m.ZipCode, m.Lat, m.Lon, m.Website, m.OwnerComment FROM Merchants m')
+    cursor.execute("""
+                   SELECT m.MerchantID, m.MerchantName, m.StreetAddress, m.Suite, m.City, m.State, m.ZipCode, m.Lat, m.Lon, m.Website, m.OwnerComment, GROUP_CONCAT(Name SEPARATOR ', ') AS Amenities 
+                   FROM Merchants m LEFT JOIN StoreAmenities sa ON m.MerchantID = sa.MerchantID LEFT JOIN Amenities ON sa.AmenityID = Amenities.AmenityID
+                   GROUP BY m.MerchantID, m.MerchantName, m.StreetAddress, m.Suite, m.City, m.State, m.ZipCode, m.Lat, m.Lon, m.Website, m.OwnerComment
+                   """)
     merchant_data = cursor.fetchall()
     merchant_response = make_response(jsonify(merchant_data))
     merchant_response.status_code = 200
