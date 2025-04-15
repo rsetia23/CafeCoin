@@ -4,7 +4,6 @@ import streamlit as st
 from streamlit_extras.app_logo import add_logo
 import pandas as pd
 import pydeck as pdk
-from urllib.error import URLError
 from modules.nav import SideBarLinks
 import requests
 
@@ -98,7 +97,7 @@ if selected_layers:
             layers=selected_layers,
 
             # adds hover data on the store pulled from API
-            tooltip={"text": "{MerchantName} \n {StreetAddress}, \n {City}, {State} {ZipCode} \n Visit online at {Website} \n Slogan: '{OwnerComment}'"},))
+            tooltip = {"text": "{MerchantName} \n {StreetAddress}, \n {City}, {State} {ZipCode} \n Visit online at {Website} \n Slogan: '{OwnerComment}'"},))
 else:
     st.error("Please choose at least one layer above.")
 
