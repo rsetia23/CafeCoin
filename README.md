@@ -1,56 +1,55 @@
-# Spring 2025 CS 3200 Project Template Repository
+# CafeCoin Collective Web App
 
-This repo is a template for your semester project. It includes most of the infrastructure setup (containers), sample databases, and example UI pages. Explore it fully and ask questions!
+## Credits and key links
 
-## Prerequisites
+This project was completed by Andrew Fielding, Mohammed Karim Kane, Josh Len, and Rahul Setia. It was based on a template repository provided by our professor, Mark Fontenot. You can access the template repository through your browser [here](https://github.com/NEU-CS3200/25S-Project-Template), and you can access our repository [here](https://github.com/rsetia23/CafeCoin).
 
+To view the video demo of our web app, please click ([here])
+
+## Introduction
+
+This repo contains the files necessary to run the preliminary CafeCoin Collective web app, created for the Spring 2025 CS3200 Intro to Databases final project. 
+
+The idea for CafeCoin was inspired by a love for the charm and quality products produced by small and independent business, and an appreciation for the convenience and familiarity of national brands. CafeCoin is an innovative data-driven application that creates and maintains rewards profiles for consumers who visit independent coffee shops and cafes that are within the CafeCoin Collective. The app allows qualifying cafes to join a network of other local small businesses, forming a consortium of independent shops where consumers can use a single user profile to obtain Coins (rewards points) that may be redeemed for rewards at any shop within the network. CafeCoin helps businesses compete directly with the powerful loyalty programs driving traffic to large national chains, increasing organic digital exposure, providing new marketing opportunities, and boosting data literacy. For coffee drinkers, it provides a new incentive to support a local business rather than a national brand–instead of feeling locked into visiting Starbucks to accumulate points, coffee lovers can support individual cafes and still access the convenience and financial benefits of a broad rewards network. 
+
+Put simply, with CafeCoin, customers can save money, try new coffee shops, and track their spending habits, while business owners can gain access to powerful tools to track information about their store, understand its performance, and expand its clientele. While our implementation does not yet have all the features necessary to deploy and operate the system at national scale, it provides several key functionalities for each of the finished app's main user types, including cafe customers, cafe owners, and CafeCoin Collective data analysts and administrators. 
+
+You are free to copy, modify, distribute, and otherwise use CafeCoin for any internal Northeastern purpose. Please contact the owners for permission to share this file elsewhere. 
+
+## What our implementation does (what it's good for right now)
+
+Our implementation allows a customer to view (and reload) their cash balance, view their Coin balance (our reward offering), examine lifetime spending stats and monthly spending trends, and view an interactive map of CafeCoin Collective members, including recommendations for stores that match their saved preferences. It allows a cafe owner to add to, edit, and delete from their stored menu items, see how well previously designated reward items performed, and view the contact information of customers who have signed up as communications subscribers for their store. The app allows a CafeCoin data analyst to view system-wide KPIs, compare individual stores' performance, and view insights from the Collective's list of "leads"--stores it might try to recruit to join its system in the future. Finally, it allows a system administrator to deprecate or delete old customer and merchant data from the system, send and track alerts pertaining to system functionality (such as outage and maintenance notifications), and track and handle customer complaints by manually updating customer data and information and/or performing direct outreach to the complaining customer. 
+
+## Prerequisites and installations
+
+Before running the CafeCoin web app in your browser, you will need some prerequisites: 
 - A GitHub Account
 - A terminal-based git client or GUI Git client such as GitHub Desktop or the Git plugin for VSCode.
 - VSCode with the Python Plugin
 - A distribution of Python running on your laptop. The distro supported by the course is Anaconda or Miniconda.
+- Docker Desktop (used to run the containers via `docker-compose.yaml`)
+- **Optionally**: DataGrip for database exploration
 
-## Current Project Components
+Once you have cloned the project repo and before attempting to execute the code or launch the web app, you'll need to install dependencies, which differ for the front and backends. **The Dockerfiles in the codebase should automatically handle the installation for you**, but it can also be accomplished manually using our requirements.txt files and the terminal: 
+- Navigate to the project root (cd /path/to/project_folder)
+- Navigate to the api directory within the project folder (cd api)
+- Install dependencies (pip install -r requirements.txt)
+- Navigate to the app directory within the project folder (cd app/src)
+- Install dependencies (pip install -r requirements.txt)
 
-Currently, there are three major components that will each run in their own Docker Containers:
+## Project Components
 
-- Streamlit App in the `./app` directory
-- Flask REST api in the `./api` directory
-- MySQL Database that will be initialized with SQL script files from the `./database-files` directory
+The project has three major components that each run in their own separate Docker Containers:
 
-## Suggestion for Learning the Project Code Base
+- The frontend of the app, designed with Streamlit, in the `./app` directory
+- The backend of the app (its data access layer, a REST api built with Flask) in the `./api` directory
+- A MySQL Database that will be initialized with the SQL script file in the `./database-files` directory
 
-If you are not familiar with web app development, this code base might be confusing. But don't worry, it's not that bad. Here are some suggestions for learning the code base:
+## Getting started
 
-1. Have two versions of the template repo - one for you to individually explore and lear and another for the team's project implementation.
-1. Start by exploring the `./app` directory. This is where the Streamlit app is located. The Streamlit app is a Python-based web app that is used to interact with the user. It's a great way to build a simple web app without having to learn a lot of web development.
-1. Next, explore the `./api` directory. This is where the Flask REST API is located. The REST API is used to interact with the database and perform other server-side tasks.
-1. Finally, explore the `./database-files` directory. This is where the SQL scripts are located that will be used to initialize the MySQL database.
-
-### Setting Up Your Personal Repo
-
-1. In GitHub, click the **fork** button in the upper right corner of the repo screen.
-1. When prompted, give the new repo a unique name, perhaps including your last name and the word 'personal'.
-1. Once the fork has been created, clone YOUR forked version of the repo to your computer.
-1. Set up the `.env` file in the `api` folder based on the `.env.template` file.
-1. For running the testing containers (for your personal repo), you will tell `docker compose` to use a different configuration file named `docker-compose-testing.yaml`.
-   1. `docker compose -f docker-compose-testing.yaml up -d` to start all the containers in the background
-   1. `docker compose -f docker-compose-testing.yaml down` to shutdown and delete the containers
-   1. `docker compose -f docker-compose-testing.yaml up db -d` only start the database container (replace db with api or app for the other two services as needed)
-   1. `docker compose -f docker-compose-testing.yaml stop` to "turn off" the containers but not delete them.
-
-### Setting Up Your Team's Repo
-
-**Before you start**: As a team, one person needs to assume the role of _Team Project Repo Owner_.
-
-1. The Team Project Repo Owner needs to fork this template repo into their own GitHub account **and give the repo a name consistent with your project's name**. If you're worried that the repo is public, don't. Every team is doing a different project.
-1. In the newly forked team repo, the Team Project Repo Owner should go to the **Settings** tab, choose **Collaborators and Teams** on the left-side panel. Add each of your team members to the repository with Write access.
-
-**Remaining Team Members**
-
-1. Each of the other team members will receive an invitation to join. Obviously accept the invite.
-1. Once that process is complete, each team member, including the repo owner, should clone the Team's Repo to their local machines (in a different location your Personal Project Repo).
-1. Set up the `.env` file in the `api` folder based on the `.env.template` file.
-1. For running the testing containers (for your team's repo):
+1. Set up the `.env` file in the `api` folder based on the `.env.template` file. Copy the template file and rename it to `.env` first. 
+1. In the newly created file, choose some password that will be memorable to you. Type it into the appropriate line and save the file. 
+1. You should be ready to start the Docker containers now. Open the Docker desktop app, and then use the following commands in your terminal to work with the containers:
    1. `docker compose up -d` to start all the containers in the background
    1. `docker compose down` to shutdown and delete the containers
    1. `docker compose up db -d` only start the database container (replace db with api or app for the other two services as needed)
@@ -58,28 +57,32 @@ If you are not familiar with web app development, this code base might be confus
 
 **Note:** You can also use the Docker Desktop GUI to start and stop the containers after the first initial run.
 
-## Handling User Role Access and Control
+## Connecting the project to DataGrip for the first time
 
-In most applications, when a user logs in, they assume a particular role. For instance, when one logs in to a stock price prediction app, they may be a single investor, a portfolio manager, or a corporate executive (of a publicly traded company). Each of those _roles_ will likely present some similar features as well as some different features when compared to the other roles. So, how do you accomplish this in Streamlit? This is sometimes called Role-based Access Control, or **RBAC** for short.
+1. Once you have spun the containers up, open the DataGrip app and create a new **MySQL** data source. 
+1. Change the port mapping for the new data source to **3200** (see `./app/docker-compose.yaml` for all port mapping information)
+1. Paste the password you created in your `.env` file into the password field. Use `root` as the user. 
+1. Test connection and, if successful, click Apply. 
+1. Introspect the CafeCoin database and examine the database structure and sample data, as generated from `./database-files/CafeCoinFinal.sql`
 
-The code in this project demonstrates how to implement a simple RBAC system in Streamlit but without actually using user authentication (usernames and passwords). The Streamlit pages from the original template repo are split up among 3 roles - Political Strategist, USAID Worker, and a System Administrator role (this is used for any sort of system tasks such as re-training ML model, etc.). It also demonstrates how to deploy an ML model.
+## A note on auth and user access
 
-Wrapping your head around this will take a little time and exploration of this code base. Some highlights are below.
+In most applications, when a user logs in, they assume a particular role. For instance, when one logs in to a stock price prediction app, they may be a single investor, a portfolio manager, or a corporate executive (of a publicly traded company). Our app uses Role-based Access Control, or **RBAC** for short, where you can choose whether to log in as a customer, a merchant, a data administrator, or a data analyst. You can then peruse that user's webpages and functionalities. For the purposes of the app's demonstration, we have pre-selected one specific user of each type so you can view and use the web app as a real user would. We define which users are part of the demo app via the session state in `app/src/Home.py`. 
 
-### Getting Started with the RBAC
+We implement a simple RBAC system in Streamlit but we do not implement any user authentication (usernames and passwords). To see the frontend code that produces every page, navigate to `app/src/pages` and peruse the python scripts there. Pages associated with the Customer user type start with a `0`, pages associated with the Merchant user type start with `1`, pages associated with the Administrator user type start with `2`, and pages associated with the Analyst user type start with `3`. To see how the Home page and user selection/page navigation process works under the hood, navigate to `app/src/Home.py`. 
 
-1. We need to turn off the standard panel of links on the left side of the Streamlit app. This is done through the `app/src/.streamlit/config.toml` file. So check that out. We are turning it off so we can control directly what links are shown.
-1. Then I created a new python module in `app/src/modules/nav.py`. When you look at the file, you will se that there are functions for basically each page of the application. The `st.sidebar.page_link(...)` adds a single link to the sidebar. We have a separate function for each page so that we can organize the links/pages by role.
-1. Next, check out the `app/src/Home.py` file. Notice that there are 3 buttons added to the page and when one is clicked, it redirects via `st.switch_page(...)` to that Roles Home page in `app/src/pages`. But before the redirect, I set a few different variables in the Streamlit `session_state` object to track role, first name of the user, and that the user is now authenticated.
-1. Notice near the top of `app/src/Home.py` and all other pages, there is a call to `SideBarLinks(...)` from the `app/src/nav.py` module. This is the function that will use the role set in `session_state` to determine what links to show the user in the sidebar.
-1. The pages are organized by Role. Pages that start with a `0` are related to the _Political Strategist_ role. Pages that start with a `1` are related to the _USAID worker_ role. And, pages that start with a `2` are related to The _System Administrator_ role.
+## Notes, further documentation, reporting problems and questions
 
-## (VERY Optional) Adding an ML Model to your App
+Please note that **all** sample data generated for the project is fake. We generated our data with Mockaroo, and performed some manual cleanup to resolve dependency issues and ensure the data makes logical sense with our schema. The database and sample data load without issue, although there may still be some small problems with the data intuitively (eg not functionally). While we worked with the sample data as much as possible to ensure consistency with the logic of our schema, it is likely not perfect. We built the dataset under the assumption that is a snapshot of data, and it therefore does not represent all data since the "beginning" of the app's existence. 
 
-_Note_: This project only contains the infrastructure for a hypothetical ML model.
+While our project does not provide further dedicated documentation files within the repository, you will find that the front and backend code is well-documented inline with comments. If you would like to view our REST API Matrix (akin to a basic API documentation) you can find that [here](https://docs.google.com/document/d/1InAFlM4QcwDRLuhxHaO5qN1LR6GPRwXFz3yjTHctssA/edit?usp=sharing). Please note that not all resources in the documentation have been implemented for this project. You can see which endpoints have associated routes by exploring the routes folders under `api/backend`. 
 
-1. Build, train, and test your ML model in a Jupyter Notebook.
-1. Once you're happy with the model's performance, convert your Jupyter Notebook code for the ML model to a pure python script. You can include the `training` and `testing` functionality as well as the `prediction` functionality. You may or may not need to include data cleaning, though.
-1. Check out the `api/backend/ml_models` module. In this folder, I've put a sample (read _fake_) ML model in `model01.py`. The `predict` function will be called by the Flask REST API to perform '_real-time_' prediction based on model parameter values that are stored in the database. **Important**: you would never want to hard code the model parameter weights directly in the prediction function. tl;dr - take some time to look over the code in `model01.py`.
-1. The prediction route for the REST API is in `api/backend/customers/customer_routes.py`. Basically, it accepts two URL parameters and passes them to the `prediction` function in the `ml_models` module. The `prediction` route/function packages up the value(s) it receives from the model's `predict` function and send its back to Streamlit as JSON.
-1. Back in streamlit, check out `app/src/pages/11_Prediction.py`. Here, I create two numeric input fields. When the button is pressed, it makes a request to the REST API URL `/c/prediction/.../...` function and passes the values from the two inputs as URL parameters. It gets back the results from the route and displays them. Nothing fancy here.
+For any issues with setup and starting the app, please reference Dr. Fontenot's CS3200 Project Tutorials playlist on YouTube [here](https://www.youtube.com/playlist?list=PL_QnMemFdCzVy65mBYvomx0u-9y0tIq7y). To view the video demo of our project, please click [here](link). If there are any questions about our project idea or structure, issues or bugs with the code, or if you have suggestions to expand the project, please email the developers. You can contact us at: 
+- fielding.a@northeastern.edu
+- kane.mo@northeastern.edu
+- len.j@northeastern.edu
+- setia.ra@northeastern.edu
+
+## Acknowledgements
+
+We are grateful for the work all the TAs and Dr. Fontenot put into this class all semester to help us get to the point of producing this project. We're proud of our work, but understand that we couldn't have done it without all the time and dedication the team puts into lessons, grading, and office hours. You guys rock! 

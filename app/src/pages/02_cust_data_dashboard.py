@@ -19,10 +19,17 @@ SideBarLinks()
 json_raw = requests.get(f"http://api:4000/c/summary/{st.session_state['userID']}").json()
 
 # build separate pd dataframes with account details and transaction data
-df_acct_deets = pd.DataFrame(json_raw[0])
-df_order_deets = pd.DataFrame(json_raw[1])
+try: 
+    df_acct_deets = pd.DataFrame(json_raw[0])
+except: 
+    st.error("Could not load account balance and Coin balance")
 
-# for a user who has made at least 1 in-store transaction (excluding balance reloads):
+try: 
+    df_order_deets = pd.DataFrame(json_raw[1])
+except: 
+    st.error("Could not load transaction history")
+
+# for a user who has made at least 1 in-store transaction (excluding balance reloads, which don't contribute to stats):
 if not df_order_deets.empty:
     # clean datetime string for order dates
     df_order_deets['TransactionDate'] = pd.to_datetime(df_order_deets['TransactionDate'])

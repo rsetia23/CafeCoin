@@ -43,8 +43,16 @@ def clean_lat_lon(json_data):
     return lat_lon_df
 
 # generate cleaned dataframes from response
-all_stores = clean_lat_lon(all_stores_data)
-rec_stores = clean_lat_lon(customer_recs_data)
+try:
+    all_stores = clean_lat_lon(all_stores_data)
+except: 
+    st.error("There was a problem fetching merchant data")
+
+try:
+    rec_stores = clean_lat_lon(customer_recs_data)
+except: 
+    st.write("We may not yet have a store matching all your preferences. Check back soon for new additions!")
+    rec_stores = pd.DataFrame({'lat': [], 'lon': []})
 
 # build webpage
 # construct pydeck layers
