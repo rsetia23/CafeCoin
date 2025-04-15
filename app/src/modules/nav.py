@@ -31,7 +31,7 @@ def AnalystPageNav():
 
 #### ------------------------ Admin Role ------------------------
 def AdminPageNav():
-    st.sidebar.page_link("pages/20_Admin_home.py", label="Admin Home", icon="🏠")
+    st.sidebar.page_link("pages/20_Admin_Home.py", label="Admin Home", icon="🏠")
 
 
 
