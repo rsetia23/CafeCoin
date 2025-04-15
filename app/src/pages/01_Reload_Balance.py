@@ -88,7 +88,7 @@ if card_data:
             'Date': None,
             'PaymentMethod': 'card',
             'CardUsed': selected_card_id,
-            'TransactionType': 'online',
+            'TransactionType': 'balancereload',
             'AmountPaid': total}
         
         # post transaction data
@@ -98,6 +98,10 @@ if card_data:
         if transaction.status_code == 200:
             acct_balance = requests.put(f"http://api:4000/c/balanceupdate/{st.session_state['userID']}/{total}")
             st.success(f'Your next cup of java awaits! ${total} added to account.')
+
+            reload_again = st.button("Add more to your balance now")
+            if reload_again:
+                st.switch_page('pages/01_Reload_Balance.py')
 
     # return an error if the customer forgot to input their CVV
     elif confirm and not cvv: 

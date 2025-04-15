@@ -44,9 +44,7 @@ def clean_lat_lon(json_data):
 
 # generate cleaned dataframes from response
 all_stores = clean_lat_lon(all_stores_data)
-
-if not customer_recs_data.empty:
-    rec_stores = clean_lat_lon(customer_recs_data)
+rec_stores = clean_lat_lon(customer_recs_data)
 
 # build webpage
 # construct pydeck layers
@@ -57,7 +55,7 @@ all_layers = {
                 data = all_stores,
                 get_position = ["lon", "lat"],
                 get_color = [200, 30, 0, 160],
-                get_radius = 5000,
+                get_radius = 1000,
                 pickable = True), 
                 
                 # layer that only includes dots for stores matching all customer amenity preferences
@@ -66,7 +64,7 @@ all_layers = {
                 data = rec_stores,
                 get_position = ["lon", "lat"],
                 get_color = [0, 0, 255, 160],
-                get_radius = 200,
+                get_radius = 1000,
                 pickable = True)
                 }
 
@@ -101,7 +99,7 @@ st.write("Or, search for stores by city, state, zip code and view their features
 
 # create a set of radio buttons to define the search method
 search_by = st.radio("Choose a way to search:", 
-         ["City, State (two letter abbr)", "State (two letter abbr)", "Zip", "Store Name"], index = None)
+         ["City, State", "State", "Zip", "Store Name"], index = None)
 
 # produce a text box to take user input
 search_term = st.text_input(label = "Enter your search term")
@@ -116,11 +114,11 @@ if search_term:
         # next check if the user defined a way to search 
         if search_by:
             # filter the data based on their response, handling case mismatches with .lower() and trailing whitespace with .strip()
-            if search_by == "City, State (two letter abbr)":
+            if search_by == "City, State":
                 search_term = search_term.split(", ")
                 relevant_stores = all_stores[(all_stores['City'].str.lower() == search_term[0].lower().strip()) & (all_stores['State'].str.lower() == search_term[1].lower().strip())]
 
-            elif search_by == "State (two letter abbr)":
+            elif search_by == "State":
                 relevant_stores = all_stores[all_stores['State'].str.lower() == search_term.lower().strip()]
 
             elif search_by == "Zip":

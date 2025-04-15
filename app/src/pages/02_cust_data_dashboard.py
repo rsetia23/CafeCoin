@@ -31,12 +31,12 @@ if not df_order_deets.empty:
 
     # calculate lifetime stats
     # total spending
-    total_spend = df_order_deets['ItemPrice'].sum() + df_order_deets['Discount'].sum()
+    total_spend = df_order_deets['ItemPrice'].sum() - df_order_deets['Discount'].sum()
     rewards_redeemed = df_order_deets['RewardRedeemed'].sum()
 
     # group by orders for order summary stats
     net_spending = df_order_deets.groupby('OrderNum')[['ItemPrice', 'Discount']].sum()
-    net_spending['NetSpend'] = net_spending['ItemPrice'] + net_spending['Discount']
+    net_spending['NetSpend'] = net_spending['ItemPrice'] - net_spending['Discount']
     net_spending = net_spending.reset_index()
 
     # calculate order summary stats
@@ -61,7 +61,7 @@ if not df_order_deets.empty:
 
     # calculate net spending
     monthly_orders = months_grouped[['ItemPrice', 'Discount']].sum().sort_values('transaction_month', ascending=False)
-    monthly_orders['NetSpend'] = monthly_orders['ItemPrice'] + monthly_orders['Discount']
+    monthly_orders['NetSpend'] = monthly_orders['ItemPrice'] - monthly_orders['Discount']
 
     # calculate number of orders
     num_orders_month = months_grouped['OrderNum'].nunique()
@@ -94,11 +94,11 @@ if not df_order_deets.empty:
 
     # build avg order plot
     fig2 = px.line(data_frame=merged_year_spend.head(12), x = 'transaction_month', y = merged_year_spend.columns[5:], title = 'Trailing 12 Months Avg Order Total/Month vs All Time',
-                labels = {'value': 'Order total ($)', 'transaction_month': 'Month'})
+                labels = {'value': 'Avg order total ($)', 'transaction_month': 'Month'})
 
     # build this month's favorites viz
     # filter the data to only include transactions from this month
-    now = (pd.to_datetime('today') - relativedelta(months = 1)).strftime('%b %Y')
+    now = (pd.to_datetime('today')).strftime('%b %Y')
     df_this_month = df_order_deets[df_order_deets['transaction_month'] == now]
 
     # group by merchants and count distinct orders
@@ -110,7 +110,7 @@ if not df_order_deets.empty:
 
     orders_per_item = df_this_month.groupby(['ItemNum', 'ItemName', 'MerchantName'])['OrderNum'].nunique().reset_index()
 
-    fig4 = px.bar(data_frame=orders_per_item, x = 'ItemNum', y = 'OrderNum', hover_data = ['ItemName', 'MerchantName'], title = f'Most Frequently Ordered Items This Month ({now})',
+    fig4 = px.bar(data_frame=orders_per_item, x = 'ItemName', y = 'OrderNum', hover_data = ['ItemName', 'MerchantName'], title = f'Most Frequently Ordered Items This Month ({now})',
                 labels = {'ItemNum': 'Item number (hover for name)', 'OrderNum': '# of your orders including this item'})
 
 
