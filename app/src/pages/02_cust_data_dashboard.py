@@ -2,10 +2,6 @@ import logging
 logger = logging.getLogger(__name__)
 import pandas as pd
 import streamlit as st
-from streamlit_extras.app_logo import add_logo
-import world_bank_data as wb
-import matplotlib.pyplot as plt
-import numpy as np
 import plotly.express as px
 from modules.nav import SideBarLinks
 import requests
@@ -28,6 +24,7 @@ try:
     df_order_deets = pd.DataFrame(json_raw[1])
 except: 
     st.error("Could not load transaction history")
+    df_order_deets = pd.DataFrame()
 
 # for a user who has made at least 1 in-store transaction (excluding balance reloads, which don't contribute to stats):
 if not df_order_deets.empty:
@@ -38,7 +35,7 @@ if not df_order_deets.empty:
 
     # calculate lifetime stats
     # total spending
-    total_spend = df_order_deets['ItemPrice'].sum() - df_order_deets['Discount'].sum()
+    total_spend = df_order_deets['ItemPrice'].sum() - df_order_deets['Discount'].sum().round(2)
     rewards_redeemed = df_order_deets['RewardRedeemed'].sum()
 
     # group by orders for order summary stats
@@ -47,10 +44,10 @@ if not df_order_deets.empty:
     net_spending = net_spending.reset_index()
 
     # calculate order summary stats
-    avg_order_spend = net_spending['NetSpend'].mean()
-    largest_order = net_spending['NetSpend'].max()
+    avg_order_spend = net_spending['NetSpend'].mean().round(2)
+    largest_order = net_spending['NetSpend'].max().round(2)
     num_orders = len(net_spending['OrderNum'])
-    total_savings = net_spending['Discount'].sum()
+    total_savings = net_spending['Discount'].sum().round(2)
 
     # group by merchant and item to get number of unique shops visited and number of unique items ordered
     merchants_grouped = df_order_deets.groupby('MerchantName')
@@ -127,25 +124,51 @@ if not df_order_deets.empty:
     st.write(" ")
     st.write(f"### Your account balances are:")
 
-    # format coin balance and account balance as side-by-side columns
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric(label="🪙 Coin Balance", value=df_acct_deets.iloc[0,1])
+    if not df_acct_deets.empty:
+        # format coin balance and account balance as side-by-side columns
+        col1, col2 = st.columns(2)
+        with col1:
+            coins = df_acct_deets.iloc[0,1]
+            st.metric(label="🪙 Coin Balance", value = coins)
 
-    with col2:
-        st.metric(label="💰 Account Cash Balance", value=df_acct_deets.iloc[0,0])
-        
-        # Create button to change tabs to reload cash balance
-        with stylable_container(
-            "green",
-            css_styles="""
-            button {
-                background-color: #00FF00;
-            }""",
-            ):
-            confirm = st.button("Reload balance now")
-            if confirm:
-                st.switch_page('pages/01_Reload_Balance.py')
+            # calculate how far the customer is from 200 Coins (hypothetical reward value)
+            distance_to_reward = 200 - coins.astype(float)
+
+            # tell the customer how far they are from a reward
+            if distance_to_reward > 0: 
+                st.write(f"{distance_to_reward} Coins until your next reward! Visit a CafeCoin Collective Member to get more Coins!")
+                            # Create button to change tabs to reload cash balance
+
+            # provide a button so the customer can find a store to use their accumulated coins if a reward is available
+            elif distance_to_reward <= 0:
+                st.write("Reward available! Visit a CafeCoin Collective Member to redeem your Coins!")
+
+            with stylable_container(
+                "green",
+                css_styles="""
+                button {
+                    background-color: #00FF00;
+                }""",
+                ):
+                find_store = st.button("Click to find a store")
+                if find_store:
+                    st.switch_page('pages/03_Map_w_Recs.py')
+            
+
+        with col2:
+            st.metric(label="💰 Account Cash Balance", value=df_acct_deets.iloc[0,0])
+            
+            # Create button to change tabs to reload cash balance
+            with stylable_container(
+                "green1",
+                css_styles="""
+                button {
+                    background-color: #00FF00;
+                }""",
+                ):
+                confirm = st.button("Click to reload balance")
+                if confirm:
+                    st.switch_page('pages/01_Reload_Balance.py')
 
     st.write(" ")
     st.write('### Your lifetime stats are:')
