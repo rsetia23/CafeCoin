@@ -163,7 +163,7 @@ def get_reward_item_orders():
         AVG(od.Price) AS AveragePrice
     FROM OrderDetails od
     JOIN Transactions t ON od.TransactionID = t.TransactionID
-    WHERE od.ItemID = %s AND t.Date BETWEEN %s AND %s
+    WHERE od.ItemID = %s AND t.TransactionDate BETWEEN %s AND %s
     '''
     cursor = db.get_db().cursor()
     cursor.execute(query, (item_id, start_date, end_date))

@@ -305,6 +305,8 @@ INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, StreetAddr
 INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance, AccountBalance, DateJoined, IsActive, AutoReloadAmt) VALUES (38, 'Heidi', 'MacCoughen', 'hmaccoughen11@phoca.cz', '724-775-9252', '271 Sundown Terrace', '12th Floor', 'Pittsburgh', 'Pennsylvania', '15210', 97, 49, '2025-02-06', true, 0);
 INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance, AccountBalance, DateJoined, IsActive, AutoReloadAmt) VALUES (39, 'Kev', 'Cohn', 'kcohn12@nbcnews.com', '314-979-7351', '065 Montana Junction', '7th Floor', 'Saint Louis', 'Missouri', '63150', 63, 35, '2024-12-22', true, 0);
 INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance, AccountBalance, DateJoined, IsActive, AutoReloadAmt) VALUES (40, 'Malissa', 'Bielfeldt', 'mbielfeldt13@reverbnation.com', '972-861-4815', '17012 Valley Edge Hill', 'Room 1869', 'Dallas', 'Texas', '75251', 52, 34, '2024-06-09', true, 0);
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance, AccountBalance, DateJoined, IsActive, AutoReloadAmt) VALUES (101, 'Alice', 'Smith', 'alice@example.com', '555-1234', '123 Main St', 'Unit 3', 'Boston', 'MA', '02120', 200, 50, '2024-01-01', TRUE, 0);
+INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Phone, StreetAddress, Apartment, City, State, ZipCode, CoinBalance, AccountBalance, DateJoined, IsActive, AutoReloadAmt) VALUES (102, 'Bob', 'Jones', 'bob@example.com', '555-5678', '456 Elm St', 'Apartment #4', 'Boston', 'MA', '02120', 150, 10, '2024-02-15', TRUE, 5);
 
 -- Merchants
 INSERT INTO Merchants (MerchantID, MerchantName, MerchantType, MembershipLvl, Email, Phone, StreetAddress, Suite, City, State, ZipCode, Lat, Lon, Website, OwnerFirst, OwnerLast, OwnerComment, IsActive) VALUES (1, 'CafeCoin', 'CafeCoin', NULL, 'estalman0@meetup.com', '508-474-2771', '08 2nd Crossing', '18th Floor', 'Newton', 'Massachusetts', '02162', 42.3319, -71.254, 'msn.com', 'Elwin', 'Stalman', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl.', true);
@@ -557,6 +559,9 @@ INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, 
 INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (41, '1', '5', 'accountbalance', null, '2025-04-05', 'purchase', 19.19);
 INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (42, '1', '7', 'accountbalance', null, '2025-04-06', 'purchase', 10.0);
 INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (43, '1', '5', 'accountbalance', null, '2025-04-06', 'purchase', 10.0);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (501, 101, 1, 'card', NULL, '2025-04-05 09:00:00', 'Product', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (502, 102, 1, 'card', NULL, '2025-04-10 14:30:00', 'Product', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (503, 101, 1, 'card', NULL, '2025-04-15 08:15:00', 'Product', 4.50);
 
 
 -- MenuItems
@@ -640,6 +645,10 @@ INSERT INTO MenuItems (ItemID, MerchantID, ItemName, CurrentPrice, Description, 
 INSERT INTO MenuItems (ItemID, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive) VALUES (78, '38', 'ultrices mattis', 3.45, 'In est risus, auctor sed, tristique in, tempus sit amet, sem.', 'Merchandise', true, true);
 INSERT INTO MenuItems (ItemID, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive) VALUES (79, '39', 'amet', 5.3, 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'Packaged', false, true);
 INSERT INTO MenuItems (ItemID, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive) VALUES (80, '40', 'odio justo', 9.64, 'Maecenas ut massa quis augue luctus tincidunt.', 'Packaged', false, true);
+INSERT INTO MenuItems (ItemID, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive) VALUES (501, 1, 'Vanilla Cold Brew', 4.25, 'Smooth vanilla-infused cold brew coffee', 'Drink', TRUE, TRUE);
+INSERT INTO MenuItems (ItemID, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive) VALUES (502, 1, 'Choco Muffin', 3.00, 'Chocolate chip muffin baked fresh daily', 'Food', FALSE, TRUE);
+INSERT INTO MenuItems (ItemID, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive) VALUES (503, 1, 'Matcha Latte', 5.00, 'Japanese matcha with steamed milk', 'Drink', TRUE, TRUE);
+INSERT INTO MenuItems (ItemID, MerchantID, ItemName, CurrentPrice, Description, ItemType, IsRewardItem, IsActive) VALUES (504, 1, 'Avocado Toast', 6.50, 'Sourdough topped with smashed avocado', 'Food', FALSE, TRUE);
 
 -- RewardItems
 INSERT INTO RewardItems (RewardId, ItemId, MerchantId, StartDate, EndDate) VALUES (1, '19', '1', '2025-01-13', '2029-10-12');
@@ -692,6 +701,8 @@ INSERT INTO RewardItems (RewardId, ItemId, MerchantId, StartDate, EndDate) VALUE
 INSERT INTO RewardItems (RewardId, ItemId, MerchantId, StartDate, EndDate) VALUES (48, '68', '8', '2024-03-04', '2039-06-07');
 INSERT INTO RewardItems (RewardId, ItemId, MerchantId, StartDate, EndDate) VALUES (49, '29', '9', '2024-01-09', '2031-09-09');
 INSERT INTO RewardItems (RewardId, ItemId, MerchantId, StartDate, EndDate) VALUES (50, '69', '10', '2023-04-05', '2077-02-03');
+INSERT INTO RewardItems (RewardID, MerchantID, ItemID, StartDate, EndDate) VALUES (501, 1, 501, '2025-04-01', '2025-05-01');
+INSERT INTO RewardItems (RewardID, MerchantID, ItemID, StartDate, EndDate) VALUES (502, 1, 503, '2025-04-01', '2025-05-01');
 
 -- Order Details
 INSERT INTO OrderDetails (OrderItemNum, TransactionId, ItemId, Price, RewardRedeemed, Discount) VALUES (1, '6', '14', 73.34, false, 0);
@@ -769,7 +780,9 @@ INSERT INTO OrderDetails (OrderItemNum, TransactionId, ItemId, Price, RewardRede
 INSERT INTO OrderDetails (OrderItemNum, TransactionId, ItemId, Price, RewardRedeemed, Discount) VALUES (1, '42', '7', 5, false, 0);
 INSERT INTO OrderDetails (OrderItemNum, TransactionId, ItemId, Price, RewardRedeemed, Discount) VALUES (2, '42', '7', 5, false, 0);
 INSERT INTO OrderDetails (OrderItemNum, TransactionId, ItemId, Price, RewardRedeemed, Discount) VALUES (2, '43', '5', 10, false, 0);
-
+INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount) VALUES (1, 501, 501, 4.50, TRUE, 0.00);
+INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount) VALUES (1, 502, 501, 4.50, TRUE, 0.00);
+INSERT INTO OrderDetails (OrderItemNum, TransactionID, ItemID, Price, RewardRedeemed, Discount) VALUES (1, 503, 501, 4.50, TRUE, 0.00);
 
 -- ComplaintTickets
 INSERT INTO ComplaintTickets (TicketId, CustomerId, AssignedToEmployeeID, CreatedAt, Category, Description, Status, Priority) VALUES (1, '32', '44', '2023-01-26', 'Order Delay', 'Order took longer than expected to arrive', 'In Progress', 'High');
