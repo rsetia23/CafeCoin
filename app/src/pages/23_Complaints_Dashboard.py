@@ -10,7 +10,7 @@ SideBarLinks()
 
 # Fetch complaints
 try:
-    res = requests.get("http://web-api:4000/admin/complaints")
+    res = requests.get("http://api:4000/admin/complaints")
     res.raise_for_status()
     complaints = res.json()
 except Exception as e:
@@ -34,7 +34,7 @@ else:
         with st.expander(f"#{row.TicketID} | {row.Category} | {row.Priority}"):
             # Inline customer email fetch
             try:
-                email_resp = requests.get(f"http://web-api:4000/admin/customers/{row.CustomerID}/email")
+                email_resp = requests.get(f"http://api:4000/admin/customers/{row.CustomerID}/email")
                 if email_resp.status_code == 200:
                     email = email_resp.json().get("Email")
                 else:
@@ -51,7 +51,7 @@ else:
 
             if st.button(f"Mark Ticket #{row.TicketID} as Resolved", key=row.TicketID):
                 try:
-                    resp = requests.put(f"http://web-api:4000/admin/complaints/{row.TicketID}/resolve")
+                    resp = requests.put(f"http://api:4000/admin/complaints/{row.TicketID}/resolve")
                     if resp.status_code == 200:
                         st.success(f"Ticket #{row.TicketID} resolved!")
                         st.rerun()

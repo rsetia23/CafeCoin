@@ -18,7 +18,7 @@ audience_options = [
     "Merchants",
     "Employees",
     "Admins",
-    "Support Team",
+    "Support Team.",
     "Beta Testers"
 ]
 
@@ -26,7 +26,7 @@ audience_filter = st.selectbox("Select Alert Audience", audience_options, index=
 
 # Fetch alerts for selected audience
 try:
-    url = f"http://web-api:4000/admin/alerts/{audience_filter}"
+    url = f"http://api:4000/admin/alerts/{audience_filter}"
     res = requests.get(url)
     res.raise_for_status()
     data = res.json()
@@ -83,7 +83,7 @@ with st.form("create_alert_form"):
         }
 
         try:
-            post_res = requests.post("http://web-api:4000/admin/alerts", json=payload)
+            post_res = requests.post("http://api:4000/admin/alerts", json=payload)
             if post_res.status_code == 200:
                 st.success("Alert sent successfully!")
                 time.sleep(2)
