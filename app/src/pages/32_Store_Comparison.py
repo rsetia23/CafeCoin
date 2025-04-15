@@ -10,6 +10,7 @@ st.title("Store Comparison Selector")
 
 API_HISTORY = "http://web-api:4000/a/transactions"
 
+# grabbing the history of the stores so I can access the drop down when I choose comparison stores
 try:
     response = requests.get(f"{API_HISTORY}")
     if response.status_code == 200:
@@ -22,6 +23,7 @@ try:
                 f"{merchant['MerchantName']} (Merchant #{merchant['MerchantID']})": merchant["MerchantID"]
                 for merchant in transaction_history
 }
+            # adding the button to get the first merchant
             merchant1_choice = st.selectbox(
                 "Select the first merchant to view performance:",
                 list(store_map.keys()),
@@ -30,6 +32,7 @@ try:
             store1_id = store_map[merchant1_choice]
             store1_name = merchant1_choice.split(" (")[0]
 
+            # adding the button to get the second merchant
             merchant2_choice = st.selectbox(
                 "Select the second merchant to view performance:",
                 list(store_map.keys()),
@@ -38,6 +41,7 @@ try:
             store2_id = store_map[merchant2_choice]
             store2_name = merchant2_choice.split(" (")[0]
 
+            # moving pages to get the data for the two stores
             if st.button('Compare Stores', 
              type='primary',
              use_container_width=True):

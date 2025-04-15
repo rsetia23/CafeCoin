@@ -9,8 +9,10 @@ import matplotlib.pyplot as plt
 
 SideBarLinks()
 
+# Title of the viewing page
 st.write("# Viewing All Transaction and Order Details")
 
+# Receiving the data of the Data Dashboard
 """
 Transaction Data
 """
@@ -30,6 +32,9 @@ try:
 except requests.exceptions.RequestException as e:
     st.error(f"Request failed: {e}")
 
+
+
+# recieving the order details for all orders
 """
 Order Details
 """
@@ -50,6 +55,7 @@ except requests.exceptions.RequestException as e:
     st.error(f"Request failed: {e}")
 
 
+# fix the formating of the date time and grabbing all the data to use for plotting
 if "df_transactions" in locals() and not df_transactions.empty:
     df_transactions['TransactionDate'] = pd.to_datetime(
         df_transactions['TransactionDate'], 
@@ -61,6 +67,7 @@ if "df_transactions" in locals() and not df_transactions.empty:
 
     customer_by_payment_method = df_transactions.groupby('PaymentMethod')['CustomerID'].nunique()
 
+# Set up plotting the graph and plotting
     fig_bar, ax_bar = plt.subplots(figsize=(8, 6))
     grouped_amount.plot(kind='bar', ax=ax_bar, color='skyblue')
     ax_bar.set_xlabel('Date')

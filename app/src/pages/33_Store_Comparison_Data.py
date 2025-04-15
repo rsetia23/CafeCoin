@@ -16,6 +16,7 @@ store2_name = st.session_state.get("store2_name")
 
 st.write("# Viewing All Transaction and Order Details")
 
+# seperating the page in to 2 different sides
 col1, col2 = st.columns(2)
 with col1:
     st.markdown(f"## {store1_name} Transaction Data")
@@ -53,6 +54,7 @@ with col1:
     except requests.exceptions.RequestException as e:
         st.error(f"Request failed: {e}")
 
+    # Translating the data to be proper format
     if 'df_store1' in locals() and not df_store1.empty:
         df_store1['TransactionDate'] = pd.to_datetime(
             df_store1['TransactionDate'], format="%a, %d %b %Y %H:%M:%S GMT"
@@ -76,6 +78,7 @@ with col1:
         ax1_pie.axis('equal')
         ax1_pie.set_title('Cust. Dist. by Payment Method')
 
+        # Plot the Graphs
         st.write("#### Graphs for", store1_name)
         graph_cols1 = st.columns(2)
         with graph_cols1[0]:
@@ -114,6 +117,7 @@ with col2:
     except requests.exceptions.RequestException as e:
         st.error(f"Request failed: {e}")
 
+    # Grab the correct format of the file
     if 'df_store2' in locals() and not df_store2.empty:
         df_store2['TransactionDate'] = pd.to_datetime(
             df_store2['TransactionDate'], format="%a, %d %b %Y %H:%M:%S GMT"
@@ -130,6 +134,7 @@ with col2:
         ax2_bar.set_xticklabels(ax2_bar.get_xticklabels(), rotation=45, ha='right')
         plt.tight_layout()
 
+        # Plot the graph
         customers_by_payment2 = df_store2.groupby('PaymentMethod')['CustomerID'].nunique()
         fig2_pie, ax2_pie = plt.subplots(figsize=(4, 4))
         ax2_pie.pie(customers_by_payment2, labels=customers_by_payment2.index,
