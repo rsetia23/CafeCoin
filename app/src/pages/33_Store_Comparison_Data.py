@@ -54,7 +54,10 @@ with col1:
         st.error(f"Request failed: {e}")
 
     if 'df_store1' in locals() and not df_store1.empty:
-        df_store1['TransactionDate'] = pd.to_datetime(df_store1['TransactionDate'])
+        # Use the appropriate format string for abbreviated month names.
+        df_store1['TransactionDate'] = pd.to_datetime(
+            df_store1['TransactionDate'], format="%a, %d %b %Y %H:%M:%S GMT"
+        )
         df_store1['AmountPaid'] = pd.to_numeric(df_store1['AmountPaid'], errors='coerce')
         df_store1['Date'] = df_store1['TransactionDate'].dt.date
 
@@ -79,7 +82,7 @@ with col1:
         with graph_cols1[0]:
             st.pyplot(fig1_bar)
         with graph_cols1[1]:
-            st.pyplot(fig1_pie)--------------------------
+            st.pyplot(fig1_pie)
 with col2:
     st.markdown(f"## {store2_name} Transaction Data")
     url = f"http://web-api:4000/a/transactions/{store2_id}"
@@ -113,7 +116,10 @@ with col2:
         st.error(f"Request failed: {e}")
 
     if 'df_store2' in locals() and not df_store2.empty:
-        df_store2['TransactionDate'] = pd.to_datetime(df_store2['TransactionDate'])
+        # Use the appropriate format string for abbreviated month names.
+        df_store2['TransactionDate'] = pd.to_datetime(
+            df_store2['TransactionDate'], format="%a, %d %b %Y %H:%M:%S GMT"
+        )
         df_store2['AmountPaid'] = pd.to_numeric(df_store2['AmountPaid'], errors='coerce')
         df_store2['Date'] = df_store2['TransactionDate'].dt.date
 

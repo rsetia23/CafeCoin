@@ -9,12 +9,13 @@ st.set_page_config(layout='wide')
 # Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
 
-
+# Welcome Message for welcoming the Analyst with Name attatched
 st.title(f"Welcome CafeCoin Analyst, {st.session_state['first_name']}.")
 st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
+# Buttons for different pages that show data about Cafe Coin
 if st.button('View Full System Dashboard', 
              type='primary',
              use_container_width=True):

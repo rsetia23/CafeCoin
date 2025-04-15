@@ -49,8 +49,13 @@ try:
 except requests.exceptions.RequestException as e:
     st.error(f"Request failed: {e}")
 
+
 if "df_transactions" in locals() and not df_transactions.empty:
-    df_transactions['TransactionDate'] = pd.to_datetime(df_transactions['TransactionDate'])
+    # Use the correct format string with '%b' for abbreviated month names.
+    df_transactions['TransactionDate'] = pd.to_datetime(
+        df_transactions['TransactionDate'], 
+        format="%a, %d %b %Y %H:%M:%S GMT"
+    )
     df_transactions['AmountPaid'] = pd.to_numeric(df_transactions['AmountPaid'], errors='coerce')
     df_transactions['Date'] = df_transactions['TransactionDate'].dt.date
     grouped_amount = df_transactions.groupby('Date')['AmountPaid'].sum()

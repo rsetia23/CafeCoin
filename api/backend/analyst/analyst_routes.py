@@ -5,8 +5,10 @@ from flask import make_response
 from flask import current_app
 from backend.db_connection import db
 
+# Create Bluepring for the analyst
 analyst_bp = Blueprint('analyst', __name__)
 
+# Route for getting transaction data of all customers
 @analyst_bp.route('/transactions', methods=['GET'])
 def get_analyst_transactions():
     current_app.logger.info('GET /transactions route')
@@ -20,6 +22,7 @@ def get_analyst_transactions():
     the_response.mimetype = 'application/json'
     return the_response
 
+# Route for viewing all the Order details
 @analyst_bp.route('/orderdetails', methods=['GET'])
 def get_analyst_orderdetails():
     current_app.logger.info('GET /orderdetails route')
