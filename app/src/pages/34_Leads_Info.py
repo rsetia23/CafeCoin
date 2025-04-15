@@ -13,6 +13,7 @@ st.write("# Viewing Store Leads")
 
 url = "http://web-api:4000/a/leadsinfo"
 
+# obtain the data
 try:
     response = requests.get(url)
     if response.status_code == 200:
@@ -27,7 +28,7 @@ try:
 except requests.exceptions.RequestException as e:
     st.error(f"Request failed: {e}")
 
-
+# plot the graph
 if "df_leads" in locals() and not df_leads.empty:
     state_counts = df_leads["State"].value_counts()
 
@@ -37,6 +38,7 @@ if "df_leads" in locals() and not df_leads.empty:
     ax.set_xlabel('State')
     ax.set_ylabel('Number of Leads')
     ax.set_title('Number of Leads per State')
-    ax.set_xticklabels(ax.get_xticklabels(), rotation=0)
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
+    
     
     st.pyplot(fig)

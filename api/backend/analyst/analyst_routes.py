@@ -34,6 +34,7 @@ def get_analyst_orderdetails():
     the_response.mimetype = 'application/json'
     return the_response
 
+# Route for viewing just the Order details
 @analyst_bp.route('/transactions/<int:merchant1>', methods=['GET'])
 def get_transactions_for_merchants(merchant1):
     current_app.logger.info(f'GET /transactions/{merchant1}')
@@ -55,6 +56,7 @@ def get_transactions_for_merchants(merchant1):
     the_response.mimetype = 'application/json'
     return the_response
 
+# Route for checking the order details of specific stores
 @analyst_bp.route('/orderdetails/<int:merchant1>', methods=['GET'])
 def get_orderdetails_for_merchant(merchant1):
     current_app.logger.info(f'GET /orderdetails/{merchant1}')
@@ -81,6 +83,7 @@ def get_orderdetails_for_merchant(merchant1):
     the_response.mimetype = 'application/json'
     return the_response
 
+# Route for checking the Leads info of Stores
 @analyst_bp.route('/leadsinfo', methods=['GET'])
 def get_analyst_leadsinfo():
     current_app.logger.info('GET /leadsinfo route')
