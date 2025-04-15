@@ -38,6 +38,38 @@ def deprecate_resource(resource, item_id):
 
     return make_response(jsonify({'message': f'{resource.capitalize()} {item_id} marked as inactive'}), 200)
 
+
+@admin_bp.route('/admin/delete/<resource>/<int:item_id>', methods=['DELETE'])
+def delete_resource(resource, item_id):
+    current_app.logger.info(f'DELETE /admin/delete/{resource}/{item_id}')
+
+    valid_resources = {
+        'customer':  ('Customers', 'CustomerID'),
+        'merchant':  ('Merchants', 'MerchantID'),
+    }
+
+    if resource.lower() not in valid_resources:
+        return make_response(jsonify({'error': 'Invalid resource type'}), 400)
+
+    table, pk = valid_resources[resource.lower()]
+
+    query = f'''
+        DELETE FROM {table}
+        WHERE {pk} = %s
+    '''
+
+    current_app.logger.info(f'Executing DELETE: {query} with ID={item_id}')
+
+    cursor = db.get_db().cursor()
+    result = cursor.execute(query, (item_id,))
+    db.get_db().commit()
+
+    if result == 0:
+        return make_response(jsonify({'message': f'{resource.capitalize()} not found'}), 404)
+
+    return make_response(jsonify({'message': f'{resource.capitalize()} {item_id} deleted successfully'}), 200)
+
+
 @admin_bp.route('/admin/customers', methods=['GET'])
 def get_active_customers():
     current_app.logger.info("GET /admin/customers")
