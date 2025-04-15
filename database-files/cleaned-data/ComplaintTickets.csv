@@ -1,0 +1,41 @@
+TicketId,CustomerId,AssignedToEmployeeID,CreatedAt,Category,Description,Status,Priority
+1,38,39,2025-01-04,Order Delay,Order took longer than expected to arrive,In Progress,High
+2,27,55,2025-01-01,App Crash,App stopped working during use,Closed,Medium
+3,31,68,2023-01-18,Wrong Order,Received incorrect item,In Progress,High
+4,2,10,2023-08-31,Payment Issue,Problem occurred while processing payment,In Progress,Critical
+5,6,6,2023-10-18,Missing Items,Some items were missing from the order,Open,Low
+6,1,43,2023-09-21,Order Delay,Order took longer than expected to arrive,In Progress,Urgent
+7,14,52,2024-07-26,App Crash,App stopped working during use,Open,Urgent
+8,13,61,2023-06-20,Wrong Order,Received incorrect item,Resolved,Medium
+9,20,66,2023-07-01,Payment Issue,Problem occurred while processing payment,Resolved,Critical
+10,33,33,2023-02-24,Missing Items,Some items were missing from the order,Closed,Low
+11,7,41,2024-11-03,Order Delay,Order took longer than expected to arrive,Escalated,Low
+12,24,53,2024-09-03,App Crash,App stopped working during use,Escalated,Critical
+13,3,77,2024-08-25,Wrong Order,Received incorrect item,Open,Low
+14,11,37,2023-02-05,Payment Issue,Problem occurred while processing payment,Closed,Urgent
+15,28,11,2023-04-20,Missing Items,Some items were missing from the order,Escalated,High
+16,36,27,2024-11-29,Order Delay,Order took longer than expected to arrive,Resolved,Critical
+17,18,1,2024-09-07,App Crash,App stopped working during use,Resolved,High
+18,23,35,2023-09-11,Wrong Order,Received incorrect item,Open,Low
+19,10,23,2024-11-02,Payment Issue,Problem occurred while processing payment,Escalated,Medium
+20,21,54,2023-01-21,Missing Items,Some items were missing from the order,Closed,Medium
+21,15,16,2023-08-09,Order Delay,Order took longer than expected to arrive,Open,Critical
+22,8,17,2024-11-12,App Crash,App stopped working during use,Closed,Low
+23,39,65,2024-01-01,Wrong Order,Received incorrect item,Closed,High
+24,16,14,2025-04-04,Payment Issue,Problem occurred while processing payment,In Progress,Medium
+25,19,75,2024-05-10,Missing Items,Some items were missing from the order,In Progress,Low
+26,9,30,2023-06-14,Order Delay,Order took longer than expected to arrive,In Progress,High
+27,25,12,2023-08-15,App Crash,App stopped working during use,Resolved,Low
+28,37,50,2023-11-18,Wrong Order,Received incorrect item,In Progress,Critical
+29,5,49,2025-02-21,Payment Issue,Problem occurred while processing payment,Closed,High
+30,4,76,2025-02-11,Missing Items,Some items were missing from the order,Open,Urgent
+31,34,51,2023-10-21,Order Delay,Order took longer than expected to arrive,Escalated,Critical
+32,29,80,2023-01-22,App Crash,App stopped working during use,In Progress,Medium
+33,17,18,2024-03-31,Wrong Order,Received incorrect item,In Progress,Urgent
+34,22,57,2023-01-26,Payment Issue,Problem occurred while processing payment,Closed,Urgent
+35,12,45,2024-08-31,Missing Items,Some items were missing from the order,Closed,Low
+36,40,5,2024-12-19,Order Delay,Order took longer than expected to arrive,Escalated,Critical
+37,30,47,2023-12-19,App Crash,App stopped working during use,Open,High
+38,32,34,2024-07-29,Wrong Order,Received incorrect item,Open,Medium
+39,35,79,2023-06-12,Payment Issue,Problem occurred while processing payment,Open,Urgent
+40,26,78,2024-10-26,Missing Items,Some items were missing from the order,Resolved,Medium

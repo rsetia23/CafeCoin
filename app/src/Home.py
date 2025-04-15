@@ -49,13 +49,13 @@ if st.button("Act as Jasper Finch, CafeCoin Customer",
     st.session_state['authenticated'] = True
     # we set the role of the current user
     st.session_state['role'] = 'cafe_coin_customer'
-    # we add the first name of the user (so it can be displayed on 
-    # subsequent pages). 
+    # we add the first name, last name, and user id of the customer (so it can be displayed on 
+    # subsequent pages and used in routes as needed). 
     st.session_state['first_name'] = 'Jasper'
     st.session_state['last_name'] = 'Finch'
+    st.session_state['userID'] = 1
     # finally, we ask streamlit to switch to another page, in this case, the 
     # landing page for this particular user type
-    st.session_state['userID'] = 1
     logger.info("Logging in as CafeCoin Customer Persona")
     st.switch_page('pages/00_Customer_Home.py')
 
@@ -65,7 +65,7 @@ if st.button('Act as Andrew Patten, a CafeCoin Shop Owner',
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'shop_owner'
     st.session_state['first_name'] = 'Andrew'
-    st.switch_page('pages/04_Shop_Owner_Home.py')
+    st.switch_page('pages/14_Shop_Owner_Home.py')
 
 if st.button('Act as Jordan Kim, a CafeCoin Data Analyst', 
             type = 'primary', 

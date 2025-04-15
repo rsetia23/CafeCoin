@@ -3,6 +3,8 @@
 # This file has function to add certain functionality to the left side bar of the app
 
 import streamlit as st
+import os
+from pathlib import Path
 
 
 #### ------------------------ General ------------------------
@@ -63,7 +65,10 @@ def SideBarLinks(show_home=False):
     """
 
     # add a logo to the sidebar always
-    st.sidebar.image("assets/logo.png", width=150)
+   # st.sidebar.image("assets/logo.png", width=150)
+    assets_dir = Path(__file__).parent.parent / "assets"
+    logo_path = os.path.join(assets_dir, "logo.png")
+    st.sidebar.image(logo_path, width=150)
 
     # If there is no logged in user, redirect to the Home (Landing) page
     if "authenticated" not in st.session_state:

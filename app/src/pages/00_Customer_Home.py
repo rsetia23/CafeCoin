@@ -27,4 +27,4 @@ if st.button('Reload CafeCoin Account Balance',
 if st.button('Find a CafeCoin Shop Near Me', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/03_Map_w_Recs.py')
