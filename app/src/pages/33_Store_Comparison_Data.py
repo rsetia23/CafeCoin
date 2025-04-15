@@ -54,7 +54,6 @@ with col1:
         st.error(f"Request failed: {e}")
 
     if 'df_store1' in locals() and not df_store1.empty:
-        # Use the appropriate format string for abbreviated month names.
         df_store1['TransactionDate'] = pd.to_datetime(
             df_store1['TransactionDate'], format="%a, %d %b %Y %H:%M:%S GMT"
         )
@@ -116,7 +115,6 @@ with col2:
         st.error(f"Request failed: {e}")
 
     if 'df_store2' in locals() and not df_store2.empty:
-        # Use the appropriate format string for abbreviated month names.
         df_store2['TransactionDate'] = pd.to_datetime(
             df_store2['TransactionDate'], format="%a, %d %b %Y %H:%M:%S GMT"
         )

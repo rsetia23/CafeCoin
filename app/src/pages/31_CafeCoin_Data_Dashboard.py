@@ -51,7 +51,6 @@ except requests.exceptions.RequestException as e:
 
 
 if "df_transactions" in locals() and not df_transactions.empty:
-    # Use the correct format string with '%b' for abbreviated month names.
     df_transactions['TransactionDate'] = pd.to_datetime(
         df_transactions['TransactionDate'], 
         format="%a, %d %b %Y %H:%M:%S GMT"
