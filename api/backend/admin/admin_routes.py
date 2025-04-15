@@ -177,3 +177,25 @@ def resolve_complaint(ticket_id):
         return jsonify({'message': 'Ticket not found'}), 404
 
     return jsonify({'message': f'Ticket {ticket_id} marked as resolved'}), 200
+
+@admin_bp.route('/admin/customers/<int:customer_id>/email', methods=['GET'])
+def get_customer_email(customer_id):
+    current_app.logger.info(f"GET /admin/customers/{customer_id}/email")
+
+    query = '''
+        SELECT Email FROM Customers
+        WHERE CustomerID = %s
+    '''
+
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (customer_id,))
+        result = cursor.fetchone()
+
+        if result is None:
+            return make_response(jsonify({'error': 'User not found'}), 404)
+
+        return jsonify(result), 200
+    except Exception as e:
+        current_app.logger.error(f"Error fetching email: {e}")
+        return make_response(jsonify({'error': str(e)}), 500)
