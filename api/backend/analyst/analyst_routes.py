@@ -34,7 +34,7 @@ def get_analyst_orderdetails():
     the_response.mimetype = 'application/json'
     return the_response
 
-# Route for viewing just the Order details
+# Route for viewing the transactions of a specific store
 @analyst_bp.route('/transactions/<int:merchant1>', methods=['GET'])
 def get_transactions_for_merchants(merchant1):
     current_app.logger.info(f'GET /transactions/{merchant1}')
