@@ -89,8 +89,8 @@ if selected_layers:
         pdk.Deck(
             map_style=None,
             initial_view_state={
-                "latitude": 42.37,
-                "longitude": -71.1,
+                "latitude": 40.7128,
+                "longitude": -73.935,
                 "zoom": 11,
                 "pitch": 50,
             },
