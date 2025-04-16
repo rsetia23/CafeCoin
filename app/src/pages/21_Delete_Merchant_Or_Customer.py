@@ -14,7 +14,7 @@ resource_type = st.selectbox(
 resource_slug = resource_type.lower()
 
 try:
-    fetch_url = f"http://api:4000/admin/{resource_slug}s"
+    fetch_url = f"http://api:4000/ad/{resource_slug}s"
     response = requests.get(fetch_url)
     response.raise_for_status()
     data = response.json()
@@ -39,7 +39,7 @@ col1, col2 = st.columns(2)
 with col1:
     if st.button(f"Mark {resource_type} as Inactive"):
         try:
-            put_url = f"http://api:4000/admin/deprecate/{resource_slug}/{item_id}"
+            put_url = f"http://api:4000/ad/{resource_slug}/{item_id}/status"
             res = requests.put(put_url)
             if res.status_code == 200:
                 st.success(f"{resource_type} '{selected_name}' marked as inactive")
@@ -53,7 +53,7 @@ with col1:
 with col2:
     if st.button(f"DELETE {resource_type} from System"):
         try:
-            delete_url = f"http://api:4000/admin/delete/{resource_slug}/{item_id}"
+            delete_url = f"http://api:4000/ad/{resource_slug}/{item_id}"
             res = requests.delete(delete_url)
             if res.status_code == 200:
                 st.success(f"{resource_type} '{selected_name}' deleted permanently")

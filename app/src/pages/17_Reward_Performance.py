@@ -8,13 +8,11 @@ SideBarLinks()
 
 st.title("View Reward Item Performance")
 
-API_HISTORY = "http://web-api:4000/shop_owner/reward_items/history"
-API_STATS = "http://web-api:4000/shop_owner/reward_items/orders"
 MERCHANT_ID = 1
 
 #Get reward history
 try:
-    response = requests.get(f"{API_HISTORY}/{MERCHANT_ID}")
+    response = requests.get(f"http://web-api:4000/m/merchants/{MERCHANT_ID}/reward-items/history")
     if response.status_code == 200:
         reward_history = response.json()
 
@@ -45,7 +43,7 @@ try:
                 }
 
                 try:
-                    stats_response = requests.get(API_STATS, params=params)
+                    stats_response = requests.get("http://web-api:4000/m/merchants/reward-items/orderdetails", params=params)
                     if stats_response.status_code == 200:
                         stats = stats_response.json()
                         st.success("Reward item stats loaded!")

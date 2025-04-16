@@ -11,7 +11,7 @@ SideBarLinks()
 
 st.write("# Viewing Store Leads")
 
-url = "http://web-api:4000/a/leadsinfo"
+url = "http://web-api:4000/an/leads"
 
 # obtain the data
 try:

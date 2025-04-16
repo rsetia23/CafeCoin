@@ -7,9 +7,11 @@ from backend.db_connection import db
 
 users_bp = Blueprint('customers', __name__)
 
-@users_bp.route('/paymethods/<userID>', methods=['GET'])
+# Balance Reload functionality
+# GET customer payment details
+@users_bp.route('/customers/<userID>/paymethods', methods=['GET'])
 def get_user_pay_methods(userID):
-    current_app.logger.info('GET /balanceupdate/<userID> route')
+    current_app.logger.info('GET /paymethods/<userID> route')
 
     # constructing and executing the cursor with the query
     cursor = db.get_db().cursor()
@@ -26,7 +28,8 @@ def get_user_pay_methods(userID):
     # returning data
     return the_response
 
-@users_bp.route('/balanceupdate', methods=['POST'])
+# POST a balance reload transaction
+@users_bp.route('/transactions/balance', methods=['POST'])
 def record_transaction():
     
     # collecting data from the request object 
@@ -71,9 +74,17 @@ def record_transaction():
     # returning the response
     return response
 
-@users_bp.route('/balanceupdate/<userID>/<amt>', methods=['PUT'])
-def update_customer(userID, amt):
+# PUT an updated balance in the user's account
+@users_bp.route('/customers/<userID>/balance', methods=['PUT'])
+def update_customer(userID):
     current_app.logger.info('PUT /balanceupdate/<userID>/<amt>')
+
+    # collecting data from the request object 
+    the_data = request.json 
+    current_app.logger.info(the_data)
+
+    #extracting the variable
+    amt = the_data['Amount']
 
     # storing query, including variables for user and amount
     query = f'''
@@ -92,7 +103,9 @@ def update_customer(userID, amt):
     # returning success message
     return 'customer balance updated!'
 
-@users_bp.route('/summary/<userID>', methods = ['GET'])
+# Dashboard functionality
+# GET all the user's spending data and account balances
+@users_bp.route('customers/<userID>/orderdetails/summary', methods = ['GET'])
 def customer_summary(userID):
     current_app.logger.info('GET /balanceupdate/<userID> route')
 
@@ -130,9 +143,11 @@ def customer_summary(userID):
     # return the data
     return the_response
 
-@users_bp.route('/stores', methods = ['GET'])
+# Store Map function
+# GET all stores with all customer relevant data, including amenities
+@users_bp.route('/merchants', methods = ['GET'])
 def store_locations():
-    current_app.logger.info('GET /stores route')
+    current_app.logger.info('GET /merchants route')
 
     # construct the cursor object and execute
     cursor = db.get_db().cursor()
@@ -155,9 +170,10 @@ def store_locations():
     # return data
     return merchant_response
 
-@users_bp.route('/storerecs/<userID>', methods = ['GET'])
+# GET stores matching the user's preferences
+@users_bp.route('/customers/<userID>/store-recommendations', methods = ['GET'])
 def store_recommendations(userID):
-    current_app.logger.info('GET /storerecs/<userID> route')
+    current_app.logger.info('GET /customers/<userID>/store-recommendations route')
 
     # construct cursor object and execute on amenity preferences/store recs query 
     # note: we went with the 2nd interation of this query from our CRUD; more complicated, but more intuitive result, eg stores that match ALL preferences instead of ANY preference

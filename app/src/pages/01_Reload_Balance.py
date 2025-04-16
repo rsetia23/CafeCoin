@@ -41,7 +41,7 @@ st.write('Please select which of your cards on file to use for this transaction 
 
 # fetch the user's card data, raising an error if they have no cards on file
 try:
-    card_data = requests.get(f"http://api:4000/c/paymethods/{st.session_state['userID']}").json()
+    card_data = requests.get(f"http://api:4000/c/customers/{st.session_state['userID']}/paymethods").json()
 except:
     st.error('Could not load cards.')
 
@@ -86,11 +86,13 @@ if card_data:
             'AmountPaid': total}
         
         # post transaction data
-        transaction = requests.post("http://api:4000/c/balanceupdate", json=body)
+        transaction = requests.post("http://api:4000/c/transactions/balance", json=body)
 
         # if transaction posts successfully, update the user's account balance and alert them
         if transaction.status_code == 200:
-            acct_balance = requests.put(f"http://api:4000/c/balanceupdate/{st.session_state['userID']}/{total}")
+            body2 = {
+                'Amount': total}
+            acct_balance = requests.put(f"http://api:4000/c/customers/{st.session_state['userID']}/balance", json = body2)
             st.success(f'Your next cup of java awaits! ${total} added to account.')
 
             reload_again = st.button("Add more to your balance now")

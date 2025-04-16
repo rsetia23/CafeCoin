@@ -6,8 +6,8 @@ shop_owner_bp = Blueprint('shop_owner', __name__)
 # Constants for testing/dev - in future this could be based on session auth or JWT
 DEFAULT_MERCHANT_ID = 1
 
-#GET menu item
-@shop_owner_bp.route('/shop_owner/menu', methods=['GET'])
+#GET menu items
+@shop_owner_bp.route('/merchants/menuitems', methods=['GET'])
 def get_menu():
     current_app.logger.info("GET /shop_owner/menu")
 
@@ -23,7 +23,7 @@ def get_menu():
     return jsonify(results), 200
 
 #Add menu Item
-@shop_owner_bp.route('/shop_owner/menu', methods=['POST'])
+@shop_owner_bp.route('/merchants/menuitems', methods=['POST'])
 def add_menu_item():
     current_app.logger.info('POST /shop_owner/menu')
     
@@ -60,9 +60,9 @@ def add_menu_item():
 
 
 #Update Menu Item
-@shop_owner_bp.route('/shop_owner/menu/<int:item_id>', methods=['PUT'])
-def update_menu_item(item_id):
-    current_app.logger.info(f"PUT /shop_owner/menu/{item_id}")
+@shop_owner_bp.route('/merchants/menuitems/<int:itemID>', methods=['PUT'])
+def update_menu_item(itemID):
+    current_app.logger.info(f"PUT /shop_owner/menu/{itemID}")
     update_data = request.json
 
     query = '''
@@ -83,7 +83,7 @@ def update_menu_item(item_id):
         update_data.get('ItemType'),
         update_data.get('IsRewardItem'),
         update_data.get('IsActive'),
-        item_id
+        itemID
     )
 
     cursor = db.get_db().cursor()
@@ -91,15 +91,15 @@ def update_menu_item(item_id):
     db.get_db().commit()
 
     if cursor.rowcount == 0:
-        return jsonify({'message': f'No item found with ID {item_id}'}), 404
+        return jsonify({'message': f'No item found with ID {itemID}'}), 404
 
-    return jsonify({'message': f'Menu item {item_id} updated successfully'}), 200
+    return jsonify({'message': f'Menu item {itemID} updated successfully'}), 200
 
 
 #Delete Menu Item
-@shop_owner_bp.route('/shop_owner/menu/<int:item_id>', methods=['DELETE'])
-def delete_menu_item(item_id):
-    current_app.logger.info(f"DELETE /shop_owner/menu/{item_id}")
+@shop_owner_bp.route('/merchants/menuitems/<int:itemID>', methods=['DELETE'])
+def delete_menu_item(itemID):
+    current_app.logger.info(f"DELETE /shop_owner/menu/{itemID}")
 
     query = '''
         DELETE FROM MenuItems
@@ -107,19 +107,19 @@ def delete_menu_item(item_id):
     '''
 
     cursor = db.get_db().cursor()
-    cursor.execute(query, (item_id,))
+    cursor.execute(query, (itemID,))
     db.get_db().commit()
 
     if cursor.rowcount == 0:
-        return jsonify({'message': f'Menu item with ID {item_id} not found'}), 404
+        return jsonify({'message': f'Menu item with ID {itemID} not found'}), 404
 
-    return jsonify({'message': f'Menu item {item_id} deleted successfully'}), 200
+    return jsonify({'message': f'Menu item {itemID} deleted successfully'}), 200
 
 
 #View all subscribers
-@shop_owner_bp.route('/shop_owner/subscribers/<int:merchant_id>', methods=['GET'])
-def get_subscribers(merchant_id):
-    current_app.logger.info(f"GET /shop_owner/subscribers/{merchant_id}")
+@shop_owner_bp.route('/merchants/<int:merchantID>/subscribers', methods=['GET'])
+def get_subscribers(merchantID):
+    current_app.logger.info(f"GET /shop_owner/subscribers/{merchantID}")
     query = '''
         SELECT c.CustomerID, c.FirstName, c.LastName, c.Email, c.Phone, 
                c.CoinBalance, c.DateJoined
@@ -128,13 +128,13 @@ def get_subscribers(merchant_id):
         WHERE cs.MerchantID = %s AND c.IsActive = TRUE
     '''
     cursor = db.get_db().cursor()
-    cursor.execute(query, (merchant_id,))
+    cursor.execute(query, (merchantID,))
     results = cursor.fetchall()
     return jsonify(results), 200
 
 #View Reward Item performance
-@shop_owner_bp.route('/shop_owner/reward_items/history/<int:merchant_id>', methods=['GET'])
-def get_reward_item_history(merchant_id):
+@shop_owner_bp.route('/merchants/<int:merchantID>/reward-items/history', methods=['GET'])
+def get_reward_item_history(merchantID):
     query = '''
         SELECT ri.RewardID, mi.ItemName, ri.StartDate, ri.EndDate
         FROM RewardItems ri
@@ -143,11 +143,12 @@ def get_reward_item_history(merchant_id):
         ORDER BY ri.StartDate DESC
     '''
     cursor = db.get_db().cursor()
-    cursor.execute(query, (merchant_id,))
+    cursor.execute(query, (merchantID,))
     results = cursor.fetchall()
     return jsonify(results), 200
 
-@shop_owner_bp.route('/shop_owner/reward_items/orders', methods=['GET'])
+# calculates reward item performance during a given time frame
+@shop_owner_bp.route('/merchants/reward-items/orderdetails', methods=['GET'])
 def get_reward_item_orders():
     item_id = request.args.get('item_id')
     start_date = request.args.get('start_date')

@@ -21,7 +21,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown(f"## {store1_name} Transaction Data")
     # API endpoint for Store 1 Transactions
-    url = f"http://web-api:4000/a/transactions/{store1_id}"
+    url = f"http://web-api:4000/an/merchants/{store1_id}/transactions"
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -40,7 +40,7 @@ with col1:
 
     st.markdown("### Order Details")
     # API endpoint for Store 1 Order Details
-    url = f"http://web-api:4000/a/orderdetails/{store1_id}"
+    url = f"http://web-api:4000/an/merchants/{store1_id}/orderdetails"
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -87,7 +87,7 @@ with col1:
             st.pyplot(fig1_pie)
 with col2:
     st.markdown(f"## {store2_name} Transaction Data")
-    url = f"http://web-api:4000/a/transactions/{store2_id}"
+    url = f"http://web-api:4000/an/merchants/{store2_id}/transactions"
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -103,7 +103,7 @@ with col2:
         st.error(f"Request failed: {e}")
 
     st.markdown("### Order Details")
-    url = f"http://web-api:4000/a/orderdetails/{store2_id}"
+    url = f"http://web-api:4000/an/merchants/{store2_id}/orderdetails"
     try:
         response = requests.get(url)
         if response.status_code == 200:

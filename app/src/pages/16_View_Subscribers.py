@@ -9,7 +9,7 @@ SideBarLinks()
 st.title("View Subscribers")
 merchant_id = 1
 
-url = f"http://web-api:4000/shop_owner/subscribers/{merchant_id}"
+url = f"http://web-api:4000/m/merchants/{merchant_id}/subscribers"
 
 query = st.text_input("Filter by name, email, etc.")
 

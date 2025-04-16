@@ -7,9 +7,10 @@ from backend.db_connection import db
 
 admin_bp = Blueprint('admin', __name__)
 
-@admin_bp.route('/admin/deprecate/<resource>/<int:item_id>', methods=['PUT'])
-def deprecate_resource(resource, item_id):
-    current_app.logger.info(f'PUT /admin/deprecate/{resource}/{item_id}')
+# updating the active status of a merchant or customer
+@admin_bp.route('/<resource>/<int:itemID>/status', methods=['PUT'])
+def deprecate_resource(resource, itemID):
+    current_app.logger.info(f'PUT /admin/{resource}/{itemID}')
 
     valid_resources = {
         'customer':  ('Customers', 'CustomerID'),
@@ -27,21 +28,21 @@ def deprecate_resource(resource, item_id):
         WHERE {pk} = %s
     '''
 
-    current_app.logger.info(f'Executing: {query} with ID={item_id}')
+    current_app.logger.info(f'Executing: {query} with ID={itemID}')
 
     cursor = db.get_db().cursor()
-    result = cursor.execute(query, (item_id,))
+    result = cursor.execute(query, (itemID,))
     db.get_db().commit()
     
     if result == 0:
         return make_response(jsonify({'message': f'{resource.capitalize()} already inactive'}), 404)
 
-    return make_response(jsonify({'message': f'{resource.capitalize()} {item_id} marked as inactive'}), 200)
+    return make_response(jsonify({'message': f'{resource.capitalize()} {itemID} marked as inactive'}), 200)
 
-
-@admin_bp.route('/admin/delete/<resource>/<int:item_id>', methods=['DELETE'])
-def delete_resource(resource, item_id):
-    current_app.logger.info(f'DELETE /admin/delete/{resource}/{item_id}')
+# hard deleting a merchant or customer's data from the database
+@admin_bp.route('/<resource>/<int:itemID>', methods=['DELETE'])
+def delete_resource(resource, itemID):
+    current_app.logger.info(f'DELETE /admin/delete/{resource}/{itemID}')
 
     valid_resources = {
         'customer':  ('Customers', 'CustomerID'),
@@ -58,19 +59,19 @@ def delete_resource(resource, item_id):
         WHERE {pk} = %s
     '''
 
-    current_app.logger.info(f'Executing DELETE: {query} with ID={item_id}')
+    current_app.logger.info(f'Executing DELETE: {query} with ID={itemID}')
 
     cursor = db.get_db().cursor()
-    result = cursor.execute(query, (item_id,))
+    result = cursor.execute(query, (itemID,))
     db.get_db().commit()
 
     if result == 0:
         return make_response(jsonify({'message': f'{resource.capitalize()} not found'}), 404)
 
-    return make_response(jsonify({'message': f'{resource.capitalize()} {item_id} deleted successfully'}), 200)
+    return make_response(jsonify({'message': f'{resource.capitalize()} {itemID} deleted successfully'}), 200)
 
-
-@admin_bp.route('/admin/customers', methods=['GET'])
+# getting all customer names
+@admin_bp.route('/customers', methods=['GET'])
 def get_active_customers():
     current_app.logger.info("GET /admin/customers")
 
@@ -87,7 +88,8 @@ def get_active_customers():
 
     return jsonify(results), 200
 
-@admin_bp.route('/admin/merchants', methods=['GET'])
+# getting all merchant names
+@admin_bp.route('/merchants', methods=['GET'])
 def get_active_merchants():
     current_app.logger.info("GET /admin/merchants")
 
@@ -104,8 +106,8 @@ def get_active_merchants():
 
     return jsonify(results), 200
 
-# Manage Alerts
-@admin_bp.route('/admin/alerts/<audience>', methods=['GET'])
+# view all alerts
+@admin_bp.route('/alerts/<audience>', methods=['GET'])
 def get_alerts(audience):
     current_app.logger.info(f'GET /admin/alerts/{audience}')
 
@@ -119,8 +121,8 @@ def get_alerts(audience):
     alerts = cursor.fetchall()
     return jsonify(alerts), 200
 
-
-@admin_bp.route('/admin/alerts', methods=['POST'])
+# create a new alert
+@admin_bp.route('/alerts', methods=['POST'])
 def create_alert():
     alert_data = request.json
     current_app.logger.info(f"POST /admin/alerts → {alert_data}")
@@ -149,8 +151,8 @@ def create_alert():
         current_app.logger.error(f"Error inserting alert: {e}")
         return make_response(jsonify({'error': str(e)}), 500)
 
-
-@admin_bp.route('/admin/complaints', methods=['GET'])
+# view all complaint tickets
+@admin_bp.route('/complaints', methods=['GET'])
 def get_complaints():
     query = '''
         SELECT TicketID, CustomerID, AssignedToEmployeeID, CreatedAt, Category, Description, Status, Priority
@@ -162,25 +164,27 @@ def get_complaints():
     data = cursor.fetchall()
     return jsonify(data), 200
 
-@admin_bp.route('/admin/complaints/<int:ticket_id>/resolve', methods=['PUT'])
-def resolve_complaint(ticket_id):
+# update the status of a complaint ticket
+@admin_bp.route('/complaints/<int:ticketID>/status', methods=['PUT'])
+def resolve_complaint(ticketID):
     query = '''
         UPDATE ComplaintTickets
         SET Status = 'Resolved'
         WHERE TicketID = %s
     '''
     cursor = db.get_db().cursor()
-    cursor.execute(query, (ticket_id,))
+    cursor.execute(query, (ticketID,))
     db.get_db().commit()
 
     if cursor.rowcount == 0:
         return jsonify({'message': 'Ticket not found'}), 404
 
-    return jsonify({'message': f'Ticket {ticket_id} marked as resolved'}), 200
+    return jsonify({'message': f'Ticket {ticketID} marked as resolved'}), 200
 
-@admin_bp.route('/admin/customers/<int:customer_id>/email', methods=['GET'])
-def get_customer_email(customer_id):
-    current_app.logger.info(f"GET /admin/customers/{customer_id}/email")
+# getting customer emails
+@admin_bp.route('/customers/<int:customerID>/email', methods=['GET'])
+def get_customer_email(customerID):
+    current_app.logger.info(f"GET /admin/customers/{customerID}/email")
 
     query = '''
         SELECT Email FROM Customers
@@ -189,7 +193,7 @@ def get_customer_email(customer_id):
 
     try:
         cursor = db.get_db().cursor()
-        cursor.execute(query, (customer_id,))
+        cursor.execute(query, (customerID,))
         result = cursor.fetchone()
 
         if result is None:

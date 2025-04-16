@@ -12,7 +12,7 @@ from dateutil.relativedelta import relativedelta
 SideBarLinks()
 
 # grab account and transaction data
-json_raw = requests.get(f"http://api:4000/c/summary/{st.session_state['userID']}").json()
+json_raw = requests.get(f"http://api:4000/c/customers/{st.session_state['userID']}/orderdetails/summary").json()
 
 # build separate pd dataframes with account details and transaction data
 try: 

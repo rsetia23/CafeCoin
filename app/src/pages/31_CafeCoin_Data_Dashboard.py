@@ -16,7 +16,7 @@ st.write("# Viewing All Transaction and Order Details")
 """
 Transaction Data
 """
-url = f"http://web-api:4000/a/transactions"
+url = f"http://web-api:4000/an/transactions"
 
 try:
     response = requests.get(url)
@@ -38,7 +38,7 @@ except requests.exceptions.RequestException as e:
 """
 Order Details
 """
-url = f"http://web-api:4000/a/orderdetails"
+url = f"http://web-api:4000/an/orderdetails"
 
 try:
     response = requests.get(url)

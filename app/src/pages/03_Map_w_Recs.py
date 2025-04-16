@@ -18,8 +18,8 @@ st.write(" ")
 st.write(f"### Hi, {st.session_state['first_name']}. Use the checkbox at left to view all CafeCoin locations, or our tailored recs just for you!")
 
 # grab store data and store recs for customer (based on which stores match all amenity preferences)
-all_stores_data = requests.get(f"http://api:4000/c/stores").json()
-customer_recs_data = requests.get(f"http://api:4000/c/storerecs/{st.session_state['userID']}").json()
+all_stores_data = requests.get(f"http://api:4000/c/merchants").json()
+customer_recs_data = requests.get(f"http://api:4000/c/customers/{st.session_state['userID']}/store-recommendations").json()
 
 # build helper function to clean data
 def clean_lat_lon(json_data):

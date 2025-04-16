@@ -10,7 +10,7 @@ SideBarLinks()
 
 st.title("Edit Menu")
 
-API_BASE = "http://web-api:4000/shop_owner/menu"
+API_BASE = "http://web-api:4000/m/merchants/menuitems"
 
 #SHowing the menu items
 st.subheader("Current Menu Items")

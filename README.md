@@ -76,7 +76,7 @@ We implement a simple RBAC system in Streamlit but we do not implement any user 
 ## Troubleshooting
 
 ### MacOS "Resource deadlock avoided" error
-Some team members operating on MacOS have encountered an OSError referencing a **resource deadlock**, though the error's appearance is inconsistent and we have not yet identified the root of the bug. If this happens, try the following steps: 
+Some team members operating on MacOS have encountered an OSError referencing a **resource deadlock**, though the error's appearance is inconsistent and we have not yet identified the root of the bug. If this happens, we have had success trying the following steps: 
 1. Backup any uncommited local changes
 1. Delete your local copy of the repo
 1. Re-clone the repository:

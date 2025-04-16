@@ -8,7 +8,7 @@ SideBarLinks()
 
 st.title("Store Comparison Selector")
 
-API_HISTORY = "http://web-api:4000/a/transactions"
+API_HISTORY = "http://web-api:4000/an/transactions"
 
 # grabbing the history of the stores so I can access the drop down when I choose comparison stores
 try:
