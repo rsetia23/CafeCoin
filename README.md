@@ -2,7 +2,7 @@
 
 ## Credits and key links
 
-This project was completed by Andrew Fielding, Mohammed Karim Kane, Josh Len, and Rahul Setia. It was based on a template repository provided by our professor, Mark Fontenot. You can access the template repository through your browser [here](https://github.com/NEU-CS3200/25S-Project-Template), and you can access our repository [here](https://github.com/rsetia23/CafeCoin).
+This project was completed by Andrew Fielding, Mohamed Karim Kane, Josh Len, and Rahul Setia. It was based on a template repository provided by our professor, Mark Fontenot. You can access the template repository through your browser [here](https://github.com/NEU-CS3200/25S-Project-Template), and you can access our repository [here](https://github.com/rsetia23/CafeCoin).
 
 To view the video demo of our web app, please click ([here])
 
