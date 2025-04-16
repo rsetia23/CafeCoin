@@ -6,7 +6,7 @@ The `CafeCoinFinal.sql` file sets up the schema for all tables and inserts all o
 
 ### How to restrap
 
-### 1. Stop and Remove Containers & Volumes
+## 1. Stop and Remove Containers & Volumes
 
 This will stop all containers and delete the database volume:
 
@@ -14,7 +14,7 @@ This will stop all containers and delete the database volume:
 docker compose down -v
 ```
 
-### 2. Build and Start Fresh 
+## 2. Build and Start Fresh 
 
 Run the following to rebuild the images and reinitialize the database:
 
