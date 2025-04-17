@@ -75,10 +75,10 @@ if card_data:
     # verify that the customer entered their CVV and confirmed their purchase
     if confirm and cvv:
 
-        # build data body to post to transactions table (note: date defaults and some fields hard coded as transaction always with CafeCoin, using a card, done online)
+        # build data body to post to transactions table (note: date defaults and some fields hard coded as transaction always with CafeCoin (MerchantID 3), using a card, done online)
         body = {
             'CustomerID': st.session_state['userID'],
-            'MerchantID': 1,
+            'MerchantID': 3,
             'Date': None,
             'PaymentMethod': 'card',
             'CardUsed': selected_card_id,

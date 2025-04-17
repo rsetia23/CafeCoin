@@ -559,33 +559,33 @@ INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, 
 INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (41, '1', '5', 'accountbalance', null, '2025-04-05', 'purchase', 19.19);
 INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (42, '1', '7', 'accountbalance', null, '2025-04-06', 'purchase', 10.0);
 INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (43, '1', '5', 'accountbalance', null, '2025-04-06', 'purchase', 10.0);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (44, 1, 1, 'card', NULL, '2025-04-15 08:15:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (45, 1, 1, 'card', NULL, '2025-04-15 08:16:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (46, 1, 1, 'card', NULL, '2025-04-15 08:17:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (47, 1, 1, 'card', NULL, '2025-04-15 08:18:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (48, 1, 1, 'card', NULL, '2025-04-15 08:19:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (49, 1, 1, 'card', NULL, '2025-04-15 08:20:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (50, 1, 1, 'card', NULL, '2025-04-15 08:21:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (51, 1, 1, 'card', NULL, '2025-04-15 08:22:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (52, 1, 1, 'card', NULL, '2025-04-15 08:23:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (53, 1, 1, 'card', NULL, '2025-04-15 08:24:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (54, 1, 1, 'card', NULL, '2025-04-15 08:25:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (55, 1, 1, 'card', NULL, '2025-04-15 08:26:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (56, 2, 2, 'card', NULL, '2025-04-15 08:15:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (57, 2, 2, 'card', NULL, '2025-04-15 08:16:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (58, 2, 2, 'card', NULL, '2025-04-15 08:17:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (59, 2, 2, 'card', NULL, '2025-04-15 08:18:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (60, 2, 2, 'card', NULL, '2025-04-15 08:19:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (61, 2, 2, 'card', NULL, '2025-04-15 08:20:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (62, 2, 2, 'card', NULL, '2025-04-15 08:21:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (63, 2, 2, 'card', NULL, '2025-04-15 08:22:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (64, 2, 2, 'card', NULL, '2025-04-15 08:23:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (65, 2, 2, 'card', NULL, '2025-04-15 08:24:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (66, 2, 2, 'card', NULL, '2025-04-15 08:25:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (67, 2, 2, 'card', NULL, '2025-04-15 08:26:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (501, 101, 1, 'card', NULL, '2025-04-05 09:00:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (502, 102, 1, 'card', NULL, '2025-04-10 14:30:00', 'Product', 4.50);
-INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (503, 101, 1, 'card', NULL, '2025-04-15 08:15:00', 'Product', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (44, 1, 1, 'card', NULL, '2025-04-15 08:15:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (45, 1, 1, 'card', NULL, '2025-04-15 08:16:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (46, 1, 1, 'card', NULL, '2025-04-15 08:17:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (47, 1, 1, 'card', NULL, '2025-04-15 08:18:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (48, 1, 1, 'card', NULL, '2025-04-15 08:19:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (49, 1, 1, 'card', NULL, '2025-04-15 08:20:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (50, 1, 1, 'card', NULL, '2025-04-15 08:21:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (51, 1, 1, 'card', NULL, '2025-04-15 08:22:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (52, 1, 1, 'card', NULL, '2025-04-15 08:23:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (53, 1, 1, 'card', NULL, '2025-04-15 08:24:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (54, 1, 1, 'card', NULL, '2025-04-15 08:25:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (55, 1, 1, 'card', NULL, '2025-04-15 08:26:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (56, 2, 2, 'card', NULL, '2025-04-15 08:15:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (57, 2, 2, 'card', NULL, '2025-04-15 08:16:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (58, 2, 2, 'card', NULL, '2025-04-15 08:17:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (59, 2, 2, 'card', NULL, '2025-04-15 08:18:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (60, 2, 2, 'card', NULL, '2025-04-15 08:19:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (61, 2, 2, 'card', NULL, '2025-04-15 08:20:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (62, 2, 2, 'card', NULL, '2025-04-15 08:21:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (63, 2, 2, 'card', NULL, '2025-04-15 08:22:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (64, 2, 2, 'card', NULL, '2025-04-15 08:23:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (65, 2, 2, 'card', NULL, '2025-04-15 08:24:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (66, 2, 2, 'card', NULL, '2025-04-15 08:25:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (67, 2, 2, 'card', NULL, '2025-04-15 08:26:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (501, 101, 1, 'card', NULL, '2025-04-05 09:00:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (502, 102, 1, 'card', NULL, '2025-04-10 14:30:00', 'purchase', 4.50);
+INSERT INTO Transactions (TransactionID, CustomerID, MerchantID, PaymentMethod, CardUsed, TransactionDate, TransactionType, AmountPaid) VALUES (503, 101, 1, 'card', NULL, '2025-04-15 08:15:00', 'purchase', 4.50);
 
 
 -- MenuItems
@@ -1028,7 +1028,7 @@ INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES 
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (7, '7', 'Newsletter', 'Regular info and tips', '2023-01-28');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (8, '8', 'Discount', 'Price cut or special deal', '2023-12-15');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (9, '9', 'Thank You', 'Appreciation message', '2024-10-15');
-INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (10, '10', 'Feature Launch', 'New feature or product release', '2024-04-11');
+INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (10, '10', 'Feature Launch', 'New feature or purchase release', '2024-04-11');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (11, '11', 'Promo', 'Limited-time offer or sale', '2024-05-12');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (12, '12', 'Update', 'Business or app changes', '2023-01-07');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (13, '13', 'Event', 'Upcoming in-store or virtual event', '2024-01-22');
@@ -1038,7 +1038,7 @@ INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES 
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (17, '17', 'Newsletter', 'Regular info and tips', '2023-07-12');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (18, '18', 'Discount', 'Price cut or special deal', '2024-07-25');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (19, '19', 'Thank You', 'Appreciation message', '2024-12-13');
-INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (20, '20', 'Feature Launch', 'New feature or product release', '2023-05-07');
+INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (20, '20', 'Feature Launch', 'New feature or purchase release', '2023-05-07');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (21, '21', 'Promo', 'Limited-time offer or sale', '2023-08-22');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (22, '22', 'Update', 'Business or app changes', '2024-10-30');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (23, '23', 'Event', 'Upcoming in-store or virtual event', '2024-03-10');
@@ -1048,7 +1048,7 @@ INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES 
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (27, '27', 'Newsletter', 'Regular info and tips', '2023-11-08');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (28, '28', 'Discount', 'Price cut or special deal', '2024-12-26');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (29, '29', 'Thank You', 'Appreciation message', '2025-02-03');
-INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (30, '30', 'Feature Launch', 'New feature or product release', '2023-08-13');
+INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (30, '30', 'Feature Launch', 'New feature or purchase release', '2023-08-13');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (31, '31', 'Promo', 'Limited-time offer or sale', '2025-01-31');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (32, '32', 'Update', 'Business or app changes', '2023-09-26');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (33, '33', 'Event', 'Upcoming in-store or virtual event', '2023-03-14');
@@ -1058,7 +1058,7 @@ INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES 
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (37, '37', 'Newsletter', 'Regular info and tips', '2025-04-03');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (38, '38', 'Discount', 'Price cut or special deal', '2024-01-17');
 INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (39, '39', 'Thank You', 'Appreciation message', '2024-09-11');
-INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (40, '40', 'Feature Launch', 'New feature or product release', '2023-03-11');
+INSERT INTO CustomerComms (PromoId, MerchantId, Type, Content, DateSent) VALUES (40, '40', 'Feature Launch', 'New feature or purchase release', '2023-03-11');
 
 -- CommsSubscribers
 INSERT INTO CommsSubscribers (CustomerId, MerchantId, DateSubscribed) VALUES ('37', '8', '2025-04-01');
