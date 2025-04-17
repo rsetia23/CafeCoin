@@ -4,7 +4,7 @@
 
 This project was completed by Andrew Fielding, Mohamed Karim Kane, Josh Len, and Rahul Setia. It was based on a template repository provided by our professor, Mark Fontenot. You can access the template repository through your browser [here](https://github.com/NEU-CS3200/25S-Project-Template), and you can access our repository [here](https://github.com/rsetia23/CafeCoin).
 
-To view the video demo of our web app, please click ([here])
+To view the video demo of our web app, please click [here](https://youtu.be/ctr3jCOQxQw)
 
 ## Introduction
 
@@ -93,7 +93,7 @@ Please note that **all** sample data generated for the project is fake. We gener
 
 We provide additional brief README/documentation files in the `./app/src/assets`, `./app/src/modules`, and `./database-files` directories. You will find that the front and backend code is well-documented inline with comments. If you would like to view our REST API Matrix (akin to a basic API documentation) you can find that [here](https://docs.google.com/document/d/1InAFlM4QcwDRLuhxHaO5qN1LR6GPRwXFz3yjTHctssA/edit?usp=sharing). Please note that not all resources in the documentation have been implemented for this project. You can see which endpoints have associated routes by exploring the routes folders under `./api/backend`. 
 
-For any issues with setup and starting the app, please reference Dr. Fontenot's CS3200 Project Tutorials playlist on YouTube [here](https://www.youtube.com/playlist?list=PL_QnMemFdCzVy65mBYvomx0u-9y0tIq7y). To view the video demo of our project, please click [here](link). If there are any questions about our project idea or structure, issues or bugs with the code, or if you have suggestions to expand the project, please email the developers. You can contact us at: 
+For any issues with setup and starting the app, please reference Dr. Fontenot's CS3200 Project Tutorials playlist on YouTube [here](https://www.youtube.com/playlist?list=PL_QnMemFdCzVy65mBYvomx0u-9y0tIq7y). To view the video demo of our project, please click [here](https://youtu.be/ctr3jCOQxQw). If there are any questions about our project idea or structure, issues or bugs with the code, or if you have suggestions to expand the project, please email the developers. You can contact us at: 
 - fielding.a@northeastern.edu
 - kane.mo@northeastern.edu
 - len.j@northeastern.edu
