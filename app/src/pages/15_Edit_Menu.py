@@ -12,7 +12,7 @@ st.title("Edit Menu")
 
 API_BASE = "http://web-api:4000/m/merchants/menuitems"
 
-#SHowing the menu items
+#Showing the menu items
 st.subheader("Current Menu Items")
 
 try:
