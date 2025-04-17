@@ -7,7 +7,7 @@ st.set_page_config(layout='wide')
 SideBarLinks()
 
 st.title("View Reward Item Performance")
-
+#Set default merchant for this page to Merchant 1 (Andrew Patten)
 MERCHANT_ID = 1
 
 #Get reward history
